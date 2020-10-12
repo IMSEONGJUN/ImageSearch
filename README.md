@@ -1,1 +1,11 @@
 # ImageSearch
+
+- 기간 : 2020.10.08 ~ 2020.10.11
+# Video Link : https://youtu.be/e6EBgg_vcb8
+
+![이미지](https://github.com/IMSEONGJUN/ImageSearch/blob/main/ImageSearcher/ImageSearcher/screenshot/ImageSearcher.png?raw=true)
+
+- 키워드 기준으로 웹상의 이미지 검색
+- 이미지 선택하여 즐겨찾기에 추가 가능
+- 즐겨찾기 이미지는 디바이스에 저장
+- RxSwift 사용
