@@ -10,14 +10,16 @@ import RxSwift
 import RxCocoa
 
 struct FavoriteViewModel: FavoriteViewModelBindable {
+    // Action with Void
     let viewWillAppear = PublishRelay<Void>()
     let refreshPulled = PublishRelay<Void>()
     let aTableViewRowDeleted = PublishRelay<Void>()
     
+    // State
     let cellData: Driver<[Document]>
     let errorMessage: Signal<String>
-    
     let loadingCompleted: Driver<Bool>
+    
     let disposeBag = DisposeBag()
     
     init() {
@@ -34,7 +36,6 @@ struct FavoriteViewModel: FavoriteViewModelBindable {
         
         
         // MARK: Data Processing Step: [ Action check -> Mutate -> reduce State ]
-        
         // MARK: - [Action 1]..< ViewWillAppear Action >
         
         // Mutate Step

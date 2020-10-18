@@ -25,7 +25,6 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
     let reloadList: Signal<Void>
     let errorMessage: Signal<String>
     
-    
     let disposeBag = DisposeBag()
     
     init(model: ImageSearchModel = ImageSearchModel()) {

@@ -93,7 +93,6 @@ class FavoriteController: UIViewController, ViewType {
         // UI Binding
         tableView.rx.itemSelected
             .subscribe(onNext: { [unowned self] indexPath in
-                print("item Tapped!!")
                 guard let cell = self.tableView.cellForRow(at: indexPath) as? FavoriteImageCell else { return }
                 let image = cell.favoriteImageView.image
                 let vc = ImageDetailController()

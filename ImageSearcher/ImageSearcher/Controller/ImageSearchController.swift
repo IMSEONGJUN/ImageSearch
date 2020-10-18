@@ -137,7 +137,6 @@ class ImageSearchController: UIViewController, ViewType {
         collection.rx.itemSelected
             .subscribe(onNext: { [unowned self] indexPath in
                 self.searchController.dismiss(animated: true)
-                print("item Tapped!!")
                 guard let cell = self.collection.cellForItem(at: indexPath) as? ImageCell else { return }
                 let image = cell.imageView.image
                 let vc = ImageDetailController()
