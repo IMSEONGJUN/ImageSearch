@@ -10,6 +10,8 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
+// This ViewController only has codes about UI.
+// So, it is categorized as a 'View' even though it is a ViewController.
 final class ImageDetailController: UIViewController {
 
     private var detailImageView: UIImageView = {

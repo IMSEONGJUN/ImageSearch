@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class FavoriteImageCell: UITableViewCell {
+final class FavoriteImageCell: UITableViewCell {
     
     var cellData: Document! {
         didSet {

@@ -12,7 +12,7 @@ import SDWebImage
 import RxCocoa
 import RxSwift
 
-class ImageCell: UICollectionViewCell {
+final class ImageCell: UICollectionViewCell {
     var cellData: Document! {
         didSet{
             configureCell()

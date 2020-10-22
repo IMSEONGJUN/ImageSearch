@@ -8,7 +8,6 @@
 import UIKit
 
 struct UIHelper {
-    
     static func createTwoColumnFlowLayout(in view: UIView) -> UICollectionViewFlowLayout {
         let collectionViewWidth = view.frame.width
         let inset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)

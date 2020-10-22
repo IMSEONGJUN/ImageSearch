@@ -22,7 +22,7 @@ protocol FavoriteViewModelBindable: ViewModelType {
     var loadingCompleted: Driver<Bool> { get }
 }
 
-class FavoriteController: UIViewController, ViewType {
+final class FavoriteController: UIViewController, ViewType {
 
     // MARK: - Properties
     var disposeBag: DisposeBag!

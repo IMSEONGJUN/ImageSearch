@@ -22,7 +22,7 @@ protocol ImageSearchViewModelBindable: ViewModelType {
     var errorMessage: Signal<String> { get }
 }
 
-class ImageSearchController: UIViewController, ViewType {
+final class ImageSearchController: UIViewController, ViewType {
     
     // MARK: - Properties
     var disposeBag: DisposeBag!
