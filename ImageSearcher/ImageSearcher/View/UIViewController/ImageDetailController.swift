@@ -23,7 +23,6 @@ final class ImageDetailController: UIViewController {
     
     private let backButton = UIButton()
     
-    
     let disposeBag = DisposeBag()
     
     override func viewDidLoad() {

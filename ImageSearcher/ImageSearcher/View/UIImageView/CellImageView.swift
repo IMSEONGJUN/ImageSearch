@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 final class CellImageView: UIImageView {
     
     override init(frame: CGRect) {
