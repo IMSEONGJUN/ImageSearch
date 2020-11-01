@@ -35,12 +35,14 @@ struct FavoriteViewModel: FavoriteViewModelBindable {
         loadingCompleted = loadingCompletedBroker.asDriver(onErrorJustReturn: false)
         
         
-        // MARK: Data Processing Step: [ Action check -> Mutate -> reduce State ]
+// MARK: Data Processing Step: [ Action check -> Mutate -> reduce State ]
+        
         // MARK: - [Action 1]..< ViewWillAppear Action >
         
         // Mutate Step
         let initiailFetch = viewWillAppear
             .flatMapLatest(PersistenceManager.retrieveFavorites)
+            .share()
         
         let favoriteList = initiailFetch
             .map{ data -> [Document]? in
@@ -76,7 +78,8 @@ struct FavoriteViewModel: FavoriteViewModelBindable {
         // Mutate Step
         let refreshData = refreshPulled
             .flatMapLatest(PersistenceManager.retrieveFavorites)
-            
+            .share()
+        
         refreshData
             .map{ _ in true }
             .bind(to: loadingCompletedBroker)
