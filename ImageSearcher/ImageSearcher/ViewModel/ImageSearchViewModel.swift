@@ -28,12 +28,12 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
     let disposeBag = DisposeBag()
     
     init(model: ImageSearchModel = ImageSearchModel()) {
-        // Broker
-        let cellDataBroker = PublishRelay<[Document]>()
-        cellData = cellDataBroker.asDriver(onErrorJustReturn: [])
+        // Proxy
+        let cellDataProxy = PublishRelay<[Document]>()
+        cellData = cellDataProxy.asDriver(onErrorJustReturn: [])
         
-        let reloadListBroker = PublishRelay<Void>()
-        reloadList = reloadListBroker.asSignal()
+        let reloadListProxy = PublishRelay<Void>()
+        reloadList = reloadListProxy.asSignal()
         
         // Accumulator
         let cellDataAccumulator = BehaviorRelay<[Document]>(value: [])
@@ -57,12 +57,12 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
             .skip(1)
             .filter{ $0 == "" }
             .do(onNext: { _ in
-                cellDataBroker.accept([])
+                cellDataProxy.accept([])
                 cellDataAccumulator.accept([])
                 page.accept(1)
             })
             .map{ _ in Void()}
-            .bind(to: reloadListBroker)
+            .bind(to: reloadListProxy)
             .disposed(by: disposeBag)
         
         
@@ -71,7 +71,7 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
         // Mutate Step
         let imageInfo = searchButtonTapped
             .do(onNext: { _ in
-                cellDataBroker.accept([])
+                cellDataProxy.accept([])
                 cellDataAccumulator.accept([])
                 page.accept(1)
             })
@@ -91,7 +91,7 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
             }
             .filterNil()
             .do(onNext:{ cellDataAccumulator.accept($0) })
-            .bind(to: cellDataBroker)
+            .bind(to: cellDataProxy)
             .disposed(by: disposeBag)
         
         imageInfo
@@ -161,7 +161,7 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
                 return newAcc
             }
             .do(onNext:{ cellDataAccumulator.accept($0) })
-            .bind(to: cellDataBroker)
+            .bind(to: cellDataProxy)
             .disposed(by: disposeBag)
         
         additionalIsEnd
@@ -174,7 +174,7 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
         // Mutate & Reduce Step
         NotificationCenter.default.rx.notification(Notifications.removeFavorite)
             .map{ _ in Void() }
-            .bind(to: reloadListBroker)
+            .bind(to: reloadListProxy)
             .disposed(by: disposeBag)
     }
 }
