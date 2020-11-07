@@ -1,6 +1,5 @@
 //
 //  ImageSearchController.swift
-//  SmoothyAssingment
 //
 //  Created by SEONGJUN on 2020/10/08.
 //
@@ -66,7 +65,7 @@ final class ImageSearchController: UIViewController, ViewType {
         configureSearchBar()
     }
     
-    func configureStatusBar() {
+    private func configureStatusBar() {
         statusBar = UIApplication.statusBar
         guard let statusBar = statusBar else {return}
         statusBar.backgroundColor = .systemBackground

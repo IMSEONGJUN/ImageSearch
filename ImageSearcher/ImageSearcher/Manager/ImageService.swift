@@ -1,6 +1,5 @@
 //
 //  ImageService.swift
-//  SmoothyAssingment
 //
 //  Created by SEONGJUN on 2020/10/08.
 //
@@ -27,7 +26,7 @@ class ImageService {
         }
         
         return session.rx.data(request: URLRequest(url: url))
-            .map { data in
+            .map { data -> Result<UIImage,ImageLoadError> in
                 guard let image = UIImage(data: data) else {
                     return .failure(.invaildData)
                 }
