@@ -23,15 +23,15 @@ struct FavoriteViewModel: FavoriteViewModelBindable {
     
     init() {
         
-        // Broker
-        let cellDataBroker = PublishRelay<[Document]>()
-        cellData = cellDataBroker.asDriver(onErrorJustReturn: [])
+        // Proxy
+        let cellDataProxy = PublishRelay<[Document]>()
+        cellData = cellDataProxy.asDriver(onErrorJustReturn: [])
         
-        let errorMessageBroker = PublishRelay<String>()
-        errorMessage = errorMessageBroker.asSignal()
+        let errorMessageProxy = PublishRelay<String>()
+        errorMessage = errorMessageProxy.asSignal()
         
-        let loadingCompletedBroker = PublishRelay<Bool>()
-        loadingCompleted = loadingCompletedBroker.asDriver(onErrorJustReturn: false)
+        let loadingCompletedProxy = PublishRelay<Bool>()
+        loadingCompleted = loadingCompletedProxy.asDriver(onErrorJustReturn: false)
         
         
 // MARK: Data Processing Step: [ Action check -> Mutate -> reduce State ]
@@ -64,11 +64,11 @@ struct FavoriteViewModel: FavoriteViewModelBindable {
         // Reduce Step
         favoriteList
             .map{ $0.reversed() }
-            .bind(to: cellDataBroker)
+            .bind(to: cellDataProxy)
             .disposed(by: disposeBag)
         
         favoriteError
-            .bind(to: errorMessageBroker)
+            .bind(to: errorMessageProxy)
             .disposed(by: disposeBag)
         
         
@@ -81,7 +81,7 @@ struct FavoriteViewModel: FavoriteViewModelBindable {
         
         refreshData
             .map{ _ in true }
-            .bind(to: loadingCompletedBroker)
+            .bind(to: loadingCompletedProxy)
             .disposed(by: disposeBag)
         
         // Reduce Step
@@ -94,7 +94,7 @@ struct FavoriteViewModel: FavoriteViewModelBindable {
             }
             .filterNil()
             .map{ $0.reversed() }
-            .bind(to: cellDataBroker)
+            .bind(to: cellDataProxy)
             .disposed(by: disposeBag)
         
         refreshData
@@ -105,7 +105,7 @@ struct FavoriteViewModel: FavoriteViewModelBindable {
                 return error.rawValue
             }
             .filterNil()
-            .bind(to: errorMessageBroker)
+            .bind(to: errorMessageProxy)
             .disposed(by: disposeBag)
         
         
@@ -123,7 +123,7 @@ struct FavoriteViewModel: FavoriteViewModelBindable {
             }
             .filterNil()
             .map{ $0.reversed() }
-            .bind(to: cellDataBroker)
+            .bind(to: cellDataProxy)
             .disposed(by: disposeBag)
     }
 }

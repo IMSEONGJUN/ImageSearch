@@ -6,7 +6,6 @@
 
 import Foundation
 
-
 // MARK: - ImageInfo
 struct ImageInfo: Codable {
     let documents: [Document]

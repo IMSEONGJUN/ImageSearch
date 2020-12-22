@@ -27,6 +27,7 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
     let disposeBag = DisposeBag()
     
     init(model: ImageSearchModel = ImageSearchModel()) {
+        
         // Proxy
         let cellDataProxy = PublishRelay<[Document]>()
         cellData = cellDataProxy.asDriver(onErrorJustReturn: [])
