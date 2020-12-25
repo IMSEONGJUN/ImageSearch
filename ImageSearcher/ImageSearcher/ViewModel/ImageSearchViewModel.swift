@@ -35,6 +35,9 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
         let reloadListProxy = PublishRelay<Void>()
         reloadList = reloadListProxy.asSignal()
         
+        let errorMessageProxy = PublishRelay<String>()
+        errorMessage = errorMessageProxy.asSignal()
+        
         // Accumulator
         let cellDataAccumulator = BehaviorRelay<[Document]>(value: [])
         
@@ -105,7 +108,7 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
             .bind(to: isEnd)
             .disposed(by: disposeBag)
         
-        errorMessage = imageInfo
+        imageInfo
             .map{ data -> String? in
                 guard case .failure(let error) = data else {
                     return nil
@@ -113,10 +116,11 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
                 return error.message
             }
             .filterNil()
-            .asSignal(onErrorJustReturn: NetworkError.defaultError.message ?? "")
+            .bind(to: errorMessageProxy)
+            .disposed(by: disposeBag)
         
         
-        // MARK: - [Action 3]..< UICollectionView DidScroll To Bottom Action >
+        // MARK: - [Action 3]..< UICollectionView DidScroll to Bottom for additional fetched data Action >
         
         // Mutate Step
         let additionalFetchedData = Observable
@@ -144,6 +148,15 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
             }
             .filterNil()
         
+        let additionalErrorMessage = additionalFetchedData
+            .map{ data -> String? in
+                guard case .failure(let error) = data else {
+                    return nil
+                }
+                return error.message
+            }
+            .filterNil()
+        
         let additionalIsEnd = additionalFetchedData
             .map{ data -> Bool? in
                 guard case .success(let value) = data else {
@@ -162,6 +175,10 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
             }
             .do(onNext:{ cellDataAccumulator.accept($0) })
             .bind(to: cellDataProxy)
+            .disposed(by: disposeBag)
+        
+        additionalErrorMessage
+            .bind(to: errorMessageProxy)
             .disposed(by: disposeBag)
         
         additionalIsEnd
