@@ -75,17 +75,17 @@ struct FavoriteViewModel: FavoriteViewModelBindable {
         // MARK: - [Action 2]..< RefreshPulled Action >
         
         // Mutate Step
-        let refreshData = refreshPulled
+        let refreshedData = refreshPulled
             .flatMapLatest(PersistenceManager.retrieveFavorites)
             .share()
         
-        refreshData
+        refreshedData
             .map{ _ in true }
             .bind(to: loadingCompletedProxy)
             .disposed(by: disposeBag)
         
         // Reduce Step
-        refreshData
+        refreshedData
             .map{ data -> [Document]? in
                 guard case .success(let value) = data else {
                     return nil
@@ -97,7 +97,7 @@ struct FavoriteViewModel: FavoriteViewModelBindable {
             .bind(to: cellDataProxy)
             .disposed(by: disposeBag)
         
-        refreshData
+        refreshedData
             .map{ data -> String? in
                 guard case .failure(let error) = data else {
                     return nil
