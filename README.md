@@ -10,6 +10,6 @@
 - Kakao Image Search API 사용.
 - 키워드 기준으로 웹상의 이미지 검색
 - 이미지 선택하여 즐겨찾기에 추가 가능
-- 즐겨찾기에 추가한 이미지, 로컬 저장에 JSONEncoder와 UserDefault 사용
+- 즐겨찾기에 추가한 이미지의 로컬 저장에 JSONEncoder와 UserDefault 사용
 
 
