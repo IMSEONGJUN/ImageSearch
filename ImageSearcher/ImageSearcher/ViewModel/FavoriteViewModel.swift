@@ -34,7 +34,7 @@ struct FavoriteViewModel: FavoriteViewModelBindable {
         loadingCompleted = loadingCompletedProxy.asDriver(onErrorJustReturn: false)
         
         
-// MARK: Data Processing Step: [ Action check -> Mutate -> reduce State ]
+        // MARK: Data Processing Step: [ Action check -> Mutate -> reduce State ]
         
         // MARK: - [Action 1]..< ViewWillAppear Action >
         
@@ -113,7 +113,7 @@ struct FavoriteViewModel: FavoriteViewModelBindable {
         
         // Mutate & Reduce Step
         NotificationCenter.default.rx.notification(Notifications.removeFavorite)
-            .map{ _ in Void() }
+            .mapToVoid()
             .flatMapLatest(PersistenceManager.retrieveFavorites)
             .map{ data -> [Document]? in
                 guard case .success(let value) = data else {

@@ -103,7 +103,7 @@ final class ImageSearchController: UIViewController, ViewType {
             .do(onNext:{ _ in self.searchController.dismiss(animated: true) })
             .bind(to: viewModel.searchButtonTapped)
             .disposed(by: disposeBag)
-        
+            
         collection.rx.needToFetchMoreData
             .filter{ $0 }
             .map{ _ in Void() }
@@ -143,6 +143,12 @@ final class ImageSearchController: UIViewController, ViewType {
                 self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
+        
+        //        collection.rx.setDelegate(self)
+        //            .disposed(by:disposeBag)
     }
 }
 
+//extension ImageSearchController: UICollectionViewDelegate {
+//
+//}

@@ -51,6 +51,12 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
             )
             .filter{ $1 != "" }
         
+        let reset = {
+            cellDataProxy.accept([])
+            cellDataAccumulator.accept([])
+            page.accept(1)
+        }
+        
         // MARK: Data Processing Step: [ Action check -> Mutate -> reduce State ]
         
         // MARK: - [Action 1].. < SearchBar Text Editing Action >
@@ -59,12 +65,8 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
         searchKeyword
             .skip(1)
             .filter{ $0 == "" }
-            .do(onNext: { _ in
-                cellDataProxy.accept([])
-                cellDataAccumulator.accept([])
-                page.accept(1)
-            })
-            .map{ _ in Void()}
+            .do{ _ in reset() }
+            .mapToVoid()
             .bind(to: reloadListProxy)
             .disposed(by: disposeBag)
         
@@ -73,11 +75,7 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
         
         // Mutate Step
         let imageInfo = searchButtonTapped
-            .do(onNext: { _ in
-                cellDataProxy.accept([])
-                cellDataAccumulator.accept([])
-                page.accept(1)
-            })
+            .do{ _ in reset() }
             .withLatestFrom( valuesForSearch )
             .flatMapLatest{ page,key in
                 return model.fetchImageInfo(page: page, searchKey: key)
@@ -190,7 +188,7 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
         
         // Mutate & Reduce Step
         NotificationCenter.default.rx.notification(Notifications.removeFavorite)
-            .map{ _ in Void() }
+            .mapToVoid()
             .bind(to: reloadListProxy)
             .disposed(by: disposeBag)
     }

@@ -8,7 +8,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class ImageService {
+final class ImageService {
     static let shared = ImageService()
     
     private init(){}
@@ -21,6 +21,7 @@ class ImageService {
         if let image = cache.object(forKey: cacheKey) {
             return .just(.success(image))
         }
+        
         guard let url = URL(string: urlString) else {
             return .just(.failure(.invalidUrl))
         }
@@ -35,6 +36,5 @@ class ImageService {
                 return .success(image)
             }
     }
-    
 }
 

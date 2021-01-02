@@ -8,7 +8,6 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-
 func castOrThrow<T>(_ resultType: T.Type, _ object: Any) throws -> T {
     guard let returnValue = object as? T else {
         throw RxCocoaError.castingError(object: object, targetType: resultType)
@@ -55,5 +54,24 @@ extension Reactive where Base: UITableViewCell {
                 .disposed(by: cell.disposeBag)
             
         }
+    }
+}
+
+extension ObservableType {
+    
+    func catchErrorJustComplete() -> Observable<Element> {
+        return catchError { _ in
+            return Observable.empty()
+        }
+    }
+    
+    func asDriverOnErrorJustComplete() -> Driver<Element> {
+        return asDriver { error in
+            return Driver.empty()
+        }
+    }
+    
+    func mapToVoid() -> Observable<Void> {
+        return map { _ in }
     }
 }
