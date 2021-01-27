@@ -130,6 +130,7 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
             .withLatestFrom( valuesForSearch )
             .map{ (pg, key) -> (Int, String) in
                 let newPage = pg + 1
+                newPage >= 10 ? isEnd.accept(true) : isEnd.accept(false)
                 page.accept(newPage)
                 return (newPage, key)
             }
@@ -155,14 +156,14 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
             }
             .filterNil()
         
-        let additionalIsEnd = additionalFetchedData
-            .map{ data -> Bool? in
-                guard case .success(let value) = data else {
-                    return nil
-                }
-                return value.meta.isEnd
-            }
-            .filterNil()
+//        let additionalIsEnd = additionalFetchedData
+//            .map{ data -> Bool? in
+//                guard case .success(let value) = data else {
+//                    return nil
+//                }
+//                return value.meta.isEnd
+//            }
+//            .filterNil()
         
         // Reduce Step
         additionalCellData
@@ -179,9 +180,9 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
             .bind(to: errorMessageProxy)
             .disposed(by: disposeBag)
         
-        additionalIsEnd
-            .bind(to: isEnd)
-            .disposed(by: disposeBag)
+//        additionalIsEnd
+//            .bind(to: isEnd)
+//            .disposed(by: disposeBag)
         
         
         // MARK: - [Action 4]..< Notification Action >
