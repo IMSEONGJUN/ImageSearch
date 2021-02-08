@@ -12,7 +12,7 @@ extension UIViewController {
         navigationItem.title = title
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = .tertiarySystemBackground
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.systemGray]
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.label]
         
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance

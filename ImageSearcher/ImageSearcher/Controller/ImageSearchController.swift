@@ -41,22 +41,23 @@ final class ImageSearchController: UIViewController, ViewType {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        configureStatusBar()
+//        configureStatusBar()
         tabBarController?.tabBar.isHidden = false
         navigationController?.navigationBar.isHidden = false
+        navigationController?.navigationBar.backgroundColor = .systemBackground
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        if traitCollection.userInterfaceStyle == .dark {
-            print("dark")
-        } else {
-            print("light")
-        }
-    }
+//    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+//        if traitCollection.userInterfaceStyle == .dark {
+//            navigationController?.navigationBar.backgroundColor = .white
+//        } else {
+//            navigationController?.navigationBar.backgroundColor = .white
+//        }
+//    }
     
     // MARK: - Initial UI Setup
     func setupUI() {
@@ -76,7 +77,7 @@ final class ImageSearchController: UIViewController, ViewType {
     private func configureCollectionView() {
         collection = UICollectionView(frame: view.frame,
                                       collectionViewLayout: UIHelper.createTwoColumnFlowLayout(in: self.view))
-        collection.backgroundColor = #colorLiteral(red: 0.9880631345, green: 0.9880631345, blue: 0.9880631345, alpha: 1)
+        collection.backgroundColor = .systemBackground
         collection.register(ImageCell.self, forCellWithReuseIdentifier: String(describing: ImageCell.self))
         view.addSubview(collection)
     }

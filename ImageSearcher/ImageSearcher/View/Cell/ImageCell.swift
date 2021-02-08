@@ -49,7 +49,7 @@ final class ImageCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(verticalStackView)
-        
+        contentView.backgroundColor = .systemBackground
         favoriteButton.addTarget(self, action: #selector(didTapFavoriteButton), for: .touchUpInside)
         verticalStackView.snp.makeConstraints {
             $0.edges.equalToSuperview()

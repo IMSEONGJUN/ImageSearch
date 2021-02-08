@@ -34,6 +34,7 @@ final class FavoriteImageCell: UITableViewCell {
     }
     
     private func configureUI() {
+        contentView.backgroundColor = .systemBackground
         contentView.addSubview(favoriteImageView)
         contentView.addSubview(favoriteButton)
         accessoryType = .disclosureIndicator
