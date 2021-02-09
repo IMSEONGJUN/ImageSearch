@@ -101,7 +101,7 @@ final class ImageSearchController: UIViewController, ViewType {
             .disposed(by: disposeBag)
             
         searchController.searchBar.rx.searchButtonClicked
-            .do(onNext:{ _ in self.searchController.dismiss(animated: true) })
+            .do(onNext:{ [weak self] _ in self?.searchController.dismiss(animated: true) })
             .bind(to: viewModel.searchButtonTapped)
             .disposed(by: disposeBag)
             
