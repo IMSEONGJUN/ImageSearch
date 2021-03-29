@@ -91,7 +91,7 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
                 return value.documents
             }
             .filterNil()
-            .do(onNext:{ cellDataAccumulator.accept($0) })
+            .do{ cellDataAccumulator.accept($0) }
             .bind(to: cellDataProxy)
             .disposed(by: disposeBag)
         

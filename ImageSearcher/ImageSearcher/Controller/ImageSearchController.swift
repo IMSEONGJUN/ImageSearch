@@ -107,7 +107,7 @@ final class ImageSearchController: UIViewController, ViewType {
             
         collection.rx.needToFetchMoreData
             .filter{ $0 }
-            .map{ _ in Void() }
+            .map{ _ in }
             .bind(to: viewModel.didScrollToBottom)
             .disposed(by: disposeBag)
         
