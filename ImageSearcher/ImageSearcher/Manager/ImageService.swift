@@ -15,7 +15,7 @@ final class ImageService {
     let session = URLSession.shared
     let cache = NSCache<NSString, UIImage>()
     
-    func downloadImage(from urlString: String) -> Observable<Result<UIImage,ImageLoadError>> {
+    func downloadImage(from urlString: String) -> Driver<Result<UIImage,ImageLoadError>> {
         let cacheKey = NSString(string: urlString)
 
         if let image = cache.object(forKey: cacheKey) {
@@ -35,6 +35,7 @@ final class ImageService {
                 
                 return .success(image)
             }
+            .asDriverOnErrorJustComplete()
     }
 }
 

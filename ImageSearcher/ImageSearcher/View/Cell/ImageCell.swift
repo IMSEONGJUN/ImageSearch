@@ -40,7 +40,6 @@ final class ImageCell: UICollectionViewCell {
 
     private let label: UILabel = {
        let label = UILabel()
-        label.text = ""
         label.textColor = .darkGray
         label.font = UIFont.systemFont(ofSize: 13, weight: .bold)
         return label
@@ -100,8 +99,7 @@ final class ImageCell: UICollectionViewCell {
     private func configureCell() {
         self.label.text = cellData.displaySitename
         ImageService.shared.downloadImage(from: cellData.imageUrl)
-            .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { [weak self] in
+            .drive(onNext: { [weak self] in
                 guard case .success(let image) = $0 else { return }
                 self?.imageView.image = image
             })
