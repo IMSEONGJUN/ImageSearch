@@ -84,20 +84,20 @@ final class FavoriteController: UIViewController, ViewType {
             .disposed(by: disposeBag)
         
         viewModel.loadingCompleted
-            .map{ !$0 }
+            .map { !$0 }
             .drive(refresh.rx.isRefreshing)
             .disposed(by: disposeBag)
         
         
         // UI Binding
         tableView.rx.itemSelected
-            .subscribe(onNext: { [unowned self] indexPath in
-                guard let cell = self.tableView.cellForRow(at: indexPath) as? FavoriteImageCell else { return }
+            .subscribe(with: self) { owner, indexPath in
+                guard let cell = owner.tableView.cellForRow(at: indexPath) as? FavoriteImageCell else { return }
                 let image = cell.favoriteImageView.image
                 let vc = ImageDetailController()
                 vc.setImage(image)
-                self.navigationController?.pushViewController(vc, animated: true)
-            })
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
             .disposed(by: disposeBag)
     }
 }

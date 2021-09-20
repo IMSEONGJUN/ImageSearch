@@ -122,7 +122,7 @@ struct FavoriteViewModel: FavoriteViewModelBindable {
                 return value
             }
             .filterNil()
-            .map{ $0.reversed() }
+            .map { $0.reversed() }
             .bind(to: cellDataProxy)
             .disposed(by: disposeBag)
     }

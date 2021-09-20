@@ -52,9 +52,9 @@ final class ImageDetailController: UIViewController {
     
     private func bind() {
         backButton.rx.tap
-            .subscribe(onNext: { [unowned self] _ in
-                self.navigationController?.popViewController(animated: true)
-            })
+            .subscribe(with: self) { owner, _ in
+                owner.navigationController?.popViewController(animated: true)
+            }
             .disposed(by: disposeBag)
     }
     
