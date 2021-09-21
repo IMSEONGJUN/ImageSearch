@@ -70,7 +70,7 @@ final class ImageCell: UICollectionViewCell {
     
     private func bind() {
         favoriteButton.rx.tap
-            .scan(false) { lastState, _ in
+            .scan(favoriteButton.isSelected) { lastState, _ in
                 !lastState
             }
             .map { isSelected -> PersistenceActionType in
@@ -95,7 +95,6 @@ final class ImageCell: UICollectionViewCell {
                     print("즐겨찾기에서 삭제완료")
                     NotificationCenter.default.post(name: Notifications.removeFavorite, object: nil)
                 }
-                
             })
             .disposed(by: disposeBag)
     }

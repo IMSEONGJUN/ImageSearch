@@ -49,7 +49,7 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
                 page,
                 searchKeyword
             )
-            .filter{ $1 != "" }
+            .filter { $1 != "" }
         
         let reset = {
             cellDataProxy.accept([])
@@ -64,7 +64,7 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
         // Mutate & Reduce Step
         searchKeyword
             .skip(1)
-            .filter{ $0 == "" }
+            .filter { $0 == "" }
             .do{ _ in reset() }
             .mapToVoid()
             .bind(to: reloadListProxy)
@@ -75,28 +75,28 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
         
         // Mutate Step
         let imageInfo = searchButtonTapped
-            .do{ _ in reset() }
+            .do { _ in reset() }
             .withLatestFrom( valuesForSearch )
-            .flatMapLatest{ page,key in
+            .flatMapLatest { page,key in
                 return model.fetchImageInfo(page: page, searchKey: key)
             }
             .share()
         
         // Reduce Step
         imageInfo
-            .map{ data -> [Document]? in
+            .map { data -> [Document]? in
                 guard case .success(let value) = data else {
                     return nil
                 }
                 return value.documents
             }
             .filterNil()
-            .do{ cellDataAccumulator.accept($0) }
+            .do { cellDataAccumulator.accept($0) }
             .bind(to: cellDataProxy)
             .disposed(by: disposeBag)
         
         imageInfo
-            .map{ data -> Bool? in
+            .map { data -> Bool? in
                 guard case .success(let value) = data else {
                     return nil
                 }
@@ -107,7 +107,7 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
             .disposed(by: disposeBag)
         
         imageInfo
-            .map{ data -> String? in
+            .map { data -> String? in
                 guard case .failure(let error) = data else {
                     return nil
                 }
@@ -128,7 +128,7 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
             )
             .filter{ !$1 }
             .withLatestFrom( valuesForSearch )
-            .map{ (pg, key) -> (Int, String) in
+            .map { (pg, key) -> (Int, String) in
                 let newPage = pg + 1
                 newPage >= 10 ? isEnd.accept(true) : isEnd.accept(false)
                 page.accept(newPage)
@@ -139,7 +139,7 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
             }
         
         let additionalCellData = additionalFetchedData
-            .map{ data -> [Document]? in
+            .map { data -> [Document]? in
                 guard case .success(let value) = data else {
                     return nil
                 }
@@ -148,7 +148,7 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
             .filterNil()
         
         let additionalErrorMessage = additionalFetchedData
-            .map{ data -> String? in
+            .map { data -> String? in
                 guard case .failure(let error) = data else {
                     return nil
                 }

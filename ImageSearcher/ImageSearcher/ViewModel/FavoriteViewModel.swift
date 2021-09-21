@@ -80,31 +80,28 @@ struct FavoriteViewModel: FavoriteViewModelBindable {
             .share()
         
         refreshedData
-            .map{ _ in true }
+            .map { _ in true }
             .bind(to: loadingCompletedProxy)
             .disposed(by: disposeBag)
         
         // Reduce Step
         refreshedData
-            .map{ data -> [Document]? in
+            .compactMap { data -> [Document]? in
                 guard case .success(let value) = data else {
                     return nil
                 }
-                return value
+                return value.reversed()
             }
-            .filterNil()
-            .map{ $0.reversed() }
             .bind(to: cellDataProxy)
             .disposed(by: disposeBag)
         
         refreshedData
-            .map{ data -> String? in
+            .compactMap { data -> String? in
                 guard case .failure(let error) = data else {
                     return nil
                 }
                 return error.rawValue
             }
-            .filterNil()
             .bind(to: errorMessageProxy)
             .disposed(by: disposeBag)
         
@@ -115,14 +112,12 @@ struct FavoriteViewModel: FavoriteViewModelBindable {
         NotificationCenter.default.rx.notification(Notifications.removeFavorite)
             .mapToVoid()
             .flatMapLatest(PersistenceManager.retrieveFavorites)
-            .map{ data -> [Document]? in
+            .compactMap { data -> [Document]? in
                 guard case .success(let value) = data else {
                     return nil
                 }
-                return value
+                return value.reversed()
             }
-            .filterNil()
-            .map { $0.reversed() }
             .bind(to: cellDataProxy)
             .disposed(by: disposeBag)
     }
