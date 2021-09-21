@@ -49,7 +49,6 @@ final class ImageCell: UICollectionViewCell {
         super.init(frame: frame)
         contentView.addSubview(verticalStackView)
         contentView.backgroundColor = .systemBackground
-        favoriteButton.addTarget(self, action: #selector(didTapFavoriteButton), for: .touchUpInside)
         verticalStackView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
@@ -57,6 +56,7 @@ final class ImageCell: UICollectionViewCell {
         horizontalStackView.snp.makeConstraints {
             $0.height.equalTo(30)
         }
+        bind()
     }
     
     required init?(coder: NSCoder) {
@@ -68,32 +68,36 @@ final class ImageCell: UICollectionViewCell {
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4))
     }
     
-    @objc func didTapFavoriteButton(_ sender: UIButton) {
-        sender.isSelected.toggle()
-        if sender.isSelected {
-            PersistenceManager.updateWith(favorite: cellData, actionType: .add)
-                .map{ $0?.rawValue }
-                .subscribe(onNext: {
-                    if let error = $0 {
-                        print(error)
-                        return
-                    }
+    private func bind() {
+        favoriteButton.rx.tap
+            .scan(false) { lastState, _ in
+                !lastState
+            }
+            .map { isSelected -> PersistenceActionType in
+                isSelected ? .add : .remove
+            }
+            .withUnretained(self)
+            .flatMapLatest { owner, action in
+                Observable.zip(
+                    Observable.just(action),
+                    PersistenceManager.updateWith(favorite: owner.cellData, actionType: action)
+                )
+            }
+            .subscribe(onNext: { action, error in
+                if let error = error?.rawValue {
+                    print(error)
+                    return
+                }
+                switch action {
+                case .add:
                     print("즐겨찾기에 추가완료")
-                })
-                .disposed(by: disposeBag)
-        } else {
-            PersistenceManager.updateWith(favorite: cellData, actionType: .remove)
-                .map{ $0?.rawValue }
-                .subscribe(onNext: {
-                    if let error = $0 {
-                        print(error)
-                        return
-                    }
+                case .remove:
                     print("즐겨찾기에서 삭제완료")
                     NotificationCenter.default.post(name: Notifications.removeFavorite, object: nil)
-                })
-                .disposed(by: disposeBag)
-        }
+                }
+                
+            })
+            .disposed(by: disposeBag)
     }
     
     private func configureCell() {
