@@ -69,10 +69,17 @@ final class ImageCell: UICollectionViewCell {
     }
     
     private func bind() {
-        favoriteButton.rx.tap
+        let favoriteButtonTap = favoriteButton.rx.tap
             .scan(favoriteButton.isSelected) { lastState, _ in
                 !lastState
             }
+            .share()
+        
+        favoriteButtonTap
+            .bind(to: favoriteButton.rx.isSelected)
+            .disposed(by: disposeBag)
+        
+        favoriteButtonTap
             .map { isSelected -> PersistenceActionType in
                 isSelected ? .add : .remove
             }

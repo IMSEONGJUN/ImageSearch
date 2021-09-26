@@ -65,7 +65,7 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
         searchKeyword
             .skip(1)
             .filter { $0 == "" }
-            .do{ _ in reset() }
+            .do { _ in reset() }
             .mapToVoid()
             .bind(to: reloadListProxy)
             .disposed(by: disposeBag)
@@ -126,7 +126,7 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
                 didScrollToBottom,
                 isEnd
             )
-            .filter{ !$1 }
+            .filter { !$1 }
             .withLatestFrom( valuesForSearch )
             .map { (pg, key) -> (Int, String) in
                 let newPage = pg + 1

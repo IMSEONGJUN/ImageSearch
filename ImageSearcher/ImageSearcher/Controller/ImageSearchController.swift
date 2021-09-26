@@ -107,7 +107,7 @@ final class ImageSearchController: UIViewController, ViewType {
             
         collection.rx.needToFetchMoreData
             .filter{ $0 }
-            .map{ _ in }
+            .mapToVoid()
             .bind(to: viewModel.didScrollToBottom)
             .disposed(by: disposeBag)
         
@@ -121,9 +121,9 @@ final class ImageSearchController: UIViewController, ViewType {
             .disposed(by: disposeBag)
         
         viewModel.reloadList
-            .emit(onNext: { [weak self] _ in
-                self?.collection.reloadData()
-            })
+            .emit(with: self) { owner, _ in
+                owner.collection.reloadData()
+            }
             .disposed(by: disposeBag)
         
         viewModel.errorMessage
@@ -135,21 +135,23 @@ final class ImageSearchController: UIViewController, ViewType {
         
         // UI Binding
         collection.rx.itemSelected
-            .subscribe(onNext: { [unowned self] indexPath in
-                self.searchController.dismiss(animated: true)
-                guard let cell = self.collection.cellForItem(at: indexPath) as? ImageCell else { return }
+            .subscribe(with: self, onNext: { owner, indexPath in
+                owner.searchController.dismiss(animated: true)
+                guard let cell = owner.collection.cellForItem(at: indexPath) as? ImageCell else { return }
                 let image = cell.imageView.image
                 let vc = ImageDetailController()
                 vc.setImage(image)
                 self.navigationController?.pushViewController(vc, animated: true)
-            })
+                print("onNext")
+            },
+            onError: { _, _ in
+                print("onDisposed")
+            },
+            onCompleted: { _  in
+                print("onCompleted!!")
+            }
+            )
             .disposed(by: disposeBag)
-        
-        //        collection.rx.setDelegate(self)
-        //            .disposed(by:disposeBag)
     }
 }
 
-//extension ImageSearchController: UICollectionViewDelegate {
-//
-//}
