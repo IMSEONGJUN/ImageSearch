@@ -1,21 +1,29 @@
 import UIKit
 
-public struct Delay {
-  public static let short: TimeInterval = 2.0
-  public static let long: TimeInterval = 3.5
+public class Delay: NSObject {
+  @available(*, unavailable) private override init() {}
+  // `short` and `long` (lowercase) are reserved words in Objective-C
+  // so we capitalize them instead of the default `short_` and `long_`
+  @objc(Short) public static let short: TimeInterval = 2.0
+  @objc(Long) public static let long: TimeInterval = 3.5
 }
 
 open class Toast: Operation {
 
   // MARK: Properties
 
-  public var text: String? {
+  @objc public var text: String? {
     get { return self.view.text }
     set { self.view.text = newValue }
   }
+  
+  @objc public var attributedText: NSAttributedString? {
+    get { return self.view.attributedText }
+    set { self.view.attributedText = newValue }
+  }
 
-  public var delay: TimeInterval
-  public var duration: TimeInterval
+  @objc public var delay: TimeInterval
+  @objc public var duration: TimeInterval
 
   private var _executing = false
   override open var isExecuting: Bool {
@@ -44,18 +52,27 @@ open class Toast: Operation {
 
   // MARK: UI
 
-  public var view: ToastView = ToastView()
+  @objc public var view: ToastView = ToastView()
 
 
   // MARK: Initializing
 
-  public init(text: String?, delay: TimeInterval = 0, duration: TimeInterval = Delay.short) {
+  /// Initializer.
+  /// Instantiates `self.view`, so must be called on main thread.
+  @objc public init(text: String?, delay: TimeInterval = 0, duration: TimeInterval = Delay.short) {
     self.delay = delay
     self.duration = duration
     super.init()
     self.text = text
   }
 
+  @objc public init(attributedText: NSAttributedString?, delay: TimeInterval = 0, duration: TimeInterval = Delay.short) {
+    self.delay = delay
+    self.duration = duration
+    super.init()
+    self.attributedText = attributedText
+  }
+  
 
   // MARK: Factory (Deprecated)
 
@@ -77,7 +94,7 @@ open class Toast: Operation {
 
   // MARK: Showing
 
-  public func show() {
+  @objc public func show() {
     ToastCenter.default.add(self)
   }
 
@@ -121,6 +138,13 @@ open class Toast: Operation {
           self.view.alpha = 1
         },
         completion: { completed in
+          if ToastCenter.default.isSupportAccessibility {
+            #if swift(>=4.2)
+            UIAccessibility.post(notification: .announcement, argument: self.view.text)
+            #else
+            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, self.view.text)
+            #endif
+          }
           UIView.animate(
             withDuration: self.duration,
             animations: {

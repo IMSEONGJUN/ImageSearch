@@ -9,6 +9,11 @@ open class ToastView: UIView {
     set { self.textLabel.text = newValue }
   }
 
+  open var attributedText: NSAttributedString? {
+    get { return self.textLabel.attributedText }
+    set { self.textLabel.attributedText = newValue }
+  }
+  
 
   // MARK: Appearance
 
@@ -42,31 +47,75 @@ open class ToastView: UIView {
   /// The bottom offset from the screen's bottom in portrait mode.
   @objc open dynamic var bottomOffsetPortrait: CGFloat = {
     switch UIDevice.current.userInterfaceIdiom {
-    case .unspecified: return 30
+    // specific values
     case .phone: return 30
     case .pad: return 60
     case .tv: return 90
     case .carPlay: return 30
-    case .mac: return 80
-    @unknown default:
-        return 0
+    #if compiler(>=5.3)
+    case .mac: return 60
+    #endif
+    // default values
+    case .unspecified: fallthrough
+    @unknown default: return 30
     }
   }()
 
   /// The bottom offset from the screen's bottom in landscape mode.
   @objc open dynamic var bottomOffsetLandscape: CGFloat = {
     switch UIDevice.current.userInterfaceIdiom {
-    case .unspecified: return 20
+    // specific values
     case .phone: return 20
     case .pad: return 40
     case .tv: return 60
     case .carPlay: return 20
-    case .mac: return 50
-    @unknown default:
-        return 0
+    #if compiler(>=5.3)
+    case .mac: return 40
+    #endif
+    // default values
+    case .unspecified: fallthrough
+    @unknown default: return 20
     }
   }()
+  
+  /// If this value is `true` and SafeArea is available,
+  /// `safeAreaInsets.bottom` will be added to the `bottomOffsetPortrait` and `bottomOffsetLandscape`.
+  /// Default value: false
+  @objc open dynamic var useSafeAreaForBottomOffset: Bool = false
 
+  /// The width ratio of toast view in window, specified as a value from 0.0 to 1.0.
+  /// Default value: 0.875
+  @objc open dynamic var maxWidthRatio: CGFloat = (280.0 / 320.0)
+  
+  /// The shape of the layer’s shadow.
+  @objc open dynamic var shadowPath: CGPath? {
+    get { return self.layer.shadowPath }
+    set { self.layer.shadowPath = newValue }
+  }
+  
+  /// The color of the layer’s shadow.
+  @objc open dynamic var shadowColor: UIColor? {
+    get { return self.layer.shadowColor.flatMap { UIColor(cgColor: $0) } }
+    set { self.layer.shadowColor = newValue?.cgColor }
+  }
+  
+  /// The opacity of the layer’s shadow.
+  @objc open dynamic var shadowOpacity: Float {
+    get { return self.layer.shadowOpacity }
+    set { self.layer.shadowOpacity = newValue }
+  }
+  
+  /// The offset (in points) of the layer’s shadow.
+  @objc open dynamic var shadowOffset: CGSize {
+    get { return self.layer.shadowOffset }
+    set { self.layer.shadowOffset = newValue }
+  }
+  
+  /// The blur radius (in points) used to render the layer’s shadow.
+  @objc open dynamic var shadowRadius: CGFloat {
+    get { return self.layer.shadowRadius }
+    set { self.layer.shadowRadius = newValue }
+  }
 
   // MARK: UI
 
@@ -77,20 +126,24 @@ open class ToastView: UIView {
     self.clipsToBounds = true
     return self
   }()
+  
   private let textLabel: UILabel = {
     let `self` = UILabel()
     self.textColor = .white
     self.backgroundColor = .clear
     self.font = {
       switch UIDevice.current.userInterfaceIdiom {
-      case .unspecified: return .systemFont(ofSize: 12)
+      // specific values
       case .phone: return .systemFont(ofSize: 12)
       case .pad: return .systemFont(ofSize: 16)
       case .tv: return .systemFont(ofSize: 20)
       case .carPlay: return .systemFont(ofSize: 12)
-      case .mac: return .systemFont(ofSize: 20)
-      @unknown default:
-        return .systemFont(ofSize: 20)
+      #if compiler(>=5.3)
+      case .mac: return .systemFont(ofSize: 16)
+      #endif
+      // default values
+      case .unspecified: fallthrough
+      @unknown default: return .systemFont(ofSize: 12)
       }
     }()
     self.numberOfLines = 0
@@ -119,7 +172,7 @@ open class ToastView: UIView {
     super.layoutSubviews()
     let containerSize = ToastWindow.shared.frame.size
     let constraintSize = CGSize(
-      width: containerSize.width * (280.0 / 320.0),
+      width: containerSize.width * maxWidthRatio - self.textInsets.left - self.textInsets.right,
       height: CGFloat.greatestFiniteMagnitude
     )
     let textLabelSize = self.textLabel.sizeThatFits(constraintSize)
@@ -150,6 +203,9 @@ open class ToastView: UIView {
       width = containerSize.height
       height = containerSize.width
       y = self.bottomOffsetLandscape
+    }
+    if #available(iOS 11.0, *), useSafeAreaForBottomOffset {
+      y += ToastWindow.shared.safeAreaInsets.bottom
     }
 
     let backgroundViewSize = self.backgroundView.frame.size

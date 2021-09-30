@@ -44,7 +44,7 @@ struct FavoriteViewModel: FavoriteViewModelBindable {
             .share()
         
         let favoriteList = initiailFetch
-            .map{ data -> [Document]? in
+            .map { data -> [Document]? in
                 guard case .success(let value) = data else {
                     return nil
                 }
@@ -53,7 +53,7 @@ struct FavoriteViewModel: FavoriteViewModelBindable {
             .filterNil()
         
         let favoriteError = initiailFetch
-            .map{ data -> String? in
+            .map { data -> String? in
                 guard case .failure(let error) = data else {
                     return nil
                 }

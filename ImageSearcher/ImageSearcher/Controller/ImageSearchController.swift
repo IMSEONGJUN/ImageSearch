@@ -35,13 +35,8 @@ final class ImageSearchController: UIViewController, ViewType {
     private var statusBar: UIView!
     
     // MARK: - Life Cycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        configureStatusBar()
         tabBarController?.tabBar.isHidden = false
         navigationController?.navigationBar.isHidden = false
         navigationController?.navigationBar.backgroundColor = .systemBackground
@@ -106,7 +101,7 @@ final class ImageSearchController: UIViewController, ViewType {
             .disposed(by: disposeBag)
             
         collection.rx.needToFetchMoreData
-            .filter{ $0 }
+            .filter { $0 }
             .mapToVoid()
             .bind(to: viewModel.didScrollToBottom)
             .disposed(by: disposeBag)
