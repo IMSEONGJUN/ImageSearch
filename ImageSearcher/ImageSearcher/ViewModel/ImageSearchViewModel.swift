@@ -95,13 +95,13 @@ final class ImageSearchViewModel: ViewModelType {
                 page.accept(newpage)
             })
         
-            let favoriteRefreshed = NotificationCenter.default.rx.notification(Notifications.removeFavorite)
+            let modifiedFavoriteTab = NotificationCenter.default.rx.notification(Notifications.removeFavorite)
                 .withLatestFrom(searchButtonTapped)
                 
             return Observable.merge(
                       searchKeywordCleared,
                       searchButtonTapped,
-                      favoriteRefreshed
+                      modifiedFavoriteTab
                    )
                    .asDriver(onErrorJustReturn: [])
     }
