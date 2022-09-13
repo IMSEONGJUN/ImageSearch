@@ -103,8 +103,7 @@ final class ImageSearchController: RxMVVMViewController<ImageSearchViewModel> {
             .disposed(by: disposeBag)
         
         viewModel.output.didFinishFavoriteAction
-            .emit(onNext: { [weak self] error, index in
-                guard error == nil else { return }
+            .emit(onNext: { [weak self] index in
                 self?.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
             })
             .disposed(by: disposeBag)

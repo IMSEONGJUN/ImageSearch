@@ -20,7 +20,7 @@ final class ImageSearchViewModel: ViewModelType {
 
     struct Output {
         let dataSources: Driver<[Document]>
-        let didFinishFavoriteAction: Signal<(FavoriteError?, Int)>
+        let didFinishFavoriteAction: Signal<Int>
         let errorMessage: Signal<String>
     }
     
@@ -106,16 +106,19 @@ final class ImageSearchViewModel: ViewModelType {
                    .asDriver(onErrorJustReturn: [])
     }
     
-    private func modifyFavorite(errorTracker: PublishRelay<String>) -> Signal<(FavoriteError?, Int)> {
+    private func modifyFavorite(errorTracker: PublishRelay<String>) -> Signal<Int> {
         favoriteButtonSelected
             .asSignal(onErrorSignalWith: .empty())
             .flatMapLatest { document, index, action in
                 PersistenceManager.updateWith(favorite: document, actionType: action)
-                    .map { error in (error, index) }
-                    .do(onNext: { error, _ in
+                    .do(onNext: { error in
                         guard let error = error else { return }
                         errorTracker.accept(error.localizedDescription)
                     })
+                    .filter { error in
+                        error == nil
+                    }
+                    .map { _ in index }
                     .asSignal(onErrorSignalWith: .empty())
             }
     }
