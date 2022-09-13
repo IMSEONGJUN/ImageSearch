@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-struct FavoriteViewModel: ViewModelType {
+final class FavoriteViewModel: ViewModelType {
     
     struct Input {
         let viewWillAppear: AnyObserver<Void>
@@ -36,14 +36,14 @@ struct FavoriteViewModel: ViewModelType {
                       aTableViewRowDeleted: aTableViewRowDeletedSubject.asObserver())
         
         let loadingCompletedRelay = PublishRelay<Bool>()
-        let sharedInitiailFetch = initialFetch(loadingCompleted: loadingCompletedRelay)
+        let sharedFetchedData = fetchData(loadingCompleted: loadingCompletedRelay)
         
-        output = Output(cellData: dataSources(initialFetch: sharedInitiailFetch),
-                        errorMessage: errorMessage(initialFetch: sharedInitiailFetch),
+        output = Output(cellData: dataSources(initialFetch: sharedFetchedData),
+                        errorMessage: errorMessage(initialFetch: sharedFetchedData),
                         loadingCompleted: loadingCompletedRelay.asSignal(onErrorJustReturn: false))
     }
     
-    private func initialFetch(loadingCompleted: PublishRelay<Bool>) -> Driver<Result<[Document], FavoriteError>> {
+    private func fetchData(loadingCompleted: PublishRelay<Bool>) -> Driver<Result<[Document], FavoriteError>> {
         Observable.merge(
                 viewWillAppearSubject,
                 refreshPulledSubject,
