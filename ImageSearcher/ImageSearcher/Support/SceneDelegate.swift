@@ -1,11 +1,13 @@
 //
 //  SceneDelegate.swift
+//  SmoothyAssingment
 //
 //  Created by SEONGJUN on 2020/10/08.
 //
 
 import UIKit
 
+@available(iOS 13.0, *)
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
@@ -22,11 +24,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func createTabBar() -> UITabBarController {
-        let searchVC = ImageSearchController.create(with: ImageSearchViewModel())
+        let searchVC = ImageSearchController(viewModel: ImageSearchViewModel())
         searchVC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
         let searchNavi = UINavigationController(rootViewController: searchVC)
         
-        let favoritesListVC = FavoriteController.create(with: FavoriteViewModel())
+        let favoritesListVC = FavoriteController(viewModel: FavoriteViewModel())
         favoritesListVC.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
         let favoritesNavi = UINavigationController(rootViewController: favoritesListVC)
         

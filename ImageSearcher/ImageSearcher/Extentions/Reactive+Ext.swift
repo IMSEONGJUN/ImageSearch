@@ -1,5 +1,6 @@
 //
 //  Reactive+Ext.swift
+//  SmoothyAssingment
 //
 //  Created by SEONGJUN on 2020/10/09.
 //
@@ -8,11 +9,12 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+
 func castOrThrow<T>(_ resultType: T.Type, _ object: Any) throws -> T {
-    guard let returnValue = object as? T else {
-        throw RxCocoaError.castingError(object: object, targetType: resultType)
-    }
-    return returnValue
+  guard let returnValue = object as? T else {
+    throw RxCocoaError.castingError(object: object, targetType: resultType)
+  }
+  return returnValue
 }
 
 extension Reactive where Base: UIViewController {
@@ -40,8 +42,9 @@ extension Reactive where Base: UICollectionView {
 extension Reactive where Base: UITableViewCell {
     var removeFavoritedData: Binder<Void> {
         return Binder(base) { base, event in
-            guard let cell = base as? FavoriteImageCell else { return }
-            PersistenceManager.updateWith(favorite: cell.cellData, actionType: .remove)
+            guard let cell = base as? FavoriteImageCell,
+                  let cellData = cell.cellData else { return }
+            PersistenceManager.updateWith(favorite: cellData, actionType: .remove)
                 .map{ $0?.rawValue }
                 .subscribe(onNext: {
                     if let error = $0 {
@@ -50,6 +53,7 @@ extension Reactive where Base: UITableViewCell {
                     }
                     print("즐겨찾기에서 삭제완료")
                     NotificationCenter.default.post(name: Notifications.removeFavorite, object: nil)
+                    
                 })
                 .disposed(by: cell.disposeBag)
             
@@ -58,19 +62,6 @@ extension Reactive where Base: UITableViewCell {
 }
 
 extension ObservableType {
-    
-    func catchErrorJustComplete() -> Observable<Element> {
-        return catchError { _ in
-            return Observable.empty()
-        }
-    }
-    
-    func asDriverOnErrorJustComplete() -> Driver<Element> {
-        return asDriver { error in
-            return Driver.empty()
-        }
-    }
-    
     func mapToVoid() -> Observable<Void> {
         return map { _ in }
     }

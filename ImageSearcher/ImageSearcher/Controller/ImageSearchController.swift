@@ -1,5 +1,6 @@
 //
 //  ImageSearchController.swift
+//  SmoothyAssingment
 //
 //  Created by SEONGJUN on 2020/10/08.
 //
@@ -9,72 +10,50 @@ import RxSwift
 import RxCocoa
 import Toaster
 
-protocol ImageSearchViewModelBindable: ViewModelType {
-    // Action -> ViewModel
-    var searchKeyword: PublishRelay<String> { get }
-    var didScrollToBottom: PublishRelay<Void> { get }
-    var searchButtonTapped: PublishRelay<Void> { get }
-    
-    // ViewModel -> State
-    var cellData: Driver<[Document]> { get }
-    var reloadList: Signal<Void> { get }
-    var errorMessage: Signal<String> { get }
-}
-
-final class ImageSearchController: UIViewController, ViewType {
+final class ImageSearchController: RxMVVMViewController<ImageSearchViewModel> {
     
     // MARK: - Properties
-    var disposeBag: DisposeBag!
-    var viewModel: ImageSearchViewModelBindable!
-    
-    private var collection: UICollectionView!
-    private var flowLayout: UICollectionViewFlowLayout!
-
+    private lazy var collectionView = UICollectionView(frame: view.frame,
+                                                       collectionViewLayout: UIHelper.twoColumnLayout(in: view))
     private let searchController = UISearchController()
     private let tap = UITapGestureRecognizer()
-    private var statusBar: UIView!
     
-    // MARK: - Life Cycle
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        tabBarController?.tabBar.isHidden = false
-        navigationController?.navigationBar.isHidden = false
-        navigationController?.navigationBar.backgroundColor = .systemBackground
-    }
-
+    private let favoriteButtonTapSubject = PublishSubject<(Document, Int, PersistenceActionType)>()
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
-//    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-//        if traitCollection.userInterfaceStyle == .dark {
-//            navigationController?.navigationBar.backgroundColor = .white
-//        } else {
-//            navigationController?.navigationBar.backgroundColor = .white
-//        }
-//    }
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if traitCollection.userInterfaceStyle == .dark {
+            print("dark")
+        } else {
+            print("light")
+        }
+    }
     
+    // MARK: - Life Cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = false
+        navigationController?.navigationBar.isHidden = false
+    }
+
     // MARK: - Initial UI Setup
-    func setupUI() {
+    override func setupUI() {
         configureNavigationBar(with: TabBarTitle.imageSearchList, prefersLargeTitles: false)
         configureCollectionView()
         configureSearchBar()
     }
     
-    private func configureStatusBar() {
-        statusBar = UIApplication.statusBar
-        guard let statusBar = statusBar else {return}
-        statusBar.backgroundColor = .systemBackground
-        let window = UIApplication.shared.windows.filter{$0.isKeyWindow}.first
-        window?.addSubview(statusBar)
-    }
-    
     private func configureCollectionView() {
-        collection = UICollectionView(frame: view.frame,
-                                      collectionViewLayout: UIHelper.createTwoColumnFlowLayout(in: self.view))
-        collection.backgroundColor = .systemBackground
-        collection.register(ImageCell.self, forCellWithReuseIdentifier: String(describing: ImageCell.self))
-        view.addSubview(collection)
+        collectionView.backgroundColor = #colorLiteral(red: 0.9880631345, green: 0.9880631345, blue: 0.9880631345, alpha: 1)
+        collectionView.register(ImageCell.self, forCellWithReuseIdentifier: String(describing: ImageCell.self))
+        view.addSubview(collectionView)
     }
     
     private func configureSearchBar() {
@@ -84,68 +63,70 @@ final class ImageSearchController: UIViewController, ViewType {
         navigationItem.searchController = searchController
     }
 
+    // MARK: - bind
+    override func bind() {
+        bindInput()
+        bindOutput()
+        navigationBind()
+    }
     
-    // MARK: - Automatic Binding
-    func bind() {
-        
-        // Action -> ViewModel
+    private func bindInput() {
         searchController.searchBar.rx.text
             .orEmpty
             .distinctUntilChanged()
-            .bind(to: viewModel.searchKeyword)
+            .bind(to: viewModel.input.searchKeyword)
             .disposed(by: disposeBag)
             
         searchController.searchBar.rx.searchButtonClicked
             .do(onNext:{ [weak self] _ in self?.searchController.dismiss(animated: true) })
-            .bind(to: viewModel.searchButtonTapped)
+            .bind(to: viewModel.input.searchButtonTapped)
             .disposed(by: disposeBag)
-            
-        collection.rx.needToFetchMoreData
+        
+        collectionView.rx.needToFetchMoreData
             .filter { $0 }
             .mapToVoid()
-            .bind(to: viewModel.didScrollToBottom)
+            .bind(to: viewModel.input.didScrollToBottom)
             .disposed(by: disposeBag)
         
-        
-        // State -> View
-        viewModel.cellData
-            .drive(collection.rx.items(cellIdentifier: String(describing: ImageCell.self),
-                                       cellType: ImageCell.self)) { indexPath, document, cell in
-                cell.cellData = document
+        favoriteButtonTapSubject
+            .bind(to: viewModel.input.favoriteButtonSelected)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindOutput() {
+        viewModel.output.dataSources
+            .drive(collectionView.rx.items(cellIdentifier: String(describing: ImageCell.self),
+                                       cellType: ImageCell.self)) { [weak self] index, document, cell in
+                guard let self = self else { return }
+                cell.configureCell(index: index, data: document, selectFavoriteButton: self.favoriteButtonTapSubject)
             }
             .disposed(by: disposeBag)
         
-        viewModel.reloadList
-            .emit(with: self) { owner, _ in
-                owner.collection.reloadData()
-            }
+        viewModel.output.didFinishFavoriteAction
+            .emit(onNext: { [weak self] error, index in
+                guard error == nil else { return }
+                self?.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
+            })
             .disposed(by: disposeBag)
         
-        viewModel.errorMessage
+        viewModel.output.errorMessage
             .emit(onNext: {
                 Toast(text: $0, delay: 0, duration: 1).show()
             })
             .disposed(by: disposeBag)
-        
-        
-        // UI Binding
-        collection.rx.itemSelected
-            .subscribe(with: self, onNext: { owner, indexPath in
-                owner.searchController.dismiss(animated: true)
-                guard let cell = owner.collection.cellForItem(at: indexPath) as? ImageCell else { return }
+    }
+    
+    private func navigationBind() {
+        collectionView.rx.itemSelected
+            .subscribe(onNext: { [unowned self] indexPath in
+                self.searchController.dismiss(animated: true)
+                print("item Tapped!!")
+                guard let cell = self.collectionView.cellForItem(at: indexPath) as? ImageCell else { return }
                 let image = cell.imageView.image
                 let vc = ImageDetailController()
                 vc.setImage(image)
                 self.navigationController?.pushViewController(vc, animated: true)
-                print("onNext")
-            },
-            onError: { _, _ in
-                print("onDisposed")
-            },
-            onCompleted: { _  in
-                print("onCompleted!!")
-            }
-            )
+            })
             .disposed(by: disposeBag)
     }
 }

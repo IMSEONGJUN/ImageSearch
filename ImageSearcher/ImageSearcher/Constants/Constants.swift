@@ -1,5 +1,6 @@
 //
 //  Constants.swift
+//  SmoothyAssingment
 //
 //  Created by SEONGJUN on 2020/10/08.
 //
@@ -9,6 +10,7 @@ import Foundation
 enum Images {
     static let back = "arrow.left"
 }
+
 
 enum Notifications {
     static let removeFavorite = Notification.Name(rawValue: "removeFavorite")

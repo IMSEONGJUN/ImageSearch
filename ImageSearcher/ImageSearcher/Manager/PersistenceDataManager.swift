@@ -1,5 +1,6 @@
 //
 //  PersistenceDataManager.swift
+//  SmoothyAssingment
 //
 //  Created by SEONGJUN on 2020/10/08.
 //
@@ -37,7 +38,6 @@ enum PersistenceManager {
                     case .remove:
                         retrievedFavorites.removeAll {$0.imageUrl == favorite.imageUrl}
                     }
-                    
                     return save(favorites: retrievedFavorites)
                     
                 case .failure(let error):

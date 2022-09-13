@@ -1,10 +1,12 @@
 //
 //  SearchCellImageView.swift
+//  SmoothyAssingment
 //
 //  Created by SEONGJUN on 2020/10/08.
 //
 
 import UIKit
+
 
 final class CellImageView: UIImageView {
     

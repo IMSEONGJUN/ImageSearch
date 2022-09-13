@@ -1,5 +1,6 @@
 //
 //  FavoriteViewModel.swift
+//  SmoothyAssingment
 //
 //  Created by SEONGJUN on 2020/10/08.
 //
@@ -8,117 +9,70 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-struct FavoriteViewModel: FavoriteViewModelBindable {
-    // Action with Void
-    let viewWillAppear = PublishRelay<Void>()
-    let refreshPulled = PublishRelay<Void>()
-    let aTableViewRowDeleted = PublishRelay<Void>()
+struct FavoriteViewModel: ViewModelType {
     
-    // State
-    let cellData: Driver<[Document]>
-    let errorMessage: Signal<String>
-    let loadingCompleted: Driver<Bool>
+    struct Input {
+        let viewWillAppear: AnyObserver<Void>
+        let refreshPulled: AnyObserver<Void>
+        let aTableViewRowDeleted: AnyObserver<Void>
+    }
     
-    let disposeBag = DisposeBag()
+    struct Output {
+        let cellData: Driver<[Document]>
+        let errorMessage: Signal<String>
+        let loadingCompleted: Signal<Bool>
+    }
+    
+    private(set) var input: Input!
+    private(set) var output: Output!
+     
+    private let viewWillAppearSubject = PublishSubject<Void>()
+    private let refreshPulledSubject = PublishSubject<Void>()
+    private let aTableViewRowDeletedSubject = PublishSubject<Void>()
     
     init() {
+        input = Input(viewWillAppear: viewWillAppearSubject.asObserver(),
+                      refreshPulled: refreshPulledSubject.asObserver(),
+                      aTableViewRowDeleted: aTableViewRowDeletedSubject.asObserver())
         
-        // Proxy
-        let cellDataProxy = PublishRelay<[Document]>()
-        cellData = cellDataProxy.asDriver(onErrorJustReturn: [])
+        let loadingCompletedRelay = PublishRelay<Bool>()
+        let sharedInitiailFetch = initialFetch(loadingCompleted: loadingCompletedRelay)
         
-        let errorMessageProxy = PublishRelay<String>()
-        errorMessage = errorMessageProxy.asSignal()
-        
-        let loadingCompletedProxy = PublishRelay<Bool>()
-        loadingCompleted = loadingCompletedProxy.asDriver(onErrorJustReturn: false)
-        
-        
-        // MARK: Data Processing Step: [ Action check -> Mutate -> reduce State ]
-        
-        // MARK: - [Action 1]..< ViewWillAppear Action >
-        
-        // Mutate Step
-        let initiailFetch = viewWillAppear
+        output = Output(cellData: dataSources(initialFetch: sharedInitiailFetch),
+                        errorMessage: errorMessage(initialFetch: sharedInitiailFetch),
+                        loadingCompleted: loadingCompletedRelay.asSignal(onErrorJustReturn: false))
+    }
+    
+    private func initialFetch(loadingCompleted: PublishRelay<Bool>) -> Driver<Result<[Document], FavoriteError>> {
+        Observable.merge(
+                viewWillAppearSubject,
+                refreshPulledSubject,
+                NotificationCenter.default.rx.notification(Notifications.removeFavorite).mapToVoid()
+            )
             .flatMapLatest(PersistenceManager.retrieveFavorites)
-            .share()
-        
-        let favoriteList = initiailFetch
-            .map { data -> [Document]? in
-                guard case .success(let value) = data else {
-                    return nil
-                }
-                return value
-            }
-            .filterNil()
-        
-        let favoriteError = initiailFetch
-            .map { data -> String? in
-                guard case .failure(let error) = data else {
-                    return nil
-                }
-                return error.rawValue
-            }
-            .filterNil()
-        
-        // Reduce Step
-        favoriteList
-            .map{ $0.reversed() }
-            .bind(to: cellDataProxy)
-            .disposed(by: disposeBag)
-        
-        favoriteError
-            .bind(to: errorMessageProxy)
-            .disposed(by: disposeBag)
-        
-        
-        // MARK: - [Action 2]..< RefreshPulled Action >
-        
-        // Mutate Step
-        let refreshedData = refreshPulled
-            .flatMapLatest(PersistenceManager.retrieveFavorites)
-            .share()
-        
-        refreshedData
-            .map { _ in true }
-            .bind(to: loadingCompletedProxy)
-            .disposed(by: disposeBag)
-        
-        // Reduce Step
-        refreshedData
-            .compactMap { data -> [Document]? in
+            .do(onNext: { _ in loadingCompleted.accept(true) })
+            .asDriver(onErrorJustReturn: .failure(.failedToLoadFavorite))
+    }
+    
+    private func dataSources(initialFetch: Driver<Result<[Document], FavoriteError>>) -> Driver<[Document]> {
+        initialFetch
+            .compactMap{ data -> [Document]? in
                 guard case .success(let value) = data else {
                     return nil
                 }
                 return value.reversed()
             }
-            .bind(to: cellDataProxy)
-            .disposed(by: disposeBag)
-        
-        refreshedData
+            .asDriver(onErrorJustReturn: [])
+    }
+    
+    private func errorMessage(initialFetch: Driver<Result<[Document], FavoriteError>>) -> Signal<String> {
+        initialFetch
             .compactMap { data -> String? in
                 guard case .failure(let error) = data else {
                     return nil
                 }
                 return error.rawValue
             }
-            .bind(to: errorMessageProxy)
-            .disposed(by: disposeBag)
-        
-        
-        // MARK: - [Action 3]..< Notification Action >
-        
-        // Mutate & Reduce Step
-        NotificationCenter.default.rx.notification(Notifications.removeFavorite)
-            .mapToVoid()
-            .flatMapLatest(PersistenceManager.retrieveFavorites)
-            .compactMap { data -> [Document]? in
-                guard case .success(let value) = data else {
-                    return nil
-                }
-                return value.reversed()
-            }
-            .bind(to: cellDataProxy)
-            .disposed(by: disposeBag)
+            .asSignal(onErrorJustReturn: "")
     }
 }
