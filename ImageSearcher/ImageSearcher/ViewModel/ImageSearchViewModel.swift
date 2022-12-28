@@ -85,9 +85,9 @@ final class ImageSearchViewModel: ViewModelType {
                             })
                             .map { $0.documents }
                     }
-            }
-            .scan([]) { prev, new in
-                new.isEmpty ? [] : prev + new
+                    .scan([]) { prev, new in
+                        new.isEmpty ? [] : prev + new
+                    }
             }
             .do(onNext: { _ in
                 let newpage = page.value + 1
