@@ -9,7 +9,7 @@ import RxSwift
 import RxCocoa
 import Toaster
 
-final class ImageSearchController: RxMVVMViewController<ImageSearchViewModel> {
+final class ImageSearchViewController: RxMVVMViewController<ImageSearchViewModel> {
     
     // MARK: - Properties
     private lazy var collectionView = UICollectionView(frame: view.frame,

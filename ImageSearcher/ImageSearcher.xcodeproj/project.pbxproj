@@ -13,8 +13,8 @@
 		CEDD8757252F1B5000A3AEEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEDD8755252F1B5000A3AEEC /* Main.storyboard */; };
 		CEDD8759252F1B5200A3AEEC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEDD8758252F1B5200A3AEEC /* Assets.xcassets */; };
 		CEDD875C252F1B5200A3AEEC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEDD875A252F1B5200A3AEEC /* LaunchScreen.storyboard */; };
-		CEDD876E252F1E3B00A3AEEC /* ImageSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDD876D252F1E3B00A3AEEC /* ImageSearchController.swift */; };
-		CEDD8772252F1E4F00A3AEEC /* FavoriteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDD8771252F1E4F00A3AEEC /* FavoriteController.swift */; };
+		CEDD876E252F1E3B00A3AEEC /* ImageSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDD876D252F1E3B00A3AEEC /* ImageSearchViewController.swift */; };
+		CEDD8772252F1E4F00A3AEEC /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDD8771252F1E4F00A3AEEC /* FavoriteViewController.swift */; };
 		CEDD8775252F1E6A00A3AEEC /* ImageDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDD8774252F1E6A00A3AEEC /* ImageDetailController.swift */; };
 		CEDD8779252F1E9400A3AEEC /* ViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDD8778252F1E9400A3AEEC /* ViewType.swift */; };
 		CEDD877D252F1EA500A3AEEC /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDD877C252F1EA500A3AEEC /* ViewModelType.swift */; };
@@ -47,8 +47,8 @@
 		CEDD8758252F1B5200A3AEEC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CEDD875B252F1B5200A3AEEC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CEDD875D252F1B5200A3AEEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CEDD876D252F1E3B00A3AEEC /* ImageSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchController.swift; sourceTree = "<group>"; };
-		CEDD8771252F1E4F00A3AEEC /* FavoriteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteController.swift; sourceTree = "<group>"; };
+		CEDD876D252F1E3B00A3AEEC /* ImageSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchViewController.swift; sourceTree = "<group>"; };
+		CEDD8771252F1E4F00A3AEEC /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		CEDD8774252F1E6A00A3AEEC /* ImageDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailController.swift; sourceTree = "<group>"; };
 		CEDD8778252F1E9400A3AEEC /* ViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewType.swift; sourceTree = "<group>"; };
 		CEDD877C252F1EA500A3AEEC /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
@@ -137,7 +137,7 @@
 				CEDD876A252F1DEA00A3AEEC /* Constants */,
 				CEDD8777252F1E7F00A3AEEC /* Base */,
 				CEDD8769252F1DDB00A3AEEC /* View */,
-				CEDD8768252F1DD200A3AEEC /* Controller */,
+				CEDD8768252F1DD200A3AEEC /* ViewController */,
 				CEDD8767252F1DC700A3AEEC /* ViewModel */,
 				CEDD8766252F1DBD00A3AEEC /* Model */,
 				CEDD8755252F1B5000A3AEEC /* Main.storyboard */,
@@ -176,13 +176,13 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		CEDD8768252F1DD200A3AEEC /* Controller */ = {
+		CEDD8768252F1DD200A3AEEC /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				CEDD876D252F1E3B00A3AEEC /* ImageSearchController.swift */,
-				CEDD8771252F1E4F00A3AEEC /* FavoriteController.swift */,
+				CEDD876D252F1E3B00A3AEEC /* ImageSearchViewController.swift */,
+				CEDD8771252F1E4F00A3AEEC /* FavoriteViewController.swift */,
 			);
-			path = Controller;
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		CEDD8769252F1DDB00A3AEEC /* View */ = {
@@ -385,7 +385,7 @@
 				CEDD8787252F2CF400A3AEEC /* Constants.swift in Sources */,
 				CEDD87CD252F828900A3AEEC /* Reactive+Ext.swift in Sources */,
 				CEDD87BA252F533E00A3AEEC /* FavoriteButton.swift in Sources */,
-				CEDD8772252F1E4F00A3AEEC /* FavoriteController.swift in Sources */,
+				CEDD8772252F1E4F00A3AEEC /* FavoriteViewController.swift in Sources */,
 				CEDD8784252F2CB800A3AEEC /* APIManager.swift in Sources */,
 				CEDD87B6252F4F6B00A3AEEC /* ImageCell.swift in Sources */,
 				CEDD87BE252F542600A3AEEC /* CellImageView.swift in Sources */,
@@ -397,7 +397,7 @@
 				CEDD8750252F1B5000A3AEEC /* AppDelegate.swift in Sources */,
 				CEDD8752252F1B5000A3AEEC /* SceneDelegate.swift in Sources */,
 				CEDD87A1252F3C4D00A3AEEC /* PersistenceDataManager.swift in Sources */,
-				CEDD876E252F1E3B00A3AEEC /* ImageSearchController.swift in Sources */,
+				CEDD876E252F1E3B00A3AEEC /* ImageSearchViewController.swift in Sources */,
 				CEDD879E252F3C0000A3AEEC /* FavoriteViewModel.swift in Sources */,
 				CEDD87CA252F724500A3AEEC /* UIHelper.swift in Sources */,
 			);

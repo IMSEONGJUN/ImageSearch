@@ -9,7 +9,7 @@ import RxSwift
 import RxCocoa
 import Toaster
 
-final class FavoriteController: RxMVVMViewController<FavoriteViewModel> {
+final class FavoriteViewController: RxMVVMViewController<FavoriteViewModel> {
 
     // MARK: - Properties
     let tableView = UITableView()

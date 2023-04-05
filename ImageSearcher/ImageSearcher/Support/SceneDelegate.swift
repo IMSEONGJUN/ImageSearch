@@ -23,11 +23,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func createTabBar() -> UITabBarController {
-        let searchVC = ImageSearchController(viewModel: ImageSearchViewModel())
+        let searchVC = ImageSearchViewController(viewModel: ImageSearchViewModel())
         searchVC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
         let searchNavi = UINavigationController(rootViewController: searchVC)
         
-        let favoritesListVC = FavoriteController(viewModel: FavoriteViewModel())
+        let favoritesListVC = FavoriteViewController(viewModel: FavoriteViewModel())
         favoritesListVC.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
         let favoritesNavi = UINavigationController(rootViewController: favoritesListVC)
         
