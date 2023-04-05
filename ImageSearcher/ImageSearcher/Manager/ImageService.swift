@@ -8,7 +8,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class ImageService {
+final class ImageService {
     static let shared = ImageService()
     
     private init(){}
@@ -35,6 +35,5 @@ class ImageService {
                 return .success(image)
             }
     }
-    
 }
 

@@ -66,7 +66,16 @@ final class ImageSearchController: RxMVVMViewController<ImageSearchViewModel> {
     override func bind() {
         bindInput()
         bindOutput()
-        navigationBind()
+        
+        collectionView.rx.itemSelected
+            .subscribe(with: self) { owner, indexPath in
+                guard let cell = owner.collectionView.cellForItem(at: indexPath) as? ImageCell,
+                      let image = cell.imageView.image else { return }
+                owner.searchController.dismiss(animated: true)
+                let vc = ImageDetailController(image: image)
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
     
     private func bindInput() {
@@ -110,20 +119,6 @@ final class ImageSearchController: RxMVVMViewController<ImageSearchViewModel> {
         viewModel.output.errorMessage
             .emit(onNext: {
                 Toast(text: $0, delay: 0, duration: 1).show()
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    private func navigationBind() {
-        collectionView.rx.itemSelected
-            .subscribe(onNext: { [unowned self] indexPath in
-                self.searchController.dismiss(animated: true)
-                print("item Tapped!!")
-                guard let cell = self.collectionView.cellForItem(at: indexPath) as? ImageCell else { return }
-                let image = cell.imageView.image
-                let vc = ImageDetailController()
-                vc.setImage(image)
-                self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
     }

@@ -20,8 +20,16 @@ final class ImageDetailController: UIViewController {
     
     private let backButton = UIButton()
     
-    
     let disposeBag = DisposeBag()
+    
+    init(image: UIImage) {
+        self.detailImageView.image = image
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,9 +63,5 @@ final class ImageDetailController: UIViewController {
                 self?.navigationController?.popViewController(animated: true)
             })
             .disposed(by: disposeBag)
-    }
-    
-    func setImage(_ image: UIImage?) {
-        self.detailImageView.image = image
     }
 }

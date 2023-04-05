@@ -43,7 +43,16 @@ final class FavoriteController: RxMVVMViewController<FavoriteViewModel> {
     override func bind() {
         bindInput()
         bindOutput()
-        navigationBind()
+        
+        tableView.rx.itemSelected
+            .subscribe(with: self) { owner, indexPath in
+                guard let cell = owner.tableView.cellForRow(at: indexPath) as? FavoriteImageCell,
+                    let image = cell.favoriteImageView.image else { return }
+
+                let vc = ImageDetailController(image: image)
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
     
     private func bindInput() {
@@ -73,19 +82,6 @@ final class FavoriteController: RxMVVMViewController<FavoriteViewModel> {
         viewModel.output.loadingCompleted
             .map(!)
             .emit(to: refresh.rx.isRefreshing)
-            .disposed(by: disposeBag)
-    }
-    
-    private func navigationBind() {
-        tableView.rx.itemSelected
-            .subscribe(onNext: { [unowned self] indexPath in
-                print("item Tapped!!")
-                guard let cell = self.tableView.cellForRow(at: indexPath) as? FavoriteImageCell else { return }
-                let image = cell.favoriteImageView.image
-                let vc = ImageDetailController()
-                vc.setImage(image)
-                self.navigationController?.pushViewController(vc, animated: true)
-            })
             .disposed(by: disposeBag)
     }
 }
