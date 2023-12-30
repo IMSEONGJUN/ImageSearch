@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CED4086A2B3FDA4C00954292 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408692B3FDA4C00954292 /* ViewModelType.swift */; };
+		CED4086A2B3FDA4C00954292 /* ViewModelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408692B3FDA4C00954292 /* ViewModelable.swift */; };
 		CED4086C2B3FDAAF00954292 /* ViewTypable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4086B2B3FDAAF00954292 /* ViewTypable.swift */; };
 		CED4086E2B3FDB6300954292 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4086D2B3FDB6300954292 /* BaseViewController.swift */; };
 		CED408702B3FDC6E00954292 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4086F2B3FDC6E00954292 /* Coordinator.swift */; };
@@ -15,7 +15,7 @@
 		CED408752B3FDE6800954292 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408742B3FDE6800954292 /* BaseCoordinator.swift */; };
 		CED408832B3FE13C00954292 /* ImageSearchAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408822B3FE13C00954292 /* ImageSearchAPI.swift */; };
 		CED408872B3FE69500954292 /* ImageSearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408862B3FE69500954292 /* ImageSearchUseCase.swift */; };
-		CED408892B3FEDEA00954292 /* ImageSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408882B3FEDEA00954292 /* ImageSearchViewController.swift */; };
+		CED408892B3FEDEA00954292 /* ImageSearchViewControllerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408882B3FEDEA00954292 /* ImageSearchViewControllerNew.swift */; };
 		CED4088B2B3FEE0F00954292 /* ImageSearchViewModelNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4088A2B3FEE0F00954292 /* ImageSearchViewModelNew.swift */; };
 		CED4088E2B401B8900954292 /* DiffableDataSourceCollectionViewUsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4088D2B401B8900954292 /* DiffableDataSourceCollectionViewUsing.swift */; };
 		CED408902B401BBF00954292 /* DiffableDataSourceCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4088F2B401BBF00954292 /* DiffableDataSourceCollectionView.swift */; };
@@ -24,8 +24,6 @@
 		CED408972B40245B00954292 /* ImageSearchCollectionViewLayoutProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408962B40245B00954292 /* ImageSearchCollectionViewLayoutProvider.swift */; };
 		CED408992B402D9100954292 /* SearchResultImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408982B402D9100954292 /* SearchResultImageCell.swift */; };
 		CEDD8750252F1B5000A3AEEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDD874F252F1B5000A3AEEC /* AppDelegate.swift */; };
-		CEDD8752252F1B5000A3AEEC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDD8751252F1B5000A3AEEC /* SceneDelegate.swift */; };
-		CEDD8757252F1B5000A3AEEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEDD8755252F1B5000A3AEEC /* Main.storyboard */; };
 		CEDD8759252F1B5200A3AEEC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEDD8758252F1B5200A3AEEC /* Assets.xcassets */; };
 		CEDD875C252F1B5200A3AEEC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEDD875A252F1B5200A3AEEC /* LaunchScreen.storyboard */; };
 		CEDD876E252F1E3B00A3AEEC /* ImageSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDD876D252F1E3B00A3AEEC /* ImageSearchViewController.swift */; };
@@ -55,7 +53,7 @@
 		2880E8CA86478765538FD746 /* Pods-ImageSearcher.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageSearcher.release.xcconfig"; path = "Target Support Files/Pods-ImageSearcher/Pods-ImageSearcher.release.xcconfig"; sourceTree = "<group>"; };
 		6465D65587E390372D073779 /* Pods_ImageSearcher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ImageSearcher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		79451A1591CA778C88C96338 /* Pods-ImageSearcher.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageSearcher.debug.xcconfig"; path = "Target Support Files/Pods-ImageSearcher/Pods-ImageSearcher.debug.xcconfig"; sourceTree = "<group>"; };
-		CED408692B3FDA4C00954292 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		CED408692B3FDA4C00954292 /* ViewModelable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelable.swift; sourceTree = "<group>"; };
 		CED4086B2B3FDAAF00954292 /* ViewTypable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTypable.swift; sourceTree = "<group>"; };
 		CED4086D2B3FDB6300954292 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		CED4086F2B3FDC6E00954292 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -63,7 +61,7 @@
 		CED408742B3FDE6800954292 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 		CED408822B3FE13C00954292 /* ImageSearchAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchAPI.swift; sourceTree = "<group>"; };
 		CED408862B3FE69500954292 /* ImageSearchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchUseCase.swift; sourceTree = "<group>"; };
-		CED408882B3FEDEA00954292 /* ImageSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchViewController.swift; sourceTree = "<group>"; };
+		CED408882B3FEDEA00954292 /* ImageSearchViewControllerNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchViewControllerNew.swift; sourceTree = "<group>"; };
 		CED4088A2B3FEE0F00954292 /* ImageSearchViewModelNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchViewModelNew.swift; sourceTree = "<group>"; };
 		CED4088D2B401B8900954292 /* DiffableDataSourceCollectionViewUsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffableDataSourceCollectionViewUsing.swift; sourceTree = "<group>"; };
 		CED4088F2B401BBF00954292 /* DiffableDataSourceCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffableDataSourceCollectionView.swift; sourceTree = "<group>"; };
@@ -73,8 +71,6 @@
 		CED408982B402D9100954292 /* SearchResultImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultImageCell.swift; sourceTree = "<group>"; };
 		CEDD874C252F1B5000A3AEEC /* ImageSearcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageSearcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEDD874F252F1B5000A3AEEC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		CEDD8751252F1B5000A3AEEC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		CEDD8756252F1B5000A3AEEC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CEDD8758252F1B5200A3AEEC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CEDD875B252F1B5200A3AEEC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CEDD875D252F1B5200A3AEEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -167,7 +163,7 @@
 				CED408712B3FDE2300954292 /* View */,
 				CED408672B3FD84B00954292 /* ViewController */,
 				CED408662B3FD84200954292 /* Coordinator */,
-				CED408692B3FDA4C00954292 /* ViewModelType.swift */,
+				CED408692B3FDA4C00954292 /* ViewModelable.swift */,
 				CED4086B2B3FDAAF00954292 /* ViewTypable.swift */,
 			);
 			path = Base;
@@ -263,7 +259,7 @@
 		CED4087E2B3FE04F00954292 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				CED408882B3FEDEA00954292 /* ImageSearchViewController.swift */,
+				CED408882B3FEDEA00954292 /* ImageSearchViewControllerNew.swift */,
 				CED408982B402D9100954292 /* SearchResultImageCell.swift */,
 			);
 			path = View;
@@ -336,7 +332,6 @@
 				CEDD8768252F1DD200A3AEEC /* ViewController */,
 				CEDD8767252F1DC700A3AEEC /* ViewModel */,
 				CEDD8766252F1DBD00A3AEEC /* Model */,
-				CEDD8755252F1B5000A3AEEC /* Main.storyboard */,
 				CEDD8758252F1B5200A3AEEC /* Assets.xcassets */,
 				CEDD875A252F1B5200A3AEEC /* LaunchScreen.storyboard */,
 				CEDD875D252F1B5200A3AEEC /* Info.plist */,
@@ -413,7 +408,6 @@
 			isa = PBXGroup;
 			children = (
 				CEDD874F252F1B5000A3AEEC /* AppDelegate.swift */,
-				CEDD8751252F1B5000A3AEEC /* SceneDelegate.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -521,7 +515,6 @@
 			files = (
 				CEDD875C252F1B5200A3AEEC /* LaunchScreen.storyboard in Resources */,
 				CEDD8759252F1B5200A3AEEC /* Assets.xcassets in Resources */,
-				CEDD8757252F1B5000A3AEEC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -582,12 +575,12 @@
 				CEDD8779252F1E9400A3AEEC /* ViewType.swift in Sources */,
 				CEDD87AD252F427D00A3AEEC /* ImageSearchModel.swift in Sources */,
 				CEDD87C5252F624700A3AEEC /* UIViewController+Ext.swift in Sources */,
-				CED408892B3FEDEA00954292 /* ImageSearchViewController.swift in Sources */,
+				CED408892B3FEDEA00954292 /* ImageSearchViewControllerNew.swift in Sources */,
 				CEDD8787252F2CF400A3AEEC /* Constants.swift in Sources */,
 				CEDD87CD252F828900A3AEEC /* Reactive+Ext.swift in Sources */,
 				CEDD87BA252F533E00A3AEEC /* FavoriteButton.swift in Sources */,
 				CED408732B3FDE3200954292 /* ViewConfigurable.swift in Sources */,
-				CEDD8772252F1E4F00A3AEEC /* FavoriteController.swift in Sources */,
+				CEDD8772252F1E4F00A3AEEC /* FavoriteViewController.swift in Sources */,
 				CED408752B3FDE6800954292 /* BaseCoordinator.swift in Sources */,
 				CED408902B401BBF00954292 /* DiffableDataSourceCollectionView.swift in Sources */,
 				CED4086C2B3FDAAF00954292 /* ViewTypable.swift in Sources */,
@@ -596,7 +589,7 @@
 				CEDD8784252F2CB800A3AEEC /* APIManager.swift in Sources */,
 				CEDD87B6252F4F6B00A3AEEC /* ImageCell.swift in Sources */,
 				CEDD87BE252F542600A3AEEC /* CellImageView.swift in Sources */,
-				CED4086A2B3FDA4C00954292 /* ViewModelType.swift in Sources */,
+				CED4086A2B3FDA4C00954292 /* ViewModelable.swift in Sources */,
 				CEDD8781252F22D600A3AEEC /* Entity.swift in Sources */,
 				CED408922B401BF200954292 /* CollectionViewLayoutProvidable.swift in Sources */,
 				CEDD879B252F3BDF00A3AEEC /* ImageSearchViewModel.swift in Sources */,
@@ -606,7 +599,6 @@
 				CEDD87C1252F574900A3AEEC /* ImageService.swift in Sources */,
 				CEDD8750252F1B5000A3AEEC /* AppDelegate.swift in Sources */,
 				CED4088B2B3FEE0F00954292 /* ImageSearchViewModelNew.swift in Sources */,
-				CEDD8752252F1B5000A3AEEC /* SceneDelegate.swift in Sources */,
 				CED408992B402D9100954292 /* SearchResultImageCell.swift in Sources */,
 				CEDD87A1252F3C4D00A3AEEC /* PersistenceDataManager.swift in Sources */,
 				CEDD876E252F1E3B00A3AEEC /* ImageSearchViewController.swift in Sources */,
@@ -619,14 +611,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		CEDD8755252F1B5000A3AEEC /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CEDD8756252F1B5000A3AEEC /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		CEDD875A252F1B5200A3AEEC /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

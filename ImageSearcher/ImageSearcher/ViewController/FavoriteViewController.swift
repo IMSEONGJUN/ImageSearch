@@ -9,23 +9,7 @@ import RxSwift
 import RxCocoa
 import Toaster
 
-<<<<<<< HEAD:ImageSearcher/ImageSearcher/Controller/FavoriteController.swift
-protocol FavoriteViewModelBindable: ViewModelType {
-    // Action -> ViewModel
-    var viewWillAppear: PublishRelay<Void> { get }
-    var refreshPulled: PublishRelay<Void> { get }
-    var aTableViewRowDeleted: PublishRelay<Void> { get }
-    
-    // ViewModel -> State
-    var cellData: Driver<[ImageInfo]> { get }
-    var errorMessage: Signal<String> { get }
-    var loadingCompleted: Driver<Bool> { get }
-}
-
-final class FavoriteController: UIViewController, ViewType {
-=======
 final class FavoriteViewController: RxMVVMViewController<FavoriteViewModel> {
->>>>>>> 57d7c16652fab14a375e20a30696fbd01d65ad7a:ImageSearcher/ImageSearcher/ViewController/FavoriteViewController.swift
 
     // MARK: - Properties
     let tableView = UITableView()

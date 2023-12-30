@@ -17,7 +17,7 @@ final class ImageSearchViewController: RxMVVMViewController<ImageSearchViewModel
     private let searchController = UISearchController()
     private let tap = UITapGestureRecognizer()
     
-    private let favoriteButtonTapSubject = PublishSubject<(Document, Int, PersistenceActionType)>()
+    private let favoriteButtonTapSubject = PublishSubject<(ImageInfo, Int, PersistenceActionType)>()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent

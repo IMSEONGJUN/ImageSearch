@@ -9,12 +9,8 @@ import RxSwift
 import RxCocoa
 
 final class FavoriteImageCell: UITableViewCell {
-    
-<<<<<<< HEAD
+
     var cellData: ImageInfo! {
-=======
-    var cellData: Document? {
->>>>>>> 57d7c16652fab14a375e20a30696fbd01d65ad7a
         didSet {
             configureCellData()
         }

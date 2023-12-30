@@ -10,7 +10,6 @@ target 'ImageSearcher' do
   pod 'RxSwift'
   pod 'RxCocoa'
   pod 'SDWebImage'
-  pod 'JGProgressHUD'
   pod 'Toaster'
   pod 'Moya'
   pod 'Moya/RxSwift'

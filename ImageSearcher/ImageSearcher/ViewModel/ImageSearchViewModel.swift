@@ -12,13 +12,13 @@ import RxOptional
 final class ImageSearchViewModel: ViewModelType {
     struct Input {
         let searchKeyword: AnyObserver<String>
-        let favoriteButtonSelected: AnyObserver<(Document, Int, PersistenceActionType)>
+        let favoriteButtonSelected: AnyObserver<(ImageInfo, Int, PersistenceActionType)>
         let didScrollToBottom: AnyObserver<Void>
         let searchButtonTapped: AnyObserver<Void>
     }
 
     struct Output {
-        let dataSources: Driver<[Document]>
+        let dataSources: Driver<[ImageInfo]>
         let didFinishFavoriteAction: Signal<Int>
         let errorMessage: Signal<String>
     }
@@ -27,61 +27,26 @@ final class ImageSearchViewModel: ViewModelType {
     private(set) var output: Output!
     
     private let searchKeywordSubject = PublishSubject<String>()
-    private let favoriteButtonSelected = PublishSubject<(Document, Int, PersistenceActionType)>()
+    private let favoriteButtonSelected = PublishSubject<(ImageInfo, Int, PersistenceActionType)>()
     private let didScrollToBottomSubject = PublishSubject<Void>()
     private let searchButtonTappedSubject = PublishSubject<Void>()
-    
-<<<<<<< HEAD
-    
-    // State
-    let cellData: Driver<[ImageInfo]>
-    let reloadList: Signal<Void>
-    let errorMessage: Signal<String>
-    
-    let disposeBag = DisposeBag()
-    
-    init(model: ImageSearchModel = ImageSearchModel()) {
-        
-        // Proxy
-        let cellDataProxy = PublishRelay<[ImageInfo]>()
-        cellData = cellDataProxy.asDriver(onErrorJustReturn: [])
-=======
+
     init() {
         input = Input(searchKeyword: searchKeywordSubject.asObserver(),
                       favoriteButtonSelected: favoriteButtonSelected.asObserver(),
                       didScrollToBottom: didScrollToBottomSubject.asObserver(),
                       searchButtonTapped: searchButtonTappedSubject.asObserver())
         
->>>>>>> 57d7c16652fab14a375e20a30696fbd01d65ad7a
-        
         let errorMessage = PublishRelay<String>()
         
-<<<<<<< HEAD
-        let errorMessageProxy = PublishRelay<String>()
-        errorMessage = errorMessageProxy.asSignal()
-        
-        // Accumulator
-        let cellDataAccumulator = BehaviorRelay<[ImageInfo]>(value: [])
-        
-        // Materials
-        let page = PublishRelay<Int>()
-        let isEnd = PublishRelay<Bool>()
-        let valuesForSearch = Observable
-            .combineLatest(
-                page,
-                searchKeyword
-            )
-            .filter { $1 != "" }
-=======
         output = Output(dataSources: dataSourceOutput(errorTracker: errorMessage),
                         didFinishFavoriteAction: modifyFavorite(errorTracker: errorMessage),
                         errorMessage: errorMessage.asSignal())
     }
     
-    private func dataSourceOutput(errorTracker: PublishRelay<String>) -> Driver<[Document]> {
+    private func dataSourceOutput(errorTracker: PublishRelay<String>) -> Driver<[ImageInfo]> {
         let isEnd = BehaviorRelay<Bool>(value: false)
         let page = BehaviorRelay<Int>(value: 1)
->>>>>>> 57d7c16652fab14a375e20a30696fbd01d65ad7a
         
         let reset = {
             page.accept(1)
@@ -91,7 +56,7 @@ final class ImageSearchViewModel: ViewModelType {
         let searchKeywordCleared = searchKeywordSubject
             .filter { $0.isEmpty }
             .do(onNext: { _ in reset() })
-            .map { _ -> [Document] in [] }
+            .map { _ -> [ImageInfo] in [] }
         
         let searchButtonTapped = searchButtonTappedSubject
             .do(onNext: reset)
@@ -105,11 +70,13 @@ final class ImageSearchViewModel: ViewModelType {
                     .withLatestFrom(page)
                     .flatMapLatest { page in
                         APIManager.shared.fetchImageInformation(page: page, searchKey: keyword)
-                            .compactMap { data -> ImageInfo? in
+                            .compactMap { data -> ImageSearchResponse? in
                                 switch data {
                                 case .success(let value):
+                                    print("@@@value", value)
                                     return value
                                 case .failure(let error):
+                                    print("@@@error", error)
                                     errorTracker.accept(error.localizedDescription)
                                     return nil
                                 }
@@ -117,7 +84,7 @@ final class ImageSearchViewModel: ViewModelType {
                             .do(onNext: {
                                 isEnd.accept($0.meta.isEnd)
                             })
-                            .map { $0.documents }
+                            .map { $0.imageInfos }
                     }
                     .scan([]) { prev, new in
                         new.isEmpty ? [] : prev + new
@@ -128,118 +95,6 @@ final class ImageSearchViewModel: ViewModelType {
                 page.accept(newpage)
             })
         
-<<<<<<< HEAD
-        // Reduce Step
-        imageInfo
-            .map { data -> [ImageInfo]? in
-                guard case .success(let value) = data else {
-                    return nil
-                }
-                return value.imageInfos
-            }
-            .filterNil()
-            .do { cellDataAccumulator.accept($0) }
-            .bind(to: cellDataProxy)
-            .disposed(by: disposeBag)
-        
-        imageInfo
-            .map { data -> Bool? in
-                guard case .success(let value) = data else {
-                    return nil
-                }
-                return value.meta.isEnd
-            }
-            .filterNil()
-            .bind(to: isEnd)
-            .disposed(by: disposeBag)
-        
-        imageInfo
-            .map { data -> String? in
-                guard case .failure(let error) = data else {
-                    return nil
-                }
-                return error.message
-            }
-            .filterNil()
-            .bind(to: errorMessageProxy)
-            .disposed(by: disposeBag)
-        
-        
-        // MARK: - [Action 3]..< UICollectionView DidScroll to Bottom for additional fetched data Action >
-        
-        // Mutate Step
-        let additionalFetchedData = Observable
-            .zip(
-                didScrollToBottom,
-                isEnd
-            )
-            .filter { !$1 }
-            .withLatestFrom( valuesForSearch )
-            .map { (pg, key) -> (Int, String) in
-                let newPage = pg + 1
-                newPage >= 10 ? isEnd.accept(true) : isEnd.accept(false)
-                page.accept(newPage)
-                return (newPage, key)
-            }
-            .flatMapLatest {
-                model.fetchImageInfo(page: $0, searchKey: $1)
-            }
-        
-        let additionalCellData = additionalFetchedData
-            .map { data -> [ImageInfo]? in
-                guard case .success(let value) = data else {
-                    return nil
-                }
-                return value.imageInfos
-            }
-            .filterNil()
-        
-        let additionalErrorMessage = additionalFetchedData
-            .map { data -> String? in
-                guard case .failure(let error) = data else {
-                    return nil
-                }
-                return error.message
-            }
-            .filterNil()
-        
-//        let additionalIsEnd = additionalFetchedData
-//            .map{ data -> Bool? in
-//                guard case .success(let value) = data else {
-//                    return nil
-//                }
-//                return value.meta.isEnd
-//            }
-//            .filterNil()
-        
-        // Reduce Step
-        additionalCellData
-            .map { (data) -> [ImageInfo] in
-                var newAcc = cellDataAccumulator.value
-                newAcc.append(contentsOf: data)
-                return newAcc
-            }
-            .do(onNext:{ cellDataAccumulator.accept($0) })
-            .bind(to: cellDataProxy)
-            .disposed(by: disposeBag)
-        
-        additionalErrorMessage
-            .bind(to: errorMessageProxy)
-            .disposed(by: disposeBag)
-        
-//        additionalIsEnd
-//            .bind(to: isEnd)
-//            .disposed(by: disposeBag)
-        
-        
-        // MARK: - [Action 4]..< Notification Action >
-        
-        // Mutate & Reduce Step
-        NotificationCenter.default.rx.notification(Notifications.removeFavorite)
-            .mapToVoid()
-            .bind(to: reloadListProxy)
-            .disposed(by: disposeBag)
-=======
             let modifiedFavoriteTab = NotificationCenter.default.rx.notification(Notifications.removeFavorite)
                 .withLatestFrom(searchButtonTapped)
                 
@@ -266,6 +121,5 @@ final class ImageSearchViewModel: ViewModelType {
                     .map { _ in index }
                     .asSignal(onErrorSignalWith: .empty())
             }
->>>>>>> 57d7c16652fab14a375e20a30696fbd01d65ad7a
     }
 }

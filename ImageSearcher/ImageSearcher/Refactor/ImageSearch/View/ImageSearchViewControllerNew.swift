@@ -8,12 +8,12 @@
 import UIKit
 import RxSwift
 
-final class ImageSearchViewController: BaseViewController<ImageSearchViewModelNew> {
+final class ImageSearchViewControllerNew: BaseViewController<ImageSearchViewModelNew> {
     typealias Section = ImageSearchResultSection
     typealias Item = ImageSearchResultItem
         
     lazy var collectionView = DiffableDataSourceCollectionView<Section, Item>(layoutProvider: createLayoutProvider()) { collectionView, indexPath, itemIdentifier in
-        <#code#>
+        return UICollectionViewCell()
     }
     
     override func viewDidLoad() {
@@ -25,13 +25,13 @@ final class ImageSearchViewController: BaseViewController<ImageSearchViewModelNe
     }
 }
 
-extension ImageSearchViewController: ViewConfigurable {
+extension ImageSearchViewControllerNew: ViewConfigurable {
     func configureViews() {
         setupCollectionView()
     }
 }
 
-extension ImageSearchViewController: DiffableDataSourceCollectionViewUsing {
+extension ImageSearchViewControllerNew: DiffableDataSourceCollectionViewUsing {
     func createLayoutProvider() -> any CollectionViewLayoutProvidable<Section, Item> {
         ImageSearchCollectionViewLayoutProvider()
     }

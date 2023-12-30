@@ -30,6 +30,10 @@ final class APIManager {
         return session.rx.data(request: urlRequest)
             .map { data in
                 do{
+                    print("response")
+                    let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+                    print("@@@json: \(json)")
+                    
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     let imageInfo = try decoder.decode(ImageSearchResponse.self, from: data)

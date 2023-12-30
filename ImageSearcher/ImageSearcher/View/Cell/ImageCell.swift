@@ -12,15 +12,6 @@ import RxCocoa
 import RxSwift
 
 final class ImageCell: UICollectionViewCell {
-<<<<<<< HEAD
-    var cellData: ImageInfo! {
-        didSet{
-            configureCell()
-        }
-    }
-    
-=======
->>>>>>> 57d7c16652fab14a375e20a30696fbd01d65ad7a
     let imageView = CellImageView(frame: .zero)
     private let favoriteButton = FavoriteButton()
     var disposeBag = DisposeBag()
@@ -78,8 +69,8 @@ final class ImageCell: UICollectionViewCell {
     }
     
     func configureCell(index: Int,
-                       data: Document,
-                       selectFavoriteButton: PublishSubject<(Document, Int, PersistenceActionType)>) {
+                       data: ImageInfo,
+                       selectFavoriteButton: PublishSubject<(ImageInfo, Int, PersistenceActionType)>) {
 
         self.label.text = data.displaySitename
         ImageService.shared.downloadImage(from: data.imageUrl)
@@ -91,7 +82,7 @@ final class ImageCell: UICollectionViewCell {
             .bind(to: imageView.rx.image)
             .disposed(by: disposeBag)
         
-        PersistenceManager.checkIsFavorited(document: data)
+        PersistenceManager.checkIsFavorited(imageInfo: data)
             .bind(to: favoriteButton.rx.isSelected)
             .disposed(by: disposeBag)
         
@@ -105,39 +96,7 @@ final class ImageCell: UICollectionViewCell {
             .map { action in
                 (data, index, action)
             }
-<<<<<<< HEAD
-            .subscribe(onNext: { action, error in
-                if let error = error?.rawValue {
-                    print(error)
-                    return
-                }
-                switch action {
-                case .add:
-                    print("즐겨찾기에 추가완료")
-                case .remove:
-                    print("즐겨찾기에서 삭제완료")
-                    NotificationCenter.default.post(name: Notifications.removeFavorite, object: nil)
-                }
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    private func configureCell() {
-        self.label.text = cellData.displaySitename
-        ImageService.shared.downloadImage(from: cellData.imageUrl)
-            .drive(onNext: { [weak self] in
-                guard case .success(let image) = $0 else { return }
-                self?.imageView.image = image
-            })
-            .disposed(by: disposeBag)
-        
-        PersistenceManager.checkIsFavorited(imageInfo: cellData)
-            .subscribe(onNext: { [weak self] in
-                self?.favoriteButton.isSelected = $0
-            })
-=======
             .bind(to: selectFavoriteButton)
->>>>>>> 57d7c16652fab14a375e20a30696fbd01d65ad7a
             .disposed(by: disposeBag)
     }
 }

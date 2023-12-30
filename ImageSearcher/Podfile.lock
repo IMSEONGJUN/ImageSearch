@@ -1,6 +1,5 @@
 PODS:
   - Alamofire (5.8.1)
-  - JGProgressHUD (2.2)
   - Moya (15.0.0):
     - Moya/Core (= 15.0.0)
   - Moya/Core (15.0.0):
@@ -28,7 +27,6 @@ PODS:
   - Toaster (2.3.0)
 
 DEPENDENCIES:
-  - JGProgressHUD
   - Moya
   - Moya/ReactiveSwift
   - Moya/RxSwift
@@ -42,7 +40,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
-    - JGProgressHUD
     - Moya
     - ReactiveSwift
     - RxCocoa
@@ -55,7 +52,6 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
-  JGProgressHUD: d83d7a981b85d11205e19ff8ad5bb9c40571c847
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
   ReactiveSwift: fab34244ad908808dc822bae352a058c8837c4ca
   RxCocoa: 44a80de90e25b739b5aeaae3c8c371a32e3343cc
@@ -66,6 +62,6 @@ SPEC CHECKSUMS:
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Toaster: c3473963c78e8cabbf6ea6f11ad0fdaae6f54987
 
-PODFILE CHECKSUM: 848fff101f6ab1bcd89d049a57b5ac2081c091b1
+PODFILE CHECKSUM: 2f8e351623018ff062ff6d1c8dc396b0b932dd2e
 
 COCOAPODS: 1.11.2
