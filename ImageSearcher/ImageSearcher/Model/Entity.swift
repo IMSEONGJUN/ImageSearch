@@ -6,6 +6,7 @@
 
 import Foundation
 
+
 // MARK: - ImageInfo
 struct ImageSearchResponse: Codable, Hashable {
     let imageInfos: [ImageInfo]

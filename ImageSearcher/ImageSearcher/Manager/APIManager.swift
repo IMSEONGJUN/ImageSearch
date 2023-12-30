@@ -9,6 +9,8 @@ import RxSwift
 import RxCocoa
 
 final class APIManager {
+    static let shared = APIManager()
+    
     private let session: URLSession
     
     init(session: URLSession = .shared) {

@@ -9,6 +9,7 @@ import RxSwift
 import RxCocoa
 import Toaster
 
+<<<<<<< HEAD:ImageSearcher/ImageSearcher/Controller/FavoriteController.swift
 protocol FavoriteViewModelBindable: ViewModelType {
     // Action -> ViewModel
     var viewWillAppear: PublishRelay<Void> { get }
@@ -22,14 +23,13 @@ protocol FavoriteViewModelBindable: ViewModelType {
 }
 
 final class FavoriteController: UIViewController, ViewType {
+=======
+final class FavoriteViewController: RxMVVMViewController<FavoriteViewModel> {
+>>>>>>> 57d7c16652fab14a375e20a30696fbd01d65ad7a:ImageSearcher/ImageSearcher/ViewController/FavoriteViewController.swift
 
     // MARK: - Properties
-    var disposeBag: DisposeBag!
-    var viewModel: FavoriteViewModelBindable!
-    
     let tableView = UITableView()
     let refresh = UIRefreshControl()
-    
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -44,9 +44,8 @@ final class FavoriteController: UIViewController, ViewType {
         navigationController?.navigationBar.isHidden = false
     }
     
-    
     // MARK: - Initial UI Setup
-    func setupUI() {
+    override func setupUI() {
         view.addSubview(tableView)
         tableView.frame = view.frame
         tableView.backgroundColor = .systemBackground
@@ -57,47 +56,48 @@ final class FavoriteController: UIViewController, ViewType {
     
     
     // MARK: - Automatic Binding
-    func bind() {
+    override func bind() {
+        bindInput()
+        bindOutput()
         
-        // Action -> ViewModel
+        tableView.rx.itemSelected
+            .subscribe(with: self) { owner, indexPath in
+                guard let cell = owner.tableView.cellForRow(at: indexPath) as? FavoriteImageCell,
+                    let image = cell.favoriteImageView.image else { return }
+
+                let vc = ImageDetailController(image: image)
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindInput() {
         rx.viewWillAppear
-            .bind(to: viewModel.viewWillAppear)
+            .bind(to: viewModel.input.viewWillAppear)
             .disposed(by: disposeBag)
         
         refresh.rx.controlEvent(.valueChanged)
-            .bind(to: viewModel.refreshPulled)
+            .bind(to: viewModel.input.refreshPulled)
             .disposed(by: disposeBag)
-        
-        
-        // ViewModel -> State
-        viewModel.cellData
+    }
+    
+    private func bindOutput() {
+        viewModel.output.cellData
             .drive(tableView.rx.items(cellIdentifier: String(describing: FavoriteImageCell.self),
                                       cellType: FavoriteImageCell.self)) { indexPathRow, imageInfo, cell in
                 cell.cellData = imageInfo
             }
             .disposed(by: disposeBag)
         
-        viewModel.errorMessage
+        viewModel.output.errorMessage
             .emit(onNext: {
                 Toast(text: $0, delay: 0, duration: 1).show()
             })
             .disposed(by: disposeBag)
         
-        viewModel.loadingCompleted
-            .map { !$0 }
-            .drive(refresh.rx.isRefreshing)
-            .disposed(by: disposeBag)
-        
-        
-        // UI Binding
-        tableView.rx.itemSelected
-            .subscribe(with: self) { owner, indexPath in
-                guard let cell = owner.tableView.cellForRow(at: indexPath) as? FavoriteImageCell else { return }
-                let image = cell.favoriteImageView.image
-                let vc = ImageDetailController()
-                vc.setImage(image)
-                owner.navigationController?.pushViewController(vc, animated: true)
-            }
+        viewModel.output.loadingCompleted
+            .map(!)
+            .emit(to: refresh.rx.isRefreshing)
             .disposed(by: disposeBag)
     }
 }

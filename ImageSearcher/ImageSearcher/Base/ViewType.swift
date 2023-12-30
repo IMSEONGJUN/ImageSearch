@@ -9,28 +9,44 @@ import RxSwift
 
 // MARK: - BaseView Protocol
 
-protocol ViewType: class {
+protocol ViewType: AnyObject {
     
-    associatedtype VM
+    associatedtype ViewModel: ViewModelType
     
-    var viewModel: VM! { get set }
-    var disposeBag: DisposeBag! { get set }
+    var viewModel: ViewModel { get }
+    var disposeBag: DisposeBag { get set }
+    
+    init(viewModel: ViewModel)
     func setupUI()
     func bind()
 }
 
-extension ViewType where Self: UIViewController {
-    static func create(with viewModel: VM) -> Self {
-        let `self` = Self()
-        
-        // DI
+class RxMVVMViewController<T: ViewModelType>: UIViewController, ViewType {
+    typealias T = ViewModel
+    
+    var viewModel: T
+    var disposeBag: DisposeBag
+    
+    required init(viewModel: T) {
         self.viewModel = viewModel
-        
-        // Initial Setup
         self.disposeBag = DisposeBag()
-        self.loadViewIfNeeded()
-        self.setupUI()
-        self.bind()
-        return self
+        super.init(nibName: nil, bundle: nil)
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupUI()
+        bind()
+    }
+    
+    convenience init() {
+        fatalError("init() has not been implemented")
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupUI() {}
+    func bind() {}
 }

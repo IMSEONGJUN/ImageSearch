@@ -9,8 +9,6 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-// This ViewController only has codes about UI.
-// So, it is categorized as a 'View' eventhough it is a ViewController.
 final class ImageDetailController: UIViewController {
 
     private var detailImageView: UIImageView = {
@@ -23,6 +21,15 @@ final class ImageDetailController: UIViewController {
     private let backButton = UIButton()
     
     let disposeBag = DisposeBag()
+    
+    init(image: UIImage) {
+        self.detailImageView.image = image
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,13 +59,9 @@ final class ImageDetailController: UIViewController {
     
     private func bind() {
         backButton.rx.tap
-            .subscribe(with: self) { owner, _ in
-                owner.navigationController?.popViewController(animated: true)
-            }
+            .subscribe(onNext: { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true)
+            })
             .disposed(by: disposeBag)
-    }
-    
-    func setImage(_ image: UIImage?) {
-        self.detailImageView.image = image
     }
 }

@@ -12,13 +12,14 @@ extension UIViewController {
         navigationItem.title = title
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = .tertiarySystemBackground
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.label]
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.systemGray]
         
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
 }
+<<<<<<< HEAD
 
 extension UIApplication {
 
@@ -29,3 +30,5 @@ extension UIApplication {
     
     
 }
+=======
+>>>>>>> 57d7c16652fab14a375e20a30696fbd01d65ad7a

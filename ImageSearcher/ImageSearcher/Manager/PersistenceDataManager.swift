@@ -37,7 +37,6 @@ enum PersistenceManager {
                     case .remove:
                         retrievedFavorites.removeAll {$0.imageUrl == favorite.imageUrl}
                     }
-                    
                     return save(favorites: retrievedFavorites)
                     
                 case .failure(let error):

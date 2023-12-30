@@ -10,7 +10,11 @@ import RxCocoa
 
 final class FavoriteImageCell: UITableViewCell {
     
+<<<<<<< HEAD
     var cellData: ImageInfo! {
+=======
+    var cellData: Document? {
+>>>>>>> 57d7c16652fab14a375e20a30696fbd01d65ad7a
         didSet {
             configureCellData()
         }
@@ -19,7 +23,7 @@ final class FavoriteImageCell: UITableViewCell {
     let favoriteImageView = CellImageView(frame: .zero)
     let favoriteButton = FavoriteButton()
     
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -33,8 +37,13 @@ final class FavoriteImageCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        favoriteImageView.image = nil
+        favoriteButton.isSelected = false
+    }
+    
     private func configureUI() {
-        contentView.backgroundColor = .systemBackground
         contentView.addSubview(favoriteImageView)
         contentView.addSubview(favoriteButton)
         accessoryType = .disclosureIndicator
@@ -58,7 +67,7 @@ final class FavoriteImageCell: UITableViewCell {
     }
     
     private func configureCellData() {
-        let url = URL(string: cellData.imageUrl)
+        let url = URL(string: cellData?.imageUrl ?? "")
         favoriteImageView.sd_setImage(with: url)
         self.favoriteButton.isSelected = true
     }

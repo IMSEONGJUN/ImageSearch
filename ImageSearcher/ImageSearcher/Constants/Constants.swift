@@ -10,6 +10,7 @@ enum Images {
     static let back = "arrow.left"
 }
 
+
 enum Notifications {
     static let removeFavorite = Notification.Name(rawValue: "removeFavorite")
 }

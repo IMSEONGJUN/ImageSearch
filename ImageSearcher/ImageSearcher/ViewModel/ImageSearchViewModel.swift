@@ -9,15 +9,29 @@ import RxSwift
 import RxCocoa
 import RxOptional
 
-struct ImageSearchViewModel: ImageSearchViewModelBindable {
+final class ImageSearchViewModel: ViewModelType {
+    struct Input {
+        let searchKeyword: AnyObserver<String>
+        let favoriteButtonSelected: AnyObserver<(Document, Int, PersistenceActionType)>
+        let didScrollToBottom: AnyObserver<Void>
+        let searchButtonTapped: AnyObserver<Void>
+    }
+
+    struct Output {
+        let dataSources: Driver<[Document]>
+        let didFinishFavoriteAction: Signal<Int>
+        let errorMessage: Signal<String>
+    }
     
-    // Action with Value
-    let searchKeyword = PublishRelay<String>()
+    private(set) var input: Input!
+    private(set) var output: Output!
     
-    // Action with Void
-    let didScrollToBottom = PublishRelay<Void>()
-    let searchButtonTapped = PublishRelay<Void>()
+    private let searchKeywordSubject = PublishSubject<String>()
+    private let favoriteButtonSelected = PublishSubject<(Document, Int, PersistenceActionType)>()
+    private let didScrollToBottomSubject = PublishSubject<Void>()
+    private let searchButtonTappedSubject = PublishSubject<Void>()
     
+<<<<<<< HEAD
     
     // State
     let cellData: Driver<[ImageInfo]>
@@ -31,10 +45,18 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
         // Proxy
         let cellDataProxy = PublishRelay<[ImageInfo]>()
         cellData = cellDataProxy.asDriver(onErrorJustReturn: [])
+=======
+    init() {
+        input = Input(searchKeyword: searchKeywordSubject.asObserver(),
+                      favoriteButtonSelected: favoriteButtonSelected.asObserver(),
+                      didScrollToBottom: didScrollToBottomSubject.asObserver(),
+                      searchButtonTapped: searchButtonTappedSubject.asObserver())
         
-        let reloadListProxy = PublishRelay<Void>()
-        reloadList = reloadListProxy.asSignal()
+>>>>>>> 57d7c16652fab14a375e20a30696fbd01d65ad7a
         
+        let errorMessage = PublishRelay<String>()
+        
+<<<<<<< HEAD
         let errorMessageProxy = PublishRelay<String>()
         errorMessage = errorMessageProxy.asSignal()
         
@@ -50,38 +72,63 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
                 searchKeyword
             )
             .filter { $1 != "" }
+=======
+        output = Output(dataSources: dataSourceOutput(errorTracker: errorMessage),
+                        didFinishFavoriteAction: modifyFavorite(errorTracker: errorMessage),
+                        errorMessage: errorMessage.asSignal())
+    }
+    
+    private func dataSourceOutput(errorTracker: PublishRelay<String>) -> Driver<[Document]> {
+        let isEnd = BehaviorRelay<Bool>(value: false)
+        let page = BehaviorRelay<Int>(value: 1)
+>>>>>>> 57d7c16652fab14a375e20a30696fbd01d65ad7a
         
         let reset = {
-            cellDataProxy.accept([])
-            cellDataAccumulator.accept([])
             page.accept(1)
+            isEnd.accept(false)
         }
         
-        // MARK: Data Processing Step: [ Action check -> Mutate -> reduce State ]
+        let searchKeywordCleared = searchKeywordSubject
+            .filter { $0.isEmpty }
+            .do(onNext: { _ in reset() })
+            .map { _ -> [Document] in [] }
         
-        // MARK: - [Action 1].. < SearchBar Text Editing Action >
-        
-        // Mutate & Reduce Step
-        searchKeyword
-            .skip(1)
-            .filter { $0 == "" }
-            .do { _ in reset() }
-            .mapToVoid()
-            .bind(to: reloadListProxy)
-            .disposed(by: disposeBag)
-        
-        
-        // MARK: - [Action 2]..< SearchButton Tap Action >
-        
-        // Mutate Step
-        let imageInfo = searchButtonTapped
-            .do { _ in reset() }
-            .withLatestFrom( valuesForSearch )
-            .flatMapLatest { page,key in
-                return model.fetchImageInfo(page: page, searchKey: key)
+        let searchButtonTapped = searchButtonTappedSubject
+            .do(onNext: reset)
+            .withLatestFrom(searchKeywordSubject)
+            .withUnretained(self)
+            .flatMapLatest { owner, keyword in
+                owner.didScrollToBottomSubject
+                    .startWith(())
+                    .withLatestFrom(isEnd)
+                    .filter { !$0 }
+                    .withLatestFrom(page)
+                    .flatMapLatest { page in
+                        APIManager.shared.fetchImageInformation(page: page, searchKey: keyword)
+                            .compactMap { data -> ImageInfo? in
+                                switch data {
+                                case .success(let value):
+                                    return value
+                                case .failure(let error):
+                                    errorTracker.accept(error.localizedDescription)
+                                    return nil
+                                }
+                            }
+                            .do(onNext: {
+                                isEnd.accept($0.meta.isEnd)
+                            })
+                            .map { $0.documents }
+                    }
+                    .scan([]) { prev, new in
+                        new.isEmpty ? [] : prev + new
+                    }
             }
-            .share()
+            .do(onNext: { _ in
+                let newpage = page.value + 1
+                page.accept(newpage)
+            })
         
+<<<<<<< HEAD
         // Reduce Step
         imageInfo
             .map { data -> [ImageInfo]? in
@@ -192,5 +239,33 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
             .mapToVoid()
             .bind(to: reloadListProxy)
             .disposed(by: disposeBag)
+=======
+            let modifiedFavoriteTab = NotificationCenter.default.rx.notification(Notifications.removeFavorite)
+                .withLatestFrom(searchButtonTapped)
+                
+            return Observable.merge(
+                      searchKeywordCleared,
+                      searchButtonTapped,
+                      modifiedFavoriteTab
+                   )
+                   .asDriver(onErrorJustReturn: [])
+    }
+    
+    private func modifyFavorite(errorTracker: PublishRelay<String>) -> Signal<Int> {
+        favoriteButtonSelected
+            .asSignal(onErrorSignalWith: .empty())
+            .flatMapLatest { document, index, action in
+                PersistenceManager.updateWith(favorite: document, actionType: action)
+                    .do(onNext: { error in
+                        guard let error = error else { return }
+                        errorTracker.accept(error.localizedDescription)
+                    })
+                    .filter { error in
+                        error == nil
+                    }
+                    .map { _ in index }
+                    .asSignal(onErrorSignalWith: .empty())
+            }
+>>>>>>> 57d7c16652fab14a375e20a30696fbd01d65ad7a
     }
 }
