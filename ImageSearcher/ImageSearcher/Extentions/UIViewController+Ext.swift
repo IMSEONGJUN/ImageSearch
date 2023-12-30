@@ -22,7 +22,7 @@ extension UIViewController {
 
 extension UIApplication {
 
-    static var statusBar: UIView {
+    static var statusBarView: UIView {
         let status = UIView(frame: (UIApplication.shared.windows.filter{$0.isKeyWindow}.first?.windowScene?.statusBarManager?.statusBarFrame)!)
         return status
     }

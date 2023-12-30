@@ -20,7 +20,7 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
     
     
     // State
-    let cellData: Driver<[Document]>
+    let cellData: Driver<[ImageInfo]>
     let reloadList: Signal<Void>
     let errorMessage: Signal<String>
     
@@ -29,7 +29,7 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
     init(model: ImageSearchModel = ImageSearchModel()) {
         
         // Proxy
-        let cellDataProxy = PublishRelay<[Document]>()
+        let cellDataProxy = PublishRelay<[ImageInfo]>()
         cellData = cellDataProxy.asDriver(onErrorJustReturn: [])
         
         let reloadListProxy = PublishRelay<Void>()
@@ -39,7 +39,7 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
         errorMessage = errorMessageProxy.asSignal()
         
         // Accumulator
-        let cellDataAccumulator = BehaviorRelay<[Document]>(value: [])
+        let cellDataAccumulator = BehaviorRelay<[ImageInfo]>(value: [])
         
         // Materials
         let page = PublishRelay<Int>()
@@ -84,11 +84,11 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
         
         // Reduce Step
         imageInfo
-            .map { data -> [Document]? in
+            .map { data -> [ImageInfo]? in
                 guard case .success(let value) = data else {
                     return nil
                 }
-                return value.documents
+                return value.imageInfos
             }
             .filterNil()
             .do { cellDataAccumulator.accept($0) }
@@ -139,11 +139,11 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
             }
         
         let additionalCellData = additionalFetchedData
-            .map { data -> [Document]? in
+            .map { data -> [ImageInfo]? in
                 guard case .success(let value) = data else {
                     return nil
                 }
-                return value.documents
+                return value.imageInfos
             }
             .filterNil()
         
@@ -167,7 +167,7 @@ struct ImageSearchViewModel: ImageSearchViewModelBindable {
         
         // Reduce Step
         additionalCellData
-            .map { (data) -> [Document] in
+            .map { (data) -> [ImageInfo] in
                 var newAcc = cellDataAccumulator.value
                 newAcc.append(contentsOf: data)
                 return newAcc

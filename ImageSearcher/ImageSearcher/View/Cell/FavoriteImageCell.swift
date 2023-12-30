@@ -10,7 +10,7 @@ import RxCocoa
 
 final class FavoriteImageCell: UITableViewCell {
     
-    var cellData: Document! {
+    var cellData: ImageInfo! {
         didSet {
             configureCellData()
         }

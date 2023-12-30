@@ -15,7 +15,7 @@ final class APIManager {
         self.session = session
     }
     
-    func fetchImageInformation(page: Int?, searchKey: String) -> Observable<Result<ImageInfo, NetworkError>> {
+    func fetchImageInformation(page: Int?, searchKey: String) -> Observable<Result<ImageSearchResponse, NetworkError>> {
         guard let url = makeComponents(page: page, searchKey: searchKey).url else {
             let error = NetworkError.error("유효하지 않은 URL")
             return .just(.failure(error))
@@ -30,7 +30,7 @@ final class APIManager {
                 do{
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    let imageInfo = try decoder.decode(ImageInfo.self, from: data)
+                    let imageInfo = try decoder.decode(ImageSearchResponse.self, from: data)
                     return .success(imageInfo)
                 } catch {
                     return .failure(.error("데이터 디코딩 에러"))

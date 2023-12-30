@@ -1,22 +1,37 @@
 PODS:
+  - Alamofire (5.8.1)
   - JGProgressHUD (2.2)
-  - RxCocoa (6.2.0):
-    - RxRelay (= 6.2.0)
-    - RxSwift (= 6.2.0)
+  - Moya (15.0.0):
+    - Moya/Core (= 15.0.0)
+  - Moya/Core (15.0.0):
+    - Alamofire (~> 5.0)
+  - Moya/ReactiveSwift (15.0.0):
+    - Moya/Core
+    - ReactiveSwift (~> 6.6.1)
+  - Moya/RxSwift (15.0.0):
+    - Moya/Core
+    - RxSwift (~> 6.0)
+  - ReactiveSwift (6.6.1)
+  - RxCocoa (6.6.0):
+    - RxRelay (= 6.6.0)
+    - RxSwift (= 6.6.0)
   - RxOptional (5.0.2):
     - RxCocoa (~> 6.0)
     - RxSwift (~> 6.0)
-  - RxRelay (6.2.0):
-    - RxSwift (= 6.2.0)
-  - RxSwift (6.2.0)
-  - SDWebImage (5.11.1):
-    - SDWebImage/Core (= 5.11.1)
-  - SDWebImage/Core (5.11.1)
-  - SnapKit (5.0.1)
+  - RxRelay (6.6.0):
+    - RxSwift (= 6.6.0)
+  - RxSwift (6.6.0)
+  - SDWebImage (5.18.8):
+    - SDWebImage/Core (= 5.18.8)
+  - SDWebImage/Core (5.18.8)
+  - SnapKit (5.6.0)
   - Toaster (2.3.0)
 
 DEPENDENCIES:
   - JGProgressHUD
+  - Moya
+  - Moya/ReactiveSwift
+  - Moya/RxSwift
   - RxCocoa
   - RxOptional
   - RxSwift
@@ -26,7 +41,10 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Alamofire
     - JGProgressHUD
+    - Moya
+    - ReactiveSwift
     - RxCocoa
     - RxOptional
     - RxRelay
@@ -36,15 +54,18 @@ SPEC REPOS:
     - Toaster
 
 SPEC CHECKSUMS:
+  Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
   JGProgressHUD: d83d7a981b85d11205e19ff8ad5bb9c40571c847
-  RxCocoa: 4baf94bb35f2c0ab31bc0cb9f1900155f646ba42
+  Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
+  ReactiveSwift: fab34244ad908808dc822bae352a058c8837c4ca
+  RxCocoa: 44a80de90e25b739b5aeaae3c8c371a32e3343cc
   RxOptional: 3664964c96b69dd20c9cf78bdfe546615e26eca8
-  RxRelay: e72dbfd157807478401ef1982e1c61c945c94b2f
-  RxSwift: d356ab7bee873611322f134c5f9ef379fa183d8f
-  SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
-  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  RxRelay: 45eaa5db8ee4fb50e5ebd57deec0159e97fa51e6
+  RxSwift: a4b44f7d24599f674deebd1818eab82e58410632
+  SDWebImage: a81bbb3ba4ea5f810f4069c68727cb118467a04a
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Toaster: c3473963c78e8cabbf6ea6f11ad0fdaae6f54987
 
-PODFILE CHECKSUM: d83a43a41e4b689d5c3977046ae2ec2dd5e76a05
+PODFILE CHECKSUM: 848fff101f6ab1bcd89d049a57b5ac2081c091b1
 
 COCOAPODS: 1.11.2

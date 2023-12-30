@@ -15,7 +15,7 @@ struct FavoriteViewModel: FavoriteViewModelBindable {
     let aTableViewRowDeleted = PublishRelay<Void>()
     
     // State
-    let cellData: Driver<[Document]>
+    let cellData: Driver<[ImageInfo]>
     let errorMessage: Signal<String>
     let loadingCompleted: Driver<Bool>
     
@@ -24,7 +24,7 @@ struct FavoriteViewModel: FavoriteViewModelBindable {
     init() {
         
         // Proxy
-        let cellDataProxy = PublishRelay<[Document]>()
+        let cellDataProxy = PublishRelay<[ImageInfo]>()
         cellData = cellDataProxy.asDriver(onErrorJustReturn: [])
         
         let errorMessageProxy = PublishRelay<String>()
@@ -44,7 +44,7 @@ struct FavoriteViewModel: FavoriteViewModelBindable {
             .share()
         
         let favoriteList = initiailFetch
-            .map { data -> [Document]? in
+            .map { data -> [ImageInfo]? in
                 guard case .success(let value) = data else {
                     return nil
                 }
@@ -86,7 +86,7 @@ struct FavoriteViewModel: FavoriteViewModelBindable {
         
         // Reduce Step
         refreshedData
-            .compactMap { data -> [Document]? in
+            .compactMap { data -> [ImageInfo]? in
                 guard case .success(let value) = data else {
                     return nil
                 }
@@ -112,7 +112,7 @@ struct FavoriteViewModel: FavoriteViewModelBindable {
         NotificationCenter.default.rx.notification(Notifications.removeFavorite)
             .mapToVoid()
             .flatMapLatest(PersistenceManager.retrieveFavorites)
-            .compactMap { data -> [Document]? in
+            .compactMap { data -> [ImageInfo]? in
                 guard case .success(let value) = data else {
                     return nil
                 }

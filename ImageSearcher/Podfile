@@ -11,6 +11,9 @@ target 'ImageSearcher' do
   pod 'RxCocoa'
   pod 'SDWebImage'
   pod 'JGProgressHUD'
-  pod 'RxOptional'
   pod 'Toaster'
+  pod 'Moya'
+  pod 'Moya/RxSwift'
+  pod 'Moya/ReactiveSwift'
+  pod 'RxOptional'
 end

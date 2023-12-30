@@ -14,7 +14,7 @@ struct ImageSearchModel {
         self.network = networkManager
     }
     
-    func fetchImageInfo(page: Int?, searchKey: String) -> Observable<Result<ImageInfo, NetworkError>> {
+    func fetchImageInfo(page: Int?, searchKey: String) -> Observable<Result<ImageSearchResponse, NetworkError>> {
         return network.fetchImageInformation(page: page, searchKey: searchKey)
     }
 }

@@ -12,7 +12,7 @@ import RxCocoa
 import RxSwift
 
 final class ImageCell: UICollectionViewCell {
-    var cellData: Document! {
+    var cellData: ImageInfo! {
         didSet{
             configureCell()
         }
@@ -115,7 +115,7 @@ final class ImageCell: UICollectionViewCell {
             })
             .disposed(by: disposeBag)
         
-        PersistenceManager.checkIsFavorited(document: cellData)
+        PersistenceManager.checkIsFavorited(imageInfo: cellData)
             .subscribe(onNext: { [weak self] in
                 self?.favoriteButton.isSelected = $0
             })

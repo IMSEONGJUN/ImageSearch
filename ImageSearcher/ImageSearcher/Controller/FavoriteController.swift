@@ -16,7 +16,7 @@ protocol FavoriteViewModelBindable: ViewModelType {
     var aTableViewRowDeleted: PublishRelay<Void> { get }
     
     // ViewModel -> State
-    var cellData: Driver<[Document]> { get }
+    var cellData: Driver<[ImageInfo]> { get }
     var errorMessage: Signal<String> { get }
     var loadingCompleted: Driver<Bool> { get }
 }
@@ -72,8 +72,8 @@ final class FavoriteController: UIViewController, ViewType {
         // ViewModel -> State
         viewModel.cellData
             .drive(tableView.rx.items(cellIdentifier: String(describing: FavoriteImageCell.self),
-                                      cellType: FavoriteImageCell.self)) { indexPathRow, document, cell in
-                cell.cellData = document
+                                      cellType: FavoriteImageCell.self)) { indexPathRow, imageInfo, cell in
+                cell.cellData = imageInfo
             }
             .disposed(by: disposeBag)
         

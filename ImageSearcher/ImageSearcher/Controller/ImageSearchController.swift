@@ -16,7 +16,7 @@ protocol ImageSearchViewModelBindable: ViewModelType {
     var searchButtonTapped: PublishRelay<Void> { get }
     
     // ViewModel -> State
-    var cellData: Driver<[Document]> { get }
+    var cellData: Driver<[ImageInfo]> { get }
     var reloadList: Signal<Void> { get }
     var errorMessage: Signal<String> { get }
 }
@@ -32,7 +32,7 @@ final class ImageSearchController: UIViewController, ViewType {
 
     private let searchController = UISearchController()
     private let tap = UITapGestureRecognizer()
-    private var statusBar: UIView!
+    private var statusBarView: UIView!
     
     // MARK: - Life Cycle
     override func viewWillAppear(_ animated: Bool) {
@@ -46,14 +46,6 @@ final class ImageSearchController: UIViewController, ViewType {
         return .lightContent
     }
     
-//    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-//        if traitCollection.userInterfaceStyle == .dark {
-//            navigationController?.navigationBar.backgroundColor = .white
-//        } else {
-//            navigationController?.navigationBar.backgroundColor = .white
-//        }
-//    }
-    
     // MARK: - Initial UI Setup
     func setupUI() {
         configureNavigationBar(with: TabBarTitle.imageSearchList, prefersLargeTitles: false)
@@ -62,8 +54,8 @@ final class ImageSearchController: UIViewController, ViewType {
     }
     
     private func configureStatusBar() {
-        statusBar = UIApplication.statusBar
-        guard let statusBar = statusBar else {return}
+        statusBarView = UIApplication.statusBarView
+        guard let statusBar = statusBarView else {return}
         statusBar.backgroundColor = .systemBackground
         let window = UIApplication.shared.windows.filter{$0.isKeyWindow}.first
         window?.addSubview(statusBar)
@@ -110,8 +102,8 @@ final class ImageSearchController: UIViewController, ViewType {
         // State -> View
         viewModel.cellData
             .drive(collection.rx.items(cellIdentifier: String(describing: ImageCell.self),
-                                       cellType: ImageCell.self)) { indexPath, document, cell in
-                cell.cellData = document
+                                       cellType: ImageCell.self)) { indexPath, imageInfo, cell in
+                cell.cellData = imageInfo
             }
             .disposed(by: disposeBag)
         
