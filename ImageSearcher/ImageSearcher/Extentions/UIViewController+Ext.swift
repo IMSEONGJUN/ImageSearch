@@ -18,6 +18,12 @@ extension UIViewController {
         navigationController?.navigationBar.compactAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
+    
+    func wrapNavigationController() -> UINavigationController {
+        let navigationController = UINavigationController(rootViewController: self)
+        navigationController.modalPresentationStyle = .fullScreen
+        return navigationController
+    }
 }
 
 extension UIApplication {

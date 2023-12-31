@@ -8,6 +8,6 @@
 import UIKit
 
 protocol Coordinator {
-    var baseViewController: UIViewController? { get }
-    func start() -> UIViewController
+    var baseViewController: UIViewController? { get set }
+    mutating func start() -> UIViewController
 }

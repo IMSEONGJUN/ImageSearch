@@ -10,29 +10,24 @@ import Moya
 import RxSwift
 
 protocol ImageSearchUseCasable {
-    associatedtype Target: TargetType
-    
-    var moyaProvider: MoyaProvider<Target> { get }
     func search(keyword: String, page: Int?) -> Single<ImageSearchResponse>
+    func markFavorite(imageInfo: ImageInfo) -> Single<FavoriteError?>
 }
 
 final class ImageSearchUseCase: ImageSearchUseCasable {
     let moyaProvider = MoyaProvider<ImageSearchAPI>()
     
     func search(keyword: String, page: Int?) -> Single<ImageSearchResponse> {
-        moyaProvider.rx.request(ImageSearchAPI.search(keyword: keyword, page: page))
+        return moyaProvider.rx.request(ImageSearchAPI.search(keyword: keyword, page: page))
             .filterSuccessfulStatusCodes()
             .map(ImageSearchResponse.self)
+            .catch { error in
+                print("@@@api error:", error)
+                throw error
+            }
     }
-}
-
-
-final class ImageSearchUseCaseMock {
-    let moyaProvider = MoyaProvider<ImageSearchAPI>(stubClosure: MoyaProvider.immediatelyStub)
     
-    func search(keyword: String, page: Int?) -> Single<ImageSearchResponse> {
-        moyaProvider.rx.request(ImageSearchAPI.search(keyword: keyword, page: page))
-            .filterSuccessfulStatusCodes()
-            .map(ImageSearchResponse.self)
+    func markFavorite(imageInfo: ImageInfo) -> Single<FavoriteError?> {
+        PersistenceManager.updateWith(favorite: imageInfo, actionType: .add)
     }
 }

@@ -23,9 +23,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func createTabBar() -> UITabBarController {
-        let searchVC = ImageSearchViewController(viewModel: ImageSearchViewModel())
+        let imageSearchCoordinator = ImageSearchCoordinator()
+        let searchVC = imageSearchCoordinator.start()
         searchVC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
-        let searchNavi = UINavigationController(rootViewController: searchVC)
+//        let searchNavi = UINavigationController(rootViewController: searchVC)
         
         let favoritesListVC = FavoriteViewController(viewModel: FavoriteViewModel())
         favoritesListVC.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
@@ -34,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let tabbar = UITabBarController()
         UITabBar.appearance().tintColor = .systemGreen
         UITabBar.appearance().backgroundColor = .systemBackground
-        tabbar.viewControllers = [searchNavi, favoritesNavi]
+        tabbar.viewControllers = [searchVC, favoritesNavi]
 
         return tabbar
     }
@@ -42,6 +43,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func configureNavigationBar() {
         UINavigationBar.appearance().tintColor = .systemGreen
         UINavigationBar.appearance().backgroundColor = .systemBackground
+    }
+    
+    func applicationWillResignActive(_ application: UIApplication) {
+        print("@@@applicationWillResignActive")
+        PersistenceManager.update()
     }
 }
 

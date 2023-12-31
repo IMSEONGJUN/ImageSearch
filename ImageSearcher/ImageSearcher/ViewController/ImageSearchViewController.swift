@@ -44,7 +44,7 @@ final class ImageSearchViewController: RxMVVMViewController<ImageSearchViewModel
 
     // MARK: - Initial UI Setup
     override func setupUI() {
-        configureNavigationBar(with: TabBarTitle.imageSearchList, prefersLargeTitles: false)
+        configureNavigationBar(with: NavigationBarTitle.imageSearchList, prefersLargeTitles: false)
         configureCollectionView()
         configureSearchBar()
     }
@@ -91,8 +91,6 @@ final class ImageSearchViewController: RxMVVMViewController<ImageSearchViewModel
             .disposed(by: disposeBag)
         
         collectionView.rx.needToFetchMoreData
-            .filter { $0 }
-            .mapToVoid()
             .bind(to: viewModel.input.didScrollToBottom)
             .disposed(by: disposeBag)
         

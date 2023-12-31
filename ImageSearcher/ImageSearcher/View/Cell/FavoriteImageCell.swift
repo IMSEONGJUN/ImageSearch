@@ -26,7 +26,7 @@ final class FavoriteImageCell: UITableViewCell {
         contentView.backgroundColor = .systemBackground
         backgroundColor = .systemBackground
         configureUI()
-        bind()
+//        bind()
     }
     
     required init?(coder: NSCoder) {
@@ -56,11 +56,11 @@ final class FavoriteImageCell: UITableViewCell {
         }
     }
     
-    private func bind() {
-        favoriteButton.rx.tap
-            .bind(to: self.rx.removeFavoritedData)
-            .disposed(by: disposeBag)
-    }
+//    private func bind() {
+//        favoriteButton.rx.tap
+//            .bind(to: self.rx.removeFavoritedData)
+//            .disposed(by: disposeBag)
+//    }
     
     private func configureCellData() {
         let url = URL(string: cellData?.imageUrl ?? "")

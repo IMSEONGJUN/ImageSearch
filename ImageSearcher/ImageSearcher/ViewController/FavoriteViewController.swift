@@ -19,7 +19,7 @@ final class FavoriteViewController: RxMVVMViewController<FavoriteViewModel> {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        configureNavigationBar(with: TabBarTitle.favoriteImage, prefersLargeTitles: false)
+        configureNavigationBar(with: NavigationBarTitle.favoriteImage, prefersLargeTitles: false)
     }
 
     override func viewWillAppear(_ animated: Bool) {

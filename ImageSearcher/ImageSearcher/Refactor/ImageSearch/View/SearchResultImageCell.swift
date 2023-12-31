@@ -55,10 +55,13 @@ class SearchResultImageCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        imageView.image = nil
+        label.text = nil
     }
     
     func setItem(item: ImageInfo, favoriteButtonTapSubject: PublishSubject<Void>) {
         disposeBag = DisposeBag()
-        
+        imageView.sd_setImage(with: URL(string: item.imageUrl))
+        label.text = item.displaySitename
     }
 }

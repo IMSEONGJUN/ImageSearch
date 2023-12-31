@@ -24,7 +24,7 @@ extension Reactive where Base: UIViewController {
 }
 
 extension Reactive where Base: UICollectionView {
-    var needToFetchMoreData: ControlEvent<Bool> {
+    var needToFetchMoreData: ControlEvent<Void> {
         let selector = #selector(UICollectionViewDelegateFlowLayout.scrollViewDidEndDragging(_:willDecelerate:))
         let source = self.delegate.methodInvoked(selector)
             .map{ arg -> Bool in
@@ -34,34 +34,44 @@ extension Reactive where Base: UICollectionView {
                 let deviceViewHeight = scrollView.frame.size.height
                 return offsetY > totalScrollViewContentHeight - deviceViewHeight
             }
+            .filter { $0 }
+            .mapToVoid()
         return ControlEvent(events: source)
     }
 }
 
-extension Reactive where Base: UITableViewCell {
-    var removeFavoritedData: Binder<Void> {
-        return Binder(base) { base, event in
-            guard let cell = base as? FavoriteImageCell,
-                  let cellData = cell.cellData else { return }
-            PersistenceManager.updateWith(favorite: cellData, actionType: .remove)
-                .map{ $0?.rawValue }
-                .subscribe(onNext: {
-                    if let error = $0 {
-                        print(error)
-                        return
-                    }
-                    print("즐겨찾기에서 삭제완료")
-                    NotificationCenter.default.post(name: Notifications.removeFavorite, object: nil)
-                    
-                })
-                .disposed(by: cell.disposeBag)
-            
-        }
-    }
-}
+//extension Reactive where Base: UITableViewCell {
+//    var removeFavoritedData: Binder<Void> {
+//        return Binder(base) { base, event in
+//            guard let cell = base as? FavoriteImageCell,
+//                  let cellData = cell.cellData else { return }
+//            PersistenceManager.updateWith(favorite: cellData, actionType: .remove)
+//                .subscribe({
+//                    if let error = $0 {
+//                        print(error)
+//                        return
+//                    }
+//                    print("즐겨찾기에서 삭제완료")
+//                    NotificationCenter.default.post(name: Notifications.removeFavorite, object: nil)
+//                    
+//                })
+//                .disposed(by: cell.disposeBag)
+//            
+//        }
+//    }
+//}
 
 extension ObservableType {
     func mapToVoid() -> Observable<Void> {
         return map { _ in }
+    }
+}
+
+extension ObservableConvertibleType {
+    func catchErrorJustComplete() -> Observable<Element> {
+        return asObservable()
+            .catch { _ in
+                return .empty()
+            }
     }
 }

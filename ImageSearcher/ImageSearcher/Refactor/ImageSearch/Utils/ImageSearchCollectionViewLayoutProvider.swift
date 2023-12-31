@@ -15,34 +15,22 @@ final class ImageSearchCollectionViewLayoutProvider: CollectionViewLayoutProvida
         let topLeftItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                    heightDimension: .fractionalHeight(0.55))
         let topLeftItem = NSCollectionLayoutItem(layoutSize: topLeftItemSize)
-        topLeftItem.contentInsets = NSDirectionalEdgeInsets.init(top: 8, leading: 8, bottom: 8, trailing: 8)
+        topLeftItem.contentInsets = NSDirectionalEdgeInsets.init(top: 2, leading: 2, bottom: 2, trailing: 2)
         
         let topLeftBottomItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                      heightDimension: .fractionalHeight(0.45))
         let topLeftBottomItem = NSCollectionLayoutItem(layoutSize: topLeftBottomItemSize)
-        topLeftBottomItem.contentInsets = NSDirectionalEdgeInsets.init(top: 8, leading: 8, bottom: 8, trailing: 8)
+        topLeftBottomItem.contentInsets = NSDirectionalEdgeInsets.init(top: 2, leading: 2, bottom: 2, trailing: 2)
         topLeftBottomItem.edgeSpacing = .init(leading: .none, top: .none, trailing: .none, bottom: .fixed(-24))
-
-        
-//        let topMidItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-//                                                  heightDimension: .fractionalHeight(0.4))
-//        let topMidItem = NSCollectionLayoutItem(layoutSize: topMidItemSize)
-//        topMidItem.contentInsets = NSDirectionalEdgeInsets.init(top: 8, leading: 8, bottom: 8, trailing: 8)
-//        topMidItem.edgeSpacing = .init(leading: .none, top: .fixed(24), trailing: .none, bottom: .none)
-//        
-//        let topMidBottomItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-//                                                                                         heightDimension: .fractionalHeight(0.6)))
-//        topMidBottomItem.contentInsets = NSDirectionalEdgeInsets.init(top: 8, leading: 8, bottom: 8, trailing: 8)
-//        topMidBottomItem.edgeSpacing = .init(leading: .none, top: .none, trailing: .none, bottom: .fixed(-24))
         
         let topRightItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                     heightDimension: .fractionalHeight(0.65))
         let topRightItem = NSCollectionLayoutItem(layoutSize: topRightItemSize)
-        topRightItem.contentInsets = NSDirectionalEdgeInsets.init(top: 8, leading: 8, bottom: 8, trailing: 8)
+        topRightItem.contentInsets = NSDirectionalEdgeInsets.init(top: 2, leading: 2, bottom: 2, trailing: 2)
         
         let topRightBottomItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                                                            heightDimension: .fractionalHeight(0.35)))
-        topRightBottomItem.contentInsets = NSDirectionalEdgeInsets.init(top: 8, leading: 8, bottom: 8, trailing: 8)
+        topRightBottomItem.contentInsets = NSDirectionalEdgeInsets.init(top: 2, leading: 2, bottom: 2, trailing: 2)
         topRightBottomItem.edgeSpacing = .init(leading: .none, top: .none, trailing: .none, bottom: .fixed(-24))
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),

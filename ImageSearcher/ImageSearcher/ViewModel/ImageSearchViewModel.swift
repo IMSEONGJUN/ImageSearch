@@ -111,7 +111,7 @@ final class ImageSearchViewModel: ViewModelType {
             .asSignal(onErrorSignalWith: .empty())
             .flatMapLatest { document, index, action in
                 PersistenceManager.updateWith(favorite: document, actionType: action)
-                    .do(onNext: { error in
+                    .do(onSuccess: { error in
                         guard let error = error else { return }
                         errorTracker.accept(error.localizedDescription)
                     })

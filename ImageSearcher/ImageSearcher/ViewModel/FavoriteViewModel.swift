@@ -47,7 +47,7 @@ final class FavoriteViewModel: ViewModelType {
                 refreshPulledSubject,
                 NotificationCenter.default.rx.notification(Notifications.removeFavorite).mapToVoid()
             )
-            .flatMapLatest(PersistenceManager.retrieveFavorites)
+            .flatMapLatest(PersistenceManager.retrieveFavoritesArray)
             .do(onNext: { _ in loadingCompleted.accept(true) })
             .asDriver(onErrorJustReturn: .failure(.failedToLoadFavorite))
     }

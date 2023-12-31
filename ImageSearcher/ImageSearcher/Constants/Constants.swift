@@ -15,7 +15,7 @@ enum Notifications {
     static let removeFavorite = Notification.Name(rawValue: "removeFavorite")
 }
 
-enum TabBarTitle {
+enum NavigationBarTitle {
     static let imageSearchList = "이미지 검색 & 리스트"
     static let favoriteImage = "이미지 즐겨찾기"
 }

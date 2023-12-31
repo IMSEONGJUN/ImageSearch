@@ -16,28 +16,32 @@ enum PersistenceManager {
     
     static private let defaults = UserDefaults.standard
     
+    static private var cache = Set<ImageInfo>()
+    
+    static private var cachedArray: [ImageInfo] {
+        Array(cache)
+    }
+    
     enum Keys {
         static let favorites = "favorites"
     }
     
-    static func updateWith(favorite: ImageInfo, actionType: PersistenceActionType) -> Observable<FavoriteError?>  {
-        return retrieveFavorites()
+    static func updateWith(favorite: ImageInfo, actionType: PersistenceActionType) -> Single<FavoriteError?>  {
+        return retrieveFavoritesSet()
             .map { favoritedData -> FavoriteError? in
                 switch favoritedData {
                 case .success(let favorites):
-                    var retrievedFavorites = favorites
-                    
                     switch actionType {
                     case .add:
-                        guard !retrievedFavorites.contains(favorite) else {
+                        guard !favorites.contains(favorite) else {
                             return .alreadyInFavorites
                         }
-                        retrievedFavorites.append(favorite)
+                        save(favorites: favorite)
                         
                     case .remove:
-                        retrievedFavorites.removeAll {$0.imageUrl == favorite.imageUrl}
+                        cache.remove(favorite)
                     }
-                    return save(favorites: retrievedFavorites)
+                    return nil
                     
                 case .failure(let error):
                     return error
@@ -45,13 +49,12 @@ enum PersistenceManager {
             }
     }
 
-    static func checkIsFavorited(imageInfo: ImageInfo) -> Observable<Bool> {
-        return retrieveFavorites()
+    static func checkIsFavorited(imageInfo: ImageInfo) -> Single<Bool> {
+        return retrieveFavoritesSet()
             .map { favoritedData -> Bool in
                 switch favoritedData {
                 case .success(let favorites):
-                    let retrievedFavorites = favorites
-                    if retrievedFavorites.contains(imageInfo) {
+                    if favorites.contains(imageInfo) {
                        return true
                     }
                 case .failure(_):
@@ -61,7 +64,30 @@ enum PersistenceManager {
             }
     }
     
-    static func retrieveFavorites() -> Observable<Result<[ImageInfo], FavoriteError>> {
+    private static func retrieveFavoritesSet() -> Single<Result<Set<ImageInfo>, FavoriteError>> {
+        guard cache.isEmpty else {
+            return .just(.success(cache))
+        }
+        
+        guard let favoriteData = defaults.object(forKey: Keys.favorites) as? Data else {
+            return .just(.success([]))
+        }
+        
+        do {
+            let decoder = JSONDecoder()
+            let favorites = try decoder.decode(Set<ImageInfo>.self, from: favoriteData)
+            cache = cache.union(favorites)
+            return .just(.success(favorites))
+        } catch {
+            return .just(.failure(.failedToLoadFavorite))
+        }
+    }
+    
+    static func retrieveFavoritesArray() -> Single<Result<[ImageInfo], FavoriteError>> {
+        guard cache.isEmpty else {
+            return .just(.success(cachedArray))
+        }
+        
         guard let favoriteData = defaults.object(forKey: Keys.favorites) as? Data else {
             return .just(.success([]))
         }
@@ -69,20 +95,24 @@ enum PersistenceManager {
         do {
             let decoder = JSONDecoder()
             let favorites = try decoder.decode([ImageInfo].self, from: favoriteData)
+            cache = cache.union(favorites)
             return .just(.success(favorites))
         } catch {
             return .just(.failure(.failedToLoadFavorite))
         }
     }
     
-    static func save(favorites: [ImageInfo]) -> FavoriteError? {
+    static func save(favorites: ImageInfo) {
+        cache.insert(favorites)
+    }
+    
+    static func update() {
         do {
             let encoder = JSONEncoder()
-            let encodedFavorites = try encoder.encode(favorites)
+            let encodedFavorites = try encoder.encode(cache)
             defaults.set(encodedFavorites, forKey: Keys.favorites)
-            return nil
         } catch {
-            return .failedToSaveFavorite
+            
         }
     }
 }

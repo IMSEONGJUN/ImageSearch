@@ -34,6 +34,9 @@ final class ImageService {
                 
                 return .success(image)
             }
+            .catch { error in
+                return .just(.failure(.unableToComplete))
+            }
     }
 }
 

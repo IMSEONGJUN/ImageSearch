@@ -13,4 +13,8 @@ class BaseCoordinator: Coordinator {
     func start() -> UIViewController {
         UIViewController()
     }
+    
+    func registerBaseViewController(_ viewController: UIViewController) {
+        baseViewController = viewController
+    }
 }
