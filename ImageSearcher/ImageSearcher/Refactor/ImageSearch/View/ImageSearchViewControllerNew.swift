@@ -21,13 +21,13 @@ final class ImageSearchViewControllerNew: BaseViewController<ImageSearchViewMode
         switch itemIdentifier {
         case .image(let imageInfo):
             let cell: ImageCell = collectionView.dequeueReusableCell(indexPath: indexPath)
-            cell.configureCell(index: indexPath.item, data: imageInfo, selectFavoriteButton: owner.favoriteButtonTapSubject)
+            cell.configureCell(indexPath: indexPath, data: imageInfo, selectFavoriteButton: owner.favoriteButtonTapSubject)
             return cell
         }
     }
     
     private let searchController = UISearchController()
-    private let favoriteButtonTapSubject = PublishSubject<(ImageInfo, Int, PersistenceActionType)>()
+    private let favoriteButtonTapSubject = PublishSubject<(ImageInfo, IndexPath, PersistenceUpdateType)>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +50,12 @@ final class ImageSearchViewControllerNew: BaseViewController<ImageSearchViewMode
         
         output.dataLoaded
             .drive(collectionView.rx.dataSource)
+            .disposed(by: disposeBag)
+        
+        output.updateFavorite
+            .drive(with: self) { owner, indexPath in
+                owner.collectionView.reconfigureItem(at: indexPath)
+            }
             .disposed(by: disposeBag)
     }
 }

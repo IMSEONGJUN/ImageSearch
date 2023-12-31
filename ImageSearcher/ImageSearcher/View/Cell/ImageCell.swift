@@ -12,28 +12,31 @@ import RxCocoa
 import RxSwift
 
 final class ImageCell: UICollectionViewCell {
-    let imageView = CellImageView(frame: .zero)
+    private let imageView = CellImageView(frame: .zero)
+    var image: UIImage? {
+        imageView.image
+    }
+    
     private let favoriteButton = FavoriteButton()
-    var disposeBag = DisposeBag()
+    private var disposeBag = DisposeBag()
     
     private lazy var verticalStackView: UIStackView = {
-       let stack = UIStackView(arrangedSubviews: [imageView, horizontalStackView])
+        let stack = UIStackView(arrangedSubviews: [imageView, horizontalStackView])
         stack.axis = .vertical
         stack.spacing = 8
         return stack
     }()
     
     private lazy var horizontalStackView: UIStackView = {
-       let stack = UIStackView(arrangedSubviews: [label, favoriteButton])
+        let stack = UIStackView(arrangedSubviews: [label, favoriteButton])
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .horizontal
         stack.spacing = 8
         return stack
     }()
-
+    
     private let label: UILabel = {
-       let label = UILabel()
-        label.text = ""
+        let label = UILabel()
         label.textColor = .darkGray
         label.font = UIFont.systemFont(ofSize: 13, weight: .bold)
         return label
@@ -57,6 +60,10 @@ final class ImageCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        reset()
+    }
+    
+    private func reset() {
         disposeBag = DisposeBag()
         imageView.image = nil
         favoriteButton.isSelected = false
@@ -68,10 +75,11 @@ final class ImageCell: UICollectionViewCell {
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4))
     }
     
-    func configureCell(index: Int,
+    func configureCell(indexPath: IndexPath,
                        data: ImageInfo,
-                       selectFavoriteButton: PublishSubject<(ImageInfo, Int, PersistenceActionType)>) {
-
+                       selectFavoriteButton: PublishSubject<(ImageInfo, IndexPath, PersistenceUpdateType)>) {
+        reset()
+        
         self.label.text = data.displaySitename
         ImageService.shared.downloadImage(from: data.imageUrl)
             .observe(on: MainScheduler.instance)
@@ -88,14 +96,16 @@ final class ImageCell: UICollectionViewCell {
             .disposed(by: disposeBag)
         
         favoriteButton.rx.tap
-            .scan(favoriteButton.isSelected) { prev, _ in
-                return !prev
+            .map { [weak self] in
+                guard let owner = self else { return false }
+                let toggleSelected = !owner.favoriteButton.isSelected
+                return toggleSelected
             }
-            .map { isSelected -> PersistenceActionType in
+            .map { isSelected -> PersistenceUpdateType in
                 isSelected ? .add : .remove
             }
-            .map { action in
-                (data, index, action)
+            .map { updateType in
+                (data, indexPath, updateType)
             }
             .bind(to: selectFavoriteButton)
             .disposed(by: disposeBag)

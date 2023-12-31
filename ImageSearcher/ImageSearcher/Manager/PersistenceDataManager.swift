@@ -8,7 +8,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-enum PersistenceActionType {
+enum PersistenceUpdateType {
     case add, remove
 }
 
@@ -26,7 +26,7 @@ enum PersistenceManager {
         static let favorites = "favorites"
     }
     
-    static func updateWith(favorite: ImageInfo, actionType: PersistenceActionType) -> Single<FavoriteError?>  {
+    static func updateWith(favorite: ImageInfo, actionType: PersistenceUpdateType) -> Single<FavoriteError?>  {
         return retrieveFavoritesSet()
             .map { favoritedData -> FavoriteError? in
                 switch favoritedData {

@@ -11,7 +11,7 @@ import RxSwift
 
 protocol ImageSearchUseCasable {
     func search(keyword: String, page: Int?) -> Single<ImageSearchResponse>
-    func markFavorite(imageInfo: ImageInfo) -> Single<FavoriteError?>
+    func updateFavorite(imageInfo: ImageInfo, actionType: PersistenceUpdateType) -> Single<FavoriteError?>
 }
 
 final class ImageSearchUseCase: ImageSearchUseCasable {
@@ -21,13 +21,9 @@ final class ImageSearchUseCase: ImageSearchUseCasable {
         return moyaProvider.rx.request(ImageSearchAPI.search(keyword: keyword, page: page))
             .filterSuccessfulStatusCodes()
             .map(ImageSearchResponse.self)
-            .catch { error in
-                print("@@@api error:", error)
-                throw error
-            }
     }
     
-    func markFavorite(imageInfo: ImageInfo) -> Single<FavoriteError?> {
-        PersistenceManager.updateWith(favorite: imageInfo, actionType: .add)
+    func updateFavorite(imageInfo: ImageInfo, actionType: PersistenceUpdateType) -> Single<FavoriteError?> {
+        PersistenceManager.updateWith(favorite: imageInfo, actionType: actionType)
     }
 }

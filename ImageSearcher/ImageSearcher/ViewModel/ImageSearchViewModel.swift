@@ -12,7 +12,7 @@ import RxOptional
 final class ImageSearchViewModel: ViewModelType {
     struct Input {
         let searchKeyword: AnyObserver<String>
-        let favoriteButtonSelected: AnyObserver<(ImageInfo, Int, PersistenceActionType)>
+        let favoriteButtonSelected: AnyObserver<(ImageInfo, Int, PersistenceUpdateType)>
         let didScrollToBottom: AnyObserver<Void>
         let searchButtonTapped: AnyObserver<Void>
     }
@@ -27,7 +27,7 @@ final class ImageSearchViewModel: ViewModelType {
     private(set) var output: Output!
     
     private let searchKeywordSubject = PublishSubject<String>()
-    private let favoriteButtonSelected = PublishSubject<(ImageInfo, Int, PersistenceActionType)>()
+    private let favoriteButtonSelected = PublishSubject<(ImageInfo, Int, PersistenceUpdateType)>()
     private let didScrollToBottomSubject = PublishSubject<Void>()
     private let searchButtonTappedSubject = PublishSubject<Void>()
 

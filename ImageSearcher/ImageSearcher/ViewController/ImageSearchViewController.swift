@@ -17,7 +17,7 @@ final class ImageSearchViewController: RxMVVMViewController<ImageSearchViewModel
     private let searchController = UISearchController()
     private let tap = UITapGestureRecognizer()
     
-    private let favoriteButtonTapSubject = PublishSubject<(ImageInfo, Int, PersistenceActionType)>()
+    private let favoriteButtonTapSubject = PublishSubject<(ImageInfo, Int, PersistenceUpdateType)>()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -70,7 +70,7 @@ final class ImageSearchViewController: RxMVVMViewController<ImageSearchViewModel
         collectionView.rx.itemSelected
             .subscribe(with: self) { owner, indexPath in
                 guard let cell = owner.collectionView.cellForItem(at: indexPath) as? ImageCell,
-                      let image = cell.imageView.image else { return }
+                      let image = cell.image else { return }
                 owner.searchController.dismiss(animated: true)
                 let vc = ImageDetailController(image: image)
                 owner.navigationController?.pushViewController(vc, animated: true)
@@ -104,7 +104,7 @@ final class ImageSearchViewController: RxMVVMViewController<ImageSearchViewModel
             .drive(collectionView.rx.items(cellIdentifier: String(describing: ImageCell.self),
                                        cellType: ImageCell.self)) { [weak self] index, document, cell in
                 guard let self = self else { return }
-                cell.configureCell(index: index, data: document, selectFavoriteButton: self.favoriteButtonTapSubject)
+//                cell.configureCell(index: index, data: document, selectFavoriteButton: self.favoriteButtonTapSubject)
             }
             .disposed(by: disposeBag)
         
