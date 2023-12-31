@@ -17,14 +17,14 @@ class ImageSearchViewModelNew: ViewModelable {
     
     struct Input {
         let searchKeyword: Observable<String>
-        let favoriteButtonSelected: Observable<(ImageInfo, IndexPath, PersistenceUpdateType)>
+        let favoriteButtonSelected: Observable<(ImageSearchResultItem, PersistenceUpdateType)>
         let didScrollToBottom: Observable<Void>
         let searchButtonTapped: Observable<Void>
     }
     
     struct Output {
         let dataLoaded: Driver<([ImageSearchResultSectionModel], DataPresentType)>
-        let updateFavorite: Driver<IndexPath>
+        let updateFavorite: Driver<ImageSearchResultItem>
     }
     
     private let useCase: any ImageSearchUseCasable
@@ -86,11 +86,14 @@ class ImageSearchViewModelNew: ViewModelable {
         .map { ($0, dataPresentType) }
         
         let updateFavorite = input.favoriteButtonSelected
-            .flatMapLatest { imageInfo, indexPath, type in
-                useCase.updateFavorite(imageInfo: imageInfo, actionType: type)
+            .flatMapLatest { item, type -> Observable<ImageSearchResultItem> in
+                guard case let .image(imageInfo) = item else {
+                    return Observable.empty()
+                }
+                return useCase.updateFavorite(imageInfo: imageInfo, actionType: type)
                     .asObservable()
                     .filter { $0 == nil }
-                    .map { _ in indexPath }
+                    .map { _ in item }
             }
             .asDriver(onErrorDriveWith: .empty())
         

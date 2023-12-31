@@ -44,10 +44,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().tintColor = .systemGreen
         UINavigationBar.appearance().backgroundColor = .systemBackground
     }
-    
-    func applicationWillResignActive(_ application: UIApplication) {
-        print("@@@applicationWillResignActive")
-        PersistenceManager.update()
-    }
 }
 

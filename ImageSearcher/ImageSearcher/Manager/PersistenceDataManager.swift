@@ -36,7 +36,11 @@ enum PersistenceManager {
                         guard !favorites.contains(favorite) else {
                             return .alreadyInFavorites
                         }
-                        save(favorites: favorite)
+                        do {
+                            try save(favorites: favorite)
+                        } catch {
+                            return FavoriteError.failedToSaveFavorite
+                        }
                         
                     case .remove:
                         cache.remove(favorite)
@@ -102,17 +106,18 @@ enum PersistenceManager {
         }
     }
     
-    static func save(favorites: ImageInfo) {
+    static func save(favorites: ImageInfo) throws {
         cache.insert(favorites)
+        try update()
     }
     
-    static func update() {
+    static func update() throws {
         do {
             let encoder = JSONEncoder()
             let encodedFavorites = try encoder.encode(cache)
             defaults.set(encodedFavorites, forKey: Keys.favorites)
         } catch {
-            
+            throw error
         }
     }
 }

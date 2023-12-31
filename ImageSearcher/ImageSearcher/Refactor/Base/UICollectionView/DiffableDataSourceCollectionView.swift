@@ -74,11 +74,12 @@ final class DiffableDataSourceCollectionView<Section: Hashable, Item: Hashable>:
         apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
-    func reconfigureItem(at indexPath: IndexPath) {
-        guard let item = item(for: indexPath), var snapshot = diffableDataSource?.snapshot() else {
+    func reconfigureItems(_ items: [Item]) {
+        guard var snapshot = diffableDataSource?.snapshot() else {
             return
         }
-        snapshot.reconfigureItems([item])
+        
+        snapshot.reconfigureItems(items)
         apply(snapshot, animatingDifferences: true)
     }
     

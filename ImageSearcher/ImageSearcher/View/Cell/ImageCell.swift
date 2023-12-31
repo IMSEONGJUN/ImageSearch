@@ -75,13 +75,16 @@ final class ImageCell: UICollectionViewCell {
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4))
     }
     
-    func configureCell(indexPath: IndexPath,
-                       data: ImageInfo,
-                       selectFavoriteButton: PublishSubject<(ImageInfo, IndexPath, PersistenceUpdateType)>) {
+    func configureCell(item: ImageSearchResultItem,
+                       selectFavoriteButton: PublishSubject<(ImageSearchResultItem, PersistenceUpdateType)>) {
         reset()
         
-        self.label.text = data.displaySitename
-        ImageService.shared.downloadImage(from: data.imageUrl)
+        guard case let .image(imageInfo) = item else {
+            return
+        }
+        
+        self.label.text = imageInfo.displaySitename
+        ImageService.shared.downloadImage(from: imageInfo.imageUrl)
             .observe(on: MainScheduler.instance)
             .compactMap {
                 guard case .success(let image) = $0 else { return nil }
@@ -90,7 +93,7 @@ final class ImageCell: UICollectionViewCell {
             .bind(to: imageView.rx.image)
             .disposed(by: disposeBag)
         
-        PersistenceManager.checkIsFavorited(imageInfo: data)
+        PersistenceManager.checkIsFavorited(imageInfo: imageInfo)
             .asObservable()
             .bind(to: favoriteButton.rx.isSelected)
             .disposed(by: disposeBag)
@@ -105,7 +108,7 @@ final class ImageCell: UICollectionViewCell {
                 isSelected ? .add : .remove
             }
             .map { updateType in
-                (data, indexPath, updateType)
+                (item, updateType)
             }
             .bind(to: selectFavoriteButton)
             .disposed(by: disposeBag)

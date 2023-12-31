@@ -14,20 +14,19 @@ final class ImageSearchViewControllerNew: BaseViewController<ImageSearchViewMode
     typealias Section = ImageSearchResultSection
     typealias Item = ImageSearchResultItem
         
-    lazy var collectionView = DiffableDataSourceCollectionView<Section, Item>(layoutProvider: createLayoutProvider()) { [weak self] collectionView, indexPath, itemIdentifier in
-        
+    lazy var collectionView = DiffableDataSourceCollectionView<Section, Item>(layoutProvider: createLayoutProvider())
+    { [weak self] collectionView, indexPath, item in
         guard let owner = self else { return nil }
-        
-        switch itemIdentifier {
-        case .image(let imageInfo):
+        switch item {
+        case .image:
             let cell: ImageCell = collectionView.dequeueReusableCell(indexPath: indexPath)
-            cell.configureCell(indexPath: indexPath, data: imageInfo, selectFavoriteButton: owner.favoriteButtonTapSubject)
+            cell.configureCell(item: item, selectFavoriteButton: owner.favoriteButtonTapSubject)
             return cell
         }
     }
     
     private let searchController = UISearchController()
-    private let favoriteButtonTapSubject = PublishSubject<(ImageInfo, IndexPath, PersistenceUpdateType)>()
+    private let favoriteButtonTapSubject = PublishSubject<(Item, PersistenceUpdateType)>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,8 +52,8 @@ final class ImageSearchViewControllerNew: BaseViewController<ImageSearchViewMode
             .disposed(by: disposeBag)
         
         output.updateFavorite
-            .drive(with: self) { owner, indexPath in
-                owner.collectionView.reconfigureItem(at: indexPath)
+            .drive(with: self) { owner, item in
+                owner.collectionView.reconfigureItems([item])
             }
             .disposed(by: disposeBag)
     }
