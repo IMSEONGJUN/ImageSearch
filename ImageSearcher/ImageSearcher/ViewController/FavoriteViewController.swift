@@ -69,7 +69,7 @@ final class FavoriteViewController: RxMVVMViewController<FavoriteViewModel> {
         viewModel.output.cellData
             .drive(tableView.rx.items(cellIdentifier: String(describing: FavoriteImageCell.self),
                                       cellType: FavoriteImageCell.self)) { indexPathRow, imageInfo, cell in
-                cell.cellData = imageInfo
+//                cell.cellData = imageInfo
             }
             .disposed(by: disposeBag)
         

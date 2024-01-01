@@ -22,6 +22,8 @@ enum PersistenceManager {
         Array(cache)
     }
     
+    static let dataUpdated = PublishSubject<Void>()
+    
     enum Keys {
         static let favorites = "favorites"
     }
@@ -36,15 +38,19 @@ enum PersistenceManager {
                         guard !favorites.contains(favorite) else {
                             return .alreadyInFavorites
                         }
-                        do {
-                            try save(favorites: favorite)
-                        } catch {
-                            return FavoriteError.failedToSaveFavorite
-                        }
+                        
+                        cache.insert(favorite)
                         
                     case .remove:
                         cache.remove(favorite)
                     }
+                    
+                    do {
+                        try update()
+                    } catch {
+                        return FavoriteError.failedToSaveFavorite
+                    }
+                    
                     return nil
                     
                 case .failure(let error):
@@ -106,16 +112,12 @@ enum PersistenceManager {
         }
     }
     
-    static func save(favorites: ImageInfo) throws {
-        cache.insert(favorites)
-        try update()
-    }
-    
     static func update() throws {
         do {
             let encoder = JSONEncoder()
             let encodedFavorites = try encoder.encode(cache)
             defaults.set(encodedFavorites, forKey: Keys.favorites)
+            dataUpdated.onNext(())
         } catch {
             throw error
         }

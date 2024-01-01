@@ -9,16 +9,8 @@ import RxSwift
 import RxCocoa
 
 final class FavoriteImageCell: UITableViewCell {
-
-    var cellData: ImageInfo! {
-        didSet {
-            configureCellData()
-        }
-    }
-    
     let favoriteImageView = CellImageView(frame: .zero)
     let favoriteButton = FavoriteButton()
-    
     var disposeBag = DisposeBag()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -26,7 +18,6 @@ final class FavoriteImageCell: UITableViewCell {
         contentView.backgroundColor = .systemBackground
         backgroundColor = .systemBackground
         configureUI()
-//        bind()
     }
     
     required init?(coder: NSCoder) {
@@ -37,6 +28,7 @@ final class FavoriteImageCell: UITableViewCell {
         super.prepareForReuse()
         favoriteImageView.image = nil
         favoriteButton.isSelected = false
+        disposeBag = DisposeBag()
     }
     
     private func configureUI() {
@@ -56,16 +48,15 @@ final class FavoriteImageCell: UITableViewCell {
         }
     }
     
-//    private func bind() {
-//        favoriteButton.rx.tap
-//            .bind(to: self.rx.removeFavoritedData)
-//            .disposed(by: disposeBag)
-//    }
-    
-    private func configureCellData() {
-        let url = URL(string: cellData?.imageUrl ?? "")
+    func configureCell(item: ImageInfo, unmarkFavoriteSubject: PublishSubject<ImageInfo>) {
+        let url = URL(string: item.imageUrl)
         favoriteImageView.sd_setImage(with: url)
         self.favoriteButton.isSelected = true
+        favoriteButton.rx.tap
+            .throttle(.seconds(1), latest: false, scheduler: MainScheduler.instance)
+            .map { item }
+            .bind(to: unmarkFavoriteSubject)
+            .disposed(by: disposeBag)
     }
 }
 

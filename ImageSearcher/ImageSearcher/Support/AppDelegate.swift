@@ -24,18 +24,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func createTabBar() -> UITabBarController {
         let imageSearchCoordinator = ImageSearchCoordinator()
-        let searchVC = imageSearchCoordinator.start()
-        searchVC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
-//        let searchNavi = UINavigationController(rootViewController: searchVC)
+        let imageSearchViewController = imageSearchCoordinator.start()
+        imageSearchViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
         
-        let favoritesListVC = FavoriteViewController(viewModel: FavoriteViewModel())
-        favoritesListVC.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
-        let favoritesNavi = UINavigationController(rootViewController: favoritesListVC)
+        let favoriteImageCoordinator = FavoriteImageCoordinator()
+        let favoriteImageViewController = favoriteImageCoordinator.start()
+        favoriteImageViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
         
         let tabbar = UITabBarController()
         UITabBar.appearance().tintColor = .systemGreen
         UITabBar.appearance().backgroundColor = .systemBackground
-        tabbar.viewControllers = [searchVC, favoritesNavi]
+        tabbar.viewControllers = [imageSearchViewController, favoriteImageViewController]
 
         return tabbar
     }

@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class ImageSearchViewModelNew: ViewModelable {
+final class ImageSearchViewModelNew: ViewModelable {
     enum DataPresentType {
         case append
         case refresh

@@ -14,7 +14,7 @@ final class ImageSearchCoordinator: BaseCoordinator {
         let viewController = ImageSearchViewControllerNew(viewModel: viewModel, coordinator: self)
         viewController.configureNavigationBar(with: NavigationBarTitle.imageSearchList, prefersLargeTitles: false)
         let navigationController = viewController.wrapNavigationController()
-        registerBaseViewController(navigationController)
+        registerBaseViewController(viewController)
         return navigationController
     }
 }

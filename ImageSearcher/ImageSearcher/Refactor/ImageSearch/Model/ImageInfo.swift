@@ -1,30 +1,12 @@
 //
 //  ImageInfo.swift
+//  ImageSearcher
 //
-//  Created by SEONGJUN on 2020/10/08.
+//  Created by SEONGJUN on 1/1/24.
 //
 
 import Foundation
 
-
-// MARK: - ImageInfo
-struct ImageSearchResponse: Decodable, Hashable {
-    let imageInfos: [ImageInfo]
-    let meta: Meta
-    
-    enum CodingKeys: String, CodingKey {
-        case imageinfos = "documents"
-        case meta
-    }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        imageInfos = try container.decode([ImageInfo].self, forKey: .imageinfos)
-        meta = try container.decode(Meta.self, forKey: .meta)
-    }
-}
-
-// MARK: - ImageInfo
 struct ImageInfo: Codable, Hashable {
     let displaySitename: String
     let imageUrl: String
@@ -44,7 +26,6 @@ struct ImageInfo: Codable, Hashable {
     }
 }
 
-// MARK: - Meta
 struct Meta: Codable, Hashable {
     let isEnd: Bool
     
@@ -59,17 +40,4 @@ struct Meta: Codable, Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(isEnd)
     }
-}
-
-struct ImageSearchResultSectionModel: SectionModeling {
-    var section: ImageSearchResultSection
-    var items: [ImageSearchResultItem]
-}
-
-enum ImageSearchResultSection {
-    case main
-}
-
-enum ImageSearchResultItem: Hashable {
-    case image(ImageInfo)
 }

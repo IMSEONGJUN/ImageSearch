@@ -93,8 +93,12 @@ final class ImageCell: UICollectionViewCell {
             .bind(to: imageView.rx.image)
             .disposed(by: disposeBag)
         
-        PersistenceManager.checkIsFavorited(imageInfo: imageInfo)
-            .asObservable()
+        PersistenceManager.dataUpdated
+            .startWith(())
+            .flatMapLatest {
+                PersistenceManager.checkIsFavorited(imageInfo: imageInfo)
+                    .asObservable()
+            }
             .bind(to: favoriteButton.rx.isSelected)
             .disposed(by: disposeBag)
         
