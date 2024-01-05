@@ -9,17 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-protocol MVVMCViewType {
-    associatedtype ViewModel: ViewModelable
-    var viewModel: ViewModel { get }
-    var coordinator: any Coordinator { get }
-    var disposeBag: DisposeBag { get }
-    
-    init(viewModel: ViewModel, coordinator: some Coordinator)
-    func bind()
-}
-
-class BaseViewController<ViewModel: ViewModelable>: UIViewController, MVVMCViewType {
+class BaseViewController<ViewModel: ViewModelType>: UIViewController, ViewType {
     let viewModel: ViewModel
     let coordinator: any Coordinator
     var disposeBag = DisposeBag()

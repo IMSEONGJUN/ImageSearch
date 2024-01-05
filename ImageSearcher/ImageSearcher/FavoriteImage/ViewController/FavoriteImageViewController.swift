@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import Toaster
 
 final class FavoriteImageViewController: BaseViewController<FavoriteImageViewModel> {
     
@@ -18,7 +19,23 @@ final class FavoriteImageViewController: BaseViewController<FavoriteImageViewMod
     override func bind() {
         let output = viewModel.transform(ViewModel.Input(unmarkFavorite: unmarkFavoriteSubject.asObservable()))
         
-        output.dataSource
+        let dataLoaded = output.dataSource
+            .compactMap { result -> [ImageInfo]? in
+                if case let .success(imageInfos) = result {
+                    return imageInfos
+                }
+                return nil
+            }
+        
+        let dataLoadingError = output.dataSource
+            .compactMap { data -> String? in
+                guard case .failure(let error) = data else {
+                    return nil
+                }
+                return error.rawValue
+            }
+        
+        dataLoaded
             .drive(tableView.rx.items(cellIdentifier: String(describing: FavoriteImageCell.self),
                                       cellType: FavoriteImageCell.self)) { [weak self] indexPathRow, imageInfo, cell in
                 guard let owner = self else { return }
@@ -26,7 +43,19 @@ final class FavoriteImageViewController: BaseViewController<FavoriteImageViewMod
             }
             .disposed(by: disposeBag)
         
-        output.unmarkDone.drive().disposed(by: disposeBag)
+        dataLoadingError
+            .drive(onNext: {
+                Toast(text: $0, delay: 0, duration: 1).show()
+            })
+            .disposed(by: disposeBag)
+        
+        output.unmarkDone
+            .drive(onNext: { error in
+                if let error {
+                    Toast(text: error.rawValue, delay: 0, duration: 1).show()
+                }
+            })
+            .disposed(by: disposeBag)
         
         tableView.rx.itemSelected
             .subscribe(with: self) { owner, indexPath in

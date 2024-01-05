@@ -50,4 +50,5 @@ enum FavoriteError: String, Error {
     case alreadyInFavorites = "즐겨찾기에 이미 존재하는 이미지 입니다."
     case failedToLoadFavorite = "즐겨찾기 로드 실패"
     case failedToSaveFavorite = "즐겨찾기에 저장 실패"
+    case failedToRemoveFavorite = "즐겨찾기에서 삭제 실패"
 }

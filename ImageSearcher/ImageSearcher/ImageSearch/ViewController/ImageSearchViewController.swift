@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import SnapKit
 
-final class ImageSearchViewControllerNew: BaseViewController<ImageSearchViewModelNew> {
+final class ImageSearchViewControllerNew: BaseViewController<ImageSearchViewModel> {
     typealias Section = ImageSearchResultSection
     typealias Item = ImageSearchResultItem
         

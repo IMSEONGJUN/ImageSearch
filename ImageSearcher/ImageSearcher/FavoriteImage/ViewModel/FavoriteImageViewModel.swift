@@ -9,14 +9,14 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-final class FavoriteImageViewModel: ViewModelable {
+final class FavoriteImageViewModel: ViewModelType {
     struct Input {
         let unmarkFavorite: Observable<ImageInfo>
     }
     
     struct Output {
-        let dataSource: Driver<[ImageInfo]>
-        let unmarkDone: Driver<Void>
+        let dataSource: Driver<Result<[ImageInfo], FavoriteError>>
+        let unmarkDone: Driver<FavoriteError?>
     }
     
     func transform(_ input: Input) -> Output {
@@ -24,22 +24,15 @@ final class FavoriteImageViewModel: ViewModelable {
             .startWith(())
             .flatMapLatest {
                 PersistenceManager.retrieveFavoritesArray()
-                    .compactMap { result -> [ImageInfo]? in
-                        if case let .success(imageInfos) = result {
-                            return imageInfos
-                        }
-                        return nil
-                    }
                     .asObservable()
             }
-            .asDriver(onErrorJustReturn: [])
+            .asDriver(onErrorJustReturn: .failure(.failedToLoadFavorite))
         
         let unmarkDone = input.unmarkFavorite
             .flatMapLatest { imageInfo in
                 PersistenceManager.updateWith(favorite: imageInfo, actionType: .remove)
-                    .map { _ in }
             }
-            .asDriver(onErrorDriveWith: .empty())
+            .asDriver(onErrorJustReturn: .failedToRemoveFavorite)
         
         return Output(dataSource: dataSource, unmarkDone: unmarkDone)
     }

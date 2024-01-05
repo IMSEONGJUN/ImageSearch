@@ -1,15 +1,15 @@
 //
 //  ViewModelType.swift
+//  ImageSearcher
 //
-//  Created by SEONGJUN on 2020/10/08.
+//  Created by SEONGJUN on 12/30/23.
 //
 
 import Foundation
 
-protocol ViewModelType: AnyObject {
+protocol ViewModelType {
     associatedtype Input
     associatedtype Output
     
-    var input: Input! { get }
-    var output: Output! { get }
+    func transform(_ input: Input) -> Output
 }

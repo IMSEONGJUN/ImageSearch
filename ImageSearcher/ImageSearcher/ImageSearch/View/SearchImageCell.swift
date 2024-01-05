@@ -11,7 +11,7 @@ import SDWebImage
 import RxCocoa
 import RxSwift
 
-final class ImageCell: UICollectionViewCell {
+final class SearchImageCell: UICollectionViewCell {
     private let imageView = CellImageView(frame: .zero)
     var image: UIImage? {
         imageView.image
