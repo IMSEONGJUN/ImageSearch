@@ -27,6 +27,16 @@ final class FavoriteImageViewController: BaseViewController<FavoriteImageViewMod
             .disposed(by: disposeBag)
         
         output.unmarkDone.drive().disposed(by: disposeBag)
+        
+        tableView.rx.itemSelected
+            .subscribe(with: self) { owner, indexPath in
+                guard let cell = owner.tableView.cellForRow(at: indexPath) as? FavoriteImageCell,
+                    let image = cell.image else { return }
+
+                let viewController = ImageDetailController(image: image)
+                owner.navigationController?.pushViewController(viewController, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 }
 

@@ -56,6 +56,16 @@ final class ImageSearchViewControllerNew: BaseViewController<ImageSearchViewMode
                 owner.collectionView.reconfigureItems([item])
             }
             .disposed(by: disposeBag)
+        
+        collectionView.rx.itemSelected
+            .subscribe(with: self) { owner, indexPath in
+                guard let cell = owner.collectionView.cellForItem(at: indexPath) as? ImageCell,
+                      let image = cell.image else { return }
+                owner.searchController.dismiss(animated: true)
+                let vc = ImageDetailController(image: image)
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 }
 

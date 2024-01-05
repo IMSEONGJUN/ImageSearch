@@ -12,15 +12,15 @@ import RxCocoa
 final class ImageDetailController: UIViewController {
 
     private var detailImageView: UIImageView = {
-       let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        return iv
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        return imageView
     }()
     
     private let backButton = UIButton()
     
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     init(image: UIImage) {
         self.detailImageView.image = image

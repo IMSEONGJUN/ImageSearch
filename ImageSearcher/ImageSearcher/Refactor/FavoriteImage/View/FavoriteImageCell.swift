@@ -9,9 +9,13 @@ import RxSwift
 import RxCocoa
 
 final class FavoriteImageCell: UITableViewCell {
-    let favoriteImageView = CellImageView(frame: .zero)
-    let favoriteButton = FavoriteButton()
-    var disposeBag = DisposeBag()
+    private let favoriteImageView = CellImageView(frame: .zero)
+    var image: UIImage? {
+        favoriteImageView.image
+    }
+    
+    private let favoriteButton = FavoriteButton()
+    private var disposeBag = DisposeBag()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

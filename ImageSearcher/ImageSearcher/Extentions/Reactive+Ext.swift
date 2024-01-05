@@ -40,27 +40,6 @@ extension Reactive where Base: UICollectionView {
     }
 }
 
-//extension Reactive where Base: UITableViewCell {
-//    var removeFavoritedData: Binder<Void> {
-//        return Binder(base) { base, event in
-//            guard let cell = base as? FavoriteImageCell,
-//                  let cellData = cell.cellData else { return }
-//            PersistenceManager.updateWith(favorite: cellData, actionType: .remove)
-//                .subscribe({
-//                    if let error = $0 {
-//                        print(error)
-//                        return
-//                    }
-//                    print("즐겨찾기에서 삭제완료")
-//                    NotificationCenter.default.post(name: Notifications.removeFavorite, object: nil)
-//                    
-//                })
-//                .disposed(by: cell.disposeBag)
-//            
-//        }
-//    }
-//}
-
 extension ObservableType {
     func mapToVoid() -> Observable<Void> {
         return map { _ in }

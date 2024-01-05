@@ -47,7 +47,7 @@ final class FavoriteViewController: RxMVVMViewController<FavoriteViewModel> {
         tableView.rx.itemSelected
             .subscribe(with: self) { owner, indexPath in
                 guard let cell = owner.tableView.cellForRow(at: indexPath) as? FavoriteImageCell,
-                    let image = cell.favoriteImageView.image else { return }
+                    let image = cell.image else { return }
 
                 let vc = ImageDetailController(image: image)
                 owner.navigationController?.pushViewController(vc, animated: true)

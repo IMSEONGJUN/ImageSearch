@@ -38,5 +38,31 @@ final class ImageService {
                 return .just(.failure(.unableToComplete))
             }
     }
+    
+    func downloadImage(from urlString: String, imageSize: CGSize) -> Observable<Result<UIImage,ImageLoadError>> {
+        let keyString = urlString + "\(imageSize.width)x\(imageSize.height)"
+        let cacheKey = NSString(string: keyString)
+
+        if let image = cache.object(forKey: cacheKey) {
+            return .just(.success(image))
+        }
+        guard let url = URL(string: urlString) else {
+            return .just(.failure(.invalidUrl))
+        }
+        
+        return session.rx.data(request: URLRequest(url: url))
+            .map { data in
+                guard let image = UIImage(data: data) else {
+                    return .failure(.invaildData)
+                }
+                let resizedImage = image.resize(imageSize)
+                self.cache.setObject(resizedImage, forKey: cacheKey)
+                
+                return .success(image)
+            }
+            .catch { error in
+                return .just(.failure(.unableToComplete))
+            }
+    }
 }
 
