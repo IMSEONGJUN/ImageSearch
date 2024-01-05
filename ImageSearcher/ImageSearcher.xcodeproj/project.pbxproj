@@ -15,8 +15,8 @@
 		CED408752B3FDE6800954292 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408742B3FDE6800954292 /* BaseCoordinator.swift */; };
 		CED408832B3FE13C00954292 /* ImageSearchAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408822B3FE13C00954292 /* ImageSearchAPI.swift */; };
 		CED408872B3FE69500954292 /* ImageSearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408862B3FE69500954292 /* ImageSearchUseCase.swift */; };
-		CED408892B3FEDEA00954292 /* ImageSearchViewControllerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408882B3FEDEA00954292 /* ImageSearchViewControllerNew.swift */; };
-		CED4088B2B3FEE0F00954292 /* ImageSearchViewModelNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4088A2B3FEE0F00954292 /* ImageSearchViewModelNew.swift */; };
+		CED408892B3FEDEA00954292 /* ImageSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408882B3FEDEA00954292 /* ImageSearchViewController.swift */; };
+		CED4088B2B3FEE0F00954292 /* ImageSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4088A2B3FEE0F00954292 /* ImageSearchViewModel.swift */; };
 		CED4088E2B401B8900954292 /* DiffableDataSourceCollectionViewUsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4088D2B401B8900954292 /* DiffableDataSourceCollectionViewUsing.swift */; };
 		CED408902B401BBF00954292 /* DiffableDataSourceCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4088F2B401BBF00954292 /* DiffableDataSourceCollectionView.swift */; };
 		CED408922B401BF200954292 /* CollectionViewLayoutProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408912B401BF200954292 /* CollectionViewLayoutProvidable.swift */; };
@@ -41,7 +41,7 @@
 		CEDD8784252F2CB800A3AEEC /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDD8783252F2CB800A3AEEC /* APIManager.swift */; };
 		CEDD8787252F2CF400A3AEEC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDD8786252F2CF400A3AEEC /* Constants.swift */; };
 		CEDD87A1252F3C4D00A3AEEC /* PersistenceDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDD87A0252F3C4D00A3AEEC /* PersistenceDataManager.swift */; };
-		CEDD87B6252F4F6B00A3AEEC /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDD87B5252F4F6B00A3AEEC /* ImageCell.swift */; };
+		CEDD87B6252F4F6B00A3AEEC /* SearchImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDD87B5252F4F6B00A3AEEC /* SearchImageCell.swift */; };
 		CEDD87BA252F533E00A3AEEC /* FavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDD87B9252F533E00A3AEEC /* FavoriteButton.swift */; };
 		CEDD87BE252F542600A3AEEC /* CellImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDD87BD252F542600A3AEEC /* CellImageView.swift */; };
 		CEDD87C1252F574900A3AEEC /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDD87C0252F574900A3AEEC /* ImageService.swift */; };
@@ -63,8 +63,8 @@
 		CED408742B3FDE6800954292 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 		CED408822B3FE13C00954292 /* ImageSearchAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchAPI.swift; sourceTree = "<group>"; };
 		CED408862B3FE69500954292 /* ImageSearchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchUseCase.swift; sourceTree = "<group>"; };
-		CED408882B3FEDEA00954292 /* ImageSearchViewControllerNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchViewControllerNew.swift; sourceTree = "<group>"; };
-		CED4088A2B3FEE0F00954292 /* ImageSearchViewModelNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchViewModelNew.swift; sourceTree = "<group>"; };
+		CED408882B3FEDEA00954292 /* ImageSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchViewController.swift; sourceTree = "<group>"; };
+		CED4088A2B3FEE0F00954292 /* ImageSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchViewModel.swift; sourceTree = "<group>"; };
 		CED4088D2B401B8900954292 /* DiffableDataSourceCollectionViewUsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffableDataSourceCollectionViewUsing.swift; sourceTree = "<group>"; };
 		CED4088F2B401BBF00954292 /* DiffableDataSourceCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffableDataSourceCollectionView.swift; sourceTree = "<group>"; };
 		CED408912B401BF200954292 /* CollectionViewLayoutProvidable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLayoutProvidable.swift; sourceTree = "<group>"; };
@@ -91,7 +91,7 @@
 		CEDD8783252F2CB800A3AEEC /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		CEDD8786252F2CF400A3AEEC /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CEDD87A0252F3C4D00A3AEEC /* PersistenceDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceDataManager.swift; sourceTree = "<group>"; };
-		CEDD87B5252F4F6B00A3AEEC /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
+		CEDD87B5252F4F6B00A3AEEC /* SearchImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchImageCell.swift; sourceTree = "<group>"; };
 		CEDD87B9252F533E00A3AEEC /* FavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteButton.swift; sourceTree = "<group>"; };
 		CEDD87BD252F542600A3AEEC /* CellImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellImageView.swift; sourceTree = "<group>"; };
 		CEDD87C0252F574900A3AEEC /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
@@ -140,6 +140,7 @@
 		CED408642B3FD83600954292 /* ImageSearch */ = {
 			isa = PBXGroup;
 			children = (
+				CED408B62B484B1200954292 /* ViewController */,
 				CED4089A2B41180C00954292 /* Coordinator */,
 				CED408952B40244700954292 /* Utils */,
 				CED4087F2B3FE05500954292 /* UseCase */,
@@ -184,6 +185,7 @@
 		CED408682B3FD8CE00954292 /* FavoriteImage */ = {
 			isa = PBXGroup;
 			children = (
+				CED408B52B484AFD00954292 /* ViewController */,
 				CED408AF2B4272D900954292 /* Coordinator */,
 				CED4087A2B3FDFF800954292 /* UseCase */,
 				CED408792B3FDFF300954292 /* View */,
@@ -229,7 +231,6 @@
 		CED408792B3FDFF300954292 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				CED408A52B42712900954292 /* FavoriteImageViewController.swift */,
 				CEDD87CF253012CC00A3AEEC /* FavoriteImageCell.swift */,
 			);
 			path = View;
@@ -256,7 +257,7 @@
 		CED4087D2B3FE04700954292 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				CED4088A2B3FEE0F00954292 /* ImageSearchViewModelNew.swift */,
+				CED4088A2B3FEE0F00954292 /* ImageSearchViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -264,8 +265,7 @@
 		CED4087E2B3FE04F00954292 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				CED408882B3FEDEA00954292 /* ImageSearchViewControllerNew.swift */,
-				CEDD87B5252F4F6B00A3AEEC /* ImageCell.swift */,
+				CEDD87B5252F4F6B00A3AEEC /* SearchImageCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -328,6 +328,22 @@
 				CEDD87C0252F574900A3AEEC /* ImageService.swift */,
 			);
 			path = Image;
+			sourceTree = "<group>";
+		};
+		CED408B52B484AFD00954292 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CED408A52B42712900954292 /* FavoriteImageViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		CED408B62B484B1200954292 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CED408882B3FEDEA00954292 /* ImageSearchViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		CEDD8743252F1B5000A3AEEC = {
@@ -541,7 +557,7 @@
 				CED408942B401C2200954292 /* SectionModeling.swift in Sources */,
 				CEDD87C5252F624700A3AEEC /* UIViewController+Ext.swift in Sources */,
 				CED408B42B483F3E00954292 /* UIImage+Ext.swift in Sources */,
-				CED408892B3FEDEA00954292 /* ImageSearchViewControllerNew.swift in Sources */,
+				CED408892B3FEDEA00954292 /* ImageSearchViewController.swift in Sources */,
 				CEDD8787252F2CF400A3AEEC /* Constants.swift in Sources */,
 				CEDD87CD252F828900A3AEEC /* Reactive+Ext.swift in Sources */,
 				CEDD87BA252F533E00A3AEEC /* FavoriteButton.swift in Sources */,
@@ -555,7 +571,7 @@
 				CEDD8784252F2CB800A3AEEC /* APIManager.swift in Sources */,
 				CED408A62B42712900954292 /* FavoriteImageViewController.swift in Sources */,
 				CED408A42B4270F700954292 /* FavoriteImageViewModel.swift in Sources */,
-				CEDD87B6252F4F6B00A3AEEC /* ImageCell.swift in Sources */,
+				CEDD87B6252F4F6B00A3AEEC /* SearchImageCell.swift in Sources */,
 				CEDD87BE252F542600A3AEEC /* CellImageView.swift in Sources */,
 				CED4086A2B3FDA4C00954292 /* ViewModelType.swift in Sources */,
 				CED408922B401BF200954292 /* CollectionViewLayoutProvidable.swift in Sources */,
@@ -568,7 +584,7 @@
 				CED408A22B417F6F00954292 /* UICollectionView+Ext.swift in Sources */,
 				CEDD87C1252F574900A3AEEC /* ImageService.swift in Sources */,
 				CEDD8750252F1B5000A3AEEC /* AppDelegate.swift in Sources */,
-				CED4088B2B3FEE0F00954292 /* ImageSearchViewModelNew.swift in Sources */,
+				CED4088B2B3FEE0F00954292 /* ImageSearchViewModel.swift in Sources */,
 				CED4089E2B411B8800954292 /* MainCoordinator.swift in Sources */,
 				CEDD87A1252F3C4D00A3AEEC /* PersistenceDataManager.swift in Sources */,
 				CED4088E2B401B8900954292 /* DiffableDataSourceCollectionViewUsing.swift in Sources */,

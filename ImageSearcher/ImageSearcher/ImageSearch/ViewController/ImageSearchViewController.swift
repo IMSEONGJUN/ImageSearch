@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import SnapKit
 
-final class ImageSearchViewControllerNew: BaseViewController<ImageSearchViewModel> {
+final class ImageSearchViewController: BaseViewController<ImageSearchViewModel> {
     typealias Section = ImageSearchResultSection
     typealias Item = ImageSearchResultItem
         
@@ -19,7 +19,7 @@ final class ImageSearchViewControllerNew: BaseViewController<ImageSearchViewMode
         guard let owner = self else { return nil }
         switch item {
         case .image:
-            let cell: ImageCell = collectionView.dequeueReusableCell(indexPath: indexPath)
+            let cell: SearchImageCell = collectionView.dequeueReusableCell(indexPath: indexPath)
             cell.configureCell(item: item, selectFavoriteButton: owner.favoriteButtonTapSubject)
             return cell
         }
@@ -59,7 +59,7 @@ final class ImageSearchViewControllerNew: BaseViewController<ImageSearchViewMode
         
         collectionView.rx.itemSelected
             .subscribe(with: self) { owner, indexPath in
-                guard let cell = owner.collectionView.cellForItem(at: indexPath) as? ImageCell,
+                guard let cell = owner.collectionView.cellForItem(at: indexPath) as? SearchImageCell,
                       let image = cell.image else { return }
                 owner.searchController.dismiss(animated: true)
                 let vc = ImageDetailController(image: image)
@@ -69,14 +69,14 @@ final class ImageSearchViewControllerNew: BaseViewController<ImageSearchViewMode
     }
 }
 
-extension ImageSearchViewControllerNew: ViewConfigurable {
+extension ImageSearchViewController: ViewConfigurable {
     func configureViews() {
         setupCollectionView()
         configureSearchBar()
     }
 }
 
-extension ImageSearchViewControllerNew: DiffableDataSourceCollectionViewUsing {
+extension ImageSearchViewController: DiffableDataSourceCollectionViewUsing {
     func createLayoutProvider() -> any CollectionViewLayoutProvidable<Section, Item> {
         ImageSearchCollectionViewLayoutProvider()
     }
@@ -86,7 +86,7 @@ extension ImageSearchViewControllerNew: DiffableDataSourceCollectionViewUsing {
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        collectionView.registerCellClass(cellType: ImageCell.self)
+        collectionView.registerCellClass(cellType: SearchImageCell.self)
     }
     
     private func configureSearchBar() {
@@ -98,7 +98,7 @@ extension ImageSearchViewControllerNew: DiffableDataSourceCollectionViewUsing {
 }
 
 extension Reactive where Base == DiffableDataSourceCollectionView<ImageSearchResultSection, ImageSearchResultItem> {
-    var dataSource: Binder<([ImageSearchResultSectionModel], ImageSearchViewModelNew.DataPresentType)> {
+    var dataSource: Binder<([ImageSearchResultSectionModel], ImageSearchViewModel.DataPresentType)> {
         Binder(base) { base, value in
             let (sectionModels, dataPresentType) = value
             switch dataPresentType {
