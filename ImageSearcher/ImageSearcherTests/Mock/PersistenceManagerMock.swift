@@ -1,26 +1,15 @@
 //
-//  PersistenceDataManager.swift
+//  PersistenceDataManagerMock.swift
+//  ImageSearcherTests
 //
-//  Created by SEONGJUN on 2020/10/08.
+//  Created by SEONGJUN on 1/6/24.
 //
-
+@testable import ImageSearcher
 import Foundation
 import RxSwift
-import RxCocoa
 
-enum PersistenceUpdateType {
-    case add, remove
-}
-
-enum PersistenceManager {
-    
-    static private let defaults = UserDefaults.standard
-    
-    static private var cache = Set<ImageInfo>()
-    
-    static private var cachedArray: [ImageInfo] {
-        Array(cache)
-    }
+enum PersistenceManagerMock {
+    static private var defaults = [String: Any]()
     
     static let dataUpdated = PublishSubject<Void>()
     
@@ -33,24 +22,22 @@ enum PersistenceManager {
             .map { favoritedData -> FavoriteError? in
                 switch favoritedData {
                 case .success(let favorites):
+                    var mutableFavorites = favorites
+                    
                     switch updateType {
                     case .add:
                         guard !favorites.contains(favorite) else {
                             return .alreadyInFavorites
                         }
+                        mutableFavorites.insert(favorite)
                         
-                        cache.insert(favorite)
                         
                     case .remove:
-                        cache.remove(favorite)
+                        mutableFavorites.remove(favorite)
                     }
                     
-                    do {
-                        try update()
-                    } catch {
-                        return FavoriteError.failedToSaveFavorite
-                    }
-                    
+                    defaults[Keys.favorites] = mutableFavorites
+                    dataUpdated.onNext(())
                     return nil
                     
                 case .failure(let error):
@@ -75,32 +62,9 @@ enum PersistenceManager {
     }
     
     static func retrieveFavorites() -> Single<Result<Set<ImageInfo>, FavoriteError>> {
-        guard cache.isEmpty else {
-            return .just(.success(cache))
-        }
-        
-        guard let favoriteData = defaults.object(forKey: Keys.favorites) as? Data else {
-            return .just(.success([]))
-        }
-        
-        do {
-            let decoder = JSONDecoder()
-            let favorites = try decoder.decode(Set<ImageInfo>.self, from: favoriteData)
-            cache = cache.union(favorites)
-            return .just(.success(favorites))
-        } catch {
+        guard let favorites = defaults[Keys.favorites] as? Set<ImageInfo> else {
             return .just(.failure(.failedToLoadFavorite))
         }
-    }
-    
-    static func update() throws {
-        do {
-            let encoder = JSONEncoder()
-            let encodedFavorites = try encoder.encode(cache)
-            defaults.set(encodedFavorites, forKey: Keys.favorites)
-            dataUpdated.onNext(())
-        } catch {
-            throw error
-        }
+        return .just(.success(favorites))
     }
 }

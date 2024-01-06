@@ -4,10 +4,10 @@
 //
 //  Created by SEONGJUN on 1/6/24.
 //
-
+@testable import ImageSearcher
 import XCTest
 
-final class ImageSearcherTests: XCTestCase {
+final class ImageSearchTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

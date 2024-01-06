@@ -4,7 +4,7 @@
 //
 //  Created by SEONGJUN on 12/31/23.
 //
-
+@testable import ImageSearcher
 import RxSwift
 import Moya
 
@@ -18,6 +18,6 @@ final class ImageSearchUseCaseMock {
     }
     
     func markFavorite(imageInfo: ImageInfo) -> Single<FavoriteError?> {
-        .just(nil)
+        PersistenceManagerMock.updateWith(favorite: imageInfo, updateType: .add)
     }
 }

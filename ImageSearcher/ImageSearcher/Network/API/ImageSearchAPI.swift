@@ -58,4 +58,8 @@ extension ImageSearchAPI: TargetType {
             "Content-Type": "application/json"
         ]
     }
+    
+    var sampleData: Data {
+        stubbedData(filename: "imageSearchResultStub")
+    }
 }
