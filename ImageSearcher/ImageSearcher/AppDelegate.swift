@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = createTabBar()
+        window?.rootViewController = createTabBarController()
         window?.makeKeyAndVisible()
         
         configureNavigationBar()
@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func createTabBar() -> UITabBarController {
+    func createTabBarController() -> UITabBarController {
         let imageSearchCoordinator = ImageSearchCoordinator()
         let imageSearchViewController = imageSearchCoordinator.start()
         imageSearchViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
@@ -31,12 +31,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let favoriteImageViewController = favoriteImageCoordinator.start()
         favoriteImageViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
         
-        let tabbar = UITabBarController()
+        let tabBarController = UITabBarController()
         UITabBar.appearance().tintColor = .systemGreen
         UITabBar.appearance().backgroundColor = .systemBackground
-        tabbar.viewControllers = [imageSearchViewController, favoriteImageViewController]
+        tabBarController.viewControllers = [imageSearchViewController, favoriteImageViewController]
 
-        return tabbar
+        return tabBarController
     }
 
     func configureNavigationBar() {
