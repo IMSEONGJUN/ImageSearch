@@ -20,6 +20,10 @@ final class ImageSearchUseCase: ImageSearchUseCasable {
     func search(keyword: String, page: Int?) -> Single<ImageSearchResponse> {
         return moyaProvider.rx.request(ImageSearchAPI.search(keyword: keyword, page: page))
             .filterSuccessfulStatusCodes()
+            .do(onSuccess: { response in
+                let dict = try response.mapJSON() as? [String: Any]
+                print(dict)
+            })
             .map(ImageSearchResponse.self)
     }
     
