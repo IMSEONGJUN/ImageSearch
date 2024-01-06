@@ -28,7 +28,7 @@ final class FavoriteImageViewModel: ViewModelType {
     func transform(_ input: Input) -> Output {
         let useCase = self.useCase
         
-        let dataSource = PersistenceManager.dataUpdated
+        let dataSource = useCase.favoriteUpdated()
             .startWith(())
             .flatMapLatest {
                 useCase.retrieveFavorites()
