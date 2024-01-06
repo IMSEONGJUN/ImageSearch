@@ -37,6 +37,7 @@
 		CED408B92B491CD500954292 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408B82B491CD500954292 /* BaseNavigationController.swift */; };
 		CED408BB2B491F6C00954292 /* NavigationBarCustomizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408BA2B491F6C00954292 /* NavigationBarCustomizable.swift */; };
 		CED408C32B49243700954292 /* ImageSearcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408C22B49243700954292 /* ImageSearcherTests.swift */; };
+		CED408CE2B492C1300954292 /* imageSearchResultStub.json in Resources */ = {isa = PBXBuildFile; fileRef = CED408CD2B492C1300954292 /* imageSearchResultStub.json */; };
 		CEDD8750252F1B5000A3AEEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDD874F252F1B5000A3AEEC /* AppDelegate.swift */; };
 		CEDD8759252F1B5200A3AEEC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEDD8758252F1B5200A3AEEC /* Assets.xcassets */; };
 		CEDD875C252F1B5200A3AEEC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEDD875A252F1B5200A3AEEC /* LaunchScreen.storyboard */; };
@@ -98,6 +99,7 @@
 		CED408BA2B491F6C00954292 /* NavigationBarCustomizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarCustomizable.swift; sourceTree = "<group>"; };
 		CED408C02B49243700954292 /* ImageSearcherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageSearcherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CED408C22B49243700954292 /* ImageSearcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearcherTests.swift; sourceTree = "<group>"; };
+		CED408CD2B492C1300954292 /* imageSearchResultStub.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = imageSearchResultStub.json; sourceTree = "<group>"; };
 		CEDD874C252F1B5000A3AEEC /* ImageSearcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageSearcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEDD874F252F1B5000A3AEEC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEDD8758252F1B5200A3AEEC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -398,6 +400,7 @@
 		CED408CB2B4929E300954292 /* Stub */ = {
 			isa = PBXGroup;
 			children = (
+				CED408CD2B492C1300954292 /* imageSearchResultStub.json */,
 			);
 			path = Stub;
 			sourceTree = "<group>";
@@ -583,6 +586,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CED408CE2B492C1300954292 /* imageSearchResultStub.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
