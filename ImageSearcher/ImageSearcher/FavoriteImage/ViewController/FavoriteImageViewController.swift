@@ -15,6 +15,9 @@ final class FavoriteImageViewController: BaseViewController<FavoriteImageViewMod
     
     private let tableView = UITableView()
     private let unmarkFavoriteSubject = PublishSubject<ImageInfo>()
+    private var favoriteImageCoordinator: FavoriteImageCoordinator? {
+        coordinator as? FavoriteImageCoordinator
+    }
     
     override func bind() {
         let output = viewModel.transform(ViewModel.Input(unmarkFavorite: unmarkFavoriteSubject.asObservable()))
@@ -57,13 +60,9 @@ final class FavoriteImageViewController: BaseViewController<FavoriteImageViewMod
             })
             .disposed(by: disposeBag)
         
-        tableView.rx.itemSelected
-            .subscribe(with: self) { owner, indexPath in
-                guard let cell = owner.tableView.cellForRow(at: indexPath) as? FavoriteImageCell,
-                    let image = cell.image else { return }
-
-                let viewController = ImageDetailController(image: image)
-                owner.navigationController?.pushViewController(viewController, animated: true)
+        tableView.rx.modelSelected(ImageInfo.self)
+            .subscribe(with: self) { owner, imageInfo in
+                owner.favoriteImageCoordinator?.showDetailImageViewController(imageUrlString: imageInfo.imageUrl)
             }
             .disposed(by: disposeBag)
     }

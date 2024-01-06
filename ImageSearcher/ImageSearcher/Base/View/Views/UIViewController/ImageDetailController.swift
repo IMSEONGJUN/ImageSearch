@@ -22,9 +22,11 @@ final class ImageDetailController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
-    init(image: UIImage) {
-        self.detailImageView.image = image
+    init(urlString: String) {
+        let url = URL(string: urlString)
+        self.detailImageView.sd_setImage(with: url)
         super.init(nibName: nil, bundle: nil)
+        hidesBottomBarWhenPushed = true
     }
     
     required init?(coder: NSCoder) {
@@ -33,7 +35,6 @@ final class ImageDetailController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tabBarController?.tabBar.isHidden = true
         navigationController?.navigationBar.isHidden = true
         configureUI()
         bind()
@@ -61,6 +62,7 @@ final class ImageDetailController: UIViewController {
         backButton.rx.tap
             .subscribe(onNext: { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
+                self?.navigationController?.navigationBar.isHidden = false
             })
             .disposed(by: disposeBag)
     }

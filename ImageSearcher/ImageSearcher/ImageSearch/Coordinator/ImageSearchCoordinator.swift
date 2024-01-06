@@ -17,4 +17,9 @@ final class ImageSearchCoordinator: BaseCoordinator {
         registerBaseViewController(viewController)
         return navigationController
     }
+    
+    func showDetailImageViewController(imageUrlString: String) {
+        let viewController = ImageDetailController(urlString: imageUrlString)
+        baseViewController?.navigationController?.pushViewController(viewController, animated: true)
+    }
 }

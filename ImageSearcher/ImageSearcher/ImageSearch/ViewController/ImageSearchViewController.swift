@@ -27,6 +27,9 @@ final class ImageSearchViewController: BaseViewController<ImageSearchViewModel> 
     
     private let searchController = UISearchController()
     private let favoriteButtonTapSubject = PublishSubject<(Item, PersistenceUpdateType)>()
+    private var searchImageCoordinator: ImageSearchCoordinator? {
+        coordinator as? ImageSearchCoordinator
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,11 +62,13 @@ final class ImageSearchViewController: BaseViewController<ImageSearchViewModel> 
         
         collectionView.rx.itemSelected
             .subscribe(with: self) { owner, indexPath in
-                guard let cell = owner.collectionView.cellForItem(at: indexPath) as? SearchImageCell,
-                      let image = cell.image else { return }
+                guard let item = owner.collectionView.item(for: indexPath),
+                      case let .image(imageInfo) = item else {
+                    return
+                }
+                
                 owner.searchController.dismiss(animated: true)
-                let vc = ImageDetailController(image: image)
-                owner.navigationController?.pushViewController(vc, animated: true)
+                owner.searchImageCoordinator?.showDetailImageViewController(imageUrlString: imageInfo.imageUrl)
             }
             .disposed(by: disposeBag)
     }
