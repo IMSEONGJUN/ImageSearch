@@ -35,9 +35,12 @@ final class ImageDetailController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.isHidden = true
         configureUI()
-        bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.backgroundColor = .clear
     }
     
     private func configureUI() {
@@ -46,24 +49,6 @@ final class ImageDetailController: UIViewController {
         detailImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
-        
-        view.addSubview(backButton)
-        backButton.setImage(UIImage(systemName: Images.back,
-                                    withConfiguration: UIImage.SymbolConfiguration(scale: .large))?
-                                    .withTintColor(.green, renderingMode: .alwaysOriginal),
-                                    for: .normal)
-        backButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(50)
-            $0.leading.equalToSuperview().offset(30)
-        }
     }
     
-    private func bind() {
-        backButton.rx.tap
-            .subscribe(onNext: { [weak self] _ in
-                self?.navigationController?.popViewController(animated: true)
-                self?.navigationController?.navigationBar.isHidden = false
-            })
-            .disposed(by: disposeBag)
-    }
 }

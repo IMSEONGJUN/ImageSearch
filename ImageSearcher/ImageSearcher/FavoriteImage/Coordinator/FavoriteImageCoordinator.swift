@@ -9,7 +9,8 @@ import UIKit
 
 final class FavoriteImageCoordinator: BaseCoordinator {
     override func start() -> UIViewController {
-        let viewModel = FavoriteImageViewModel()
+        let useCase = FavoriteImageUseCase()
+        let viewModel = FavoriteImageViewModel(useCase: useCase)
         let viewController = FavoriteImageViewController(viewModel: viewModel, coordinator: self)
         viewController.configureNavigationBar(with: NavigationBarTitle.favoriteImage, prefersLargeTitles: false)
         let navigationController = viewController.wrapNavigationController()

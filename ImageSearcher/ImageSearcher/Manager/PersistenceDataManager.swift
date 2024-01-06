@@ -28,12 +28,12 @@ enum PersistenceManager {
         static let favorites = "favorites"
     }
     
-    static func updateWith(favorite: ImageInfo, actionType: PersistenceUpdateType) -> Single<FavoriteError?>  {
-        return retrieveFavoritesSet()
+    static func updateWith(favorite: ImageInfo, updateType: PersistenceUpdateType) -> Single<FavoriteError?>  {
+        return retrieveFavorites()
             .map { favoritedData -> FavoriteError? in
                 switch favoritedData {
                 case .success(let favorites):
-                    switch actionType {
+                    switch updateType {
                     case .add:
                         guard !favorites.contains(favorite) else {
                             return .alreadyInFavorites
@@ -60,7 +60,7 @@ enum PersistenceManager {
     }
 
     static func checkIsFavorited(imageInfo: ImageInfo) -> Single<Bool> {
-        return retrieveFavoritesSet()
+        return retrieveFavorites()
             .map { favoritedData -> Bool in
                 switch favoritedData {
                 case .success(let favorites):
@@ -74,7 +74,7 @@ enum PersistenceManager {
             }
     }
     
-    private static func retrieveFavoritesSet() -> Single<Result<Set<ImageInfo>, FavoriteError>> {
+    static func retrieveFavorites() -> Single<Result<Set<ImageInfo>, FavoriteError>> {
         guard cache.isEmpty else {
             return .just(.success(cache))
         }
@@ -86,25 +86,6 @@ enum PersistenceManager {
         do {
             let decoder = JSONDecoder()
             let favorites = try decoder.decode(Set<ImageInfo>.self, from: favoriteData)
-            cache = cache.union(favorites)
-            return .just(.success(favorites))
-        } catch {
-            return .just(.failure(.failedToLoadFavorite))
-        }
-    }
-    
-    static func retrieveFavoritesArray() -> Single<Result<[ImageInfo], FavoriteError>> {
-        guard cache.isEmpty else {
-            return .just(.success(cachedArray))
-        }
-        
-        guard let favoriteData = defaults.object(forKey: Keys.favorites) as? Data else {
-            return .just(.success([]))
-        }
-        
-        do {
-            let decoder = JSONDecoder()
-            let favorites = try decoder.decode([ImageInfo].self, from: favoriteData)
             cache = cache.union(favorites)
             return .just(.success(favorites))
         } catch {

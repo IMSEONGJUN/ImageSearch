@@ -20,15 +20,8 @@ extension UIViewController {
     }
     
     func wrapNavigationController() -> UINavigationController {
-        let navigationController = UINavigationController(rootViewController: self)
+        let navigationController = BaseNavigationController(rootViewController: self)
         navigationController.modalPresentationStyle = .fullScreen
         return navigationController
-    }
-}
-
-extension UIApplication {
-    static var statusBarView: UIView {
-        let status = UIView(frame: (UIApplication.shared.windows.filter{$0.isKeyWindow}.first?.windowScene?.statusBarManager?.statusBarFrame)!)
-        return status
     }
 }

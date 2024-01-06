@@ -34,6 +34,8 @@
 		CED408AE2B42724B00954292 /* ImageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408AD2B42724B00954292 /* ImageInfo.swift */; };
 		CED408B12B4272ED00954292 /* FavoriteImageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408B02B4272ED00954292 /* FavoriteImageCoordinator.swift */; };
 		CED408B42B483F3E00954292 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408B32B483F3E00954292 /* UIImage+Ext.swift */; };
+		CED408B92B491CD500954292 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408B82B491CD500954292 /* BaseNavigationController.swift */; };
+		CED408BB2B491F6C00954292 /* NavigationBarCustomizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408BA2B491F6C00954292 /* NavigationBarCustomizable.swift */; };
 		CEDD8750252F1B5000A3AEEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDD874F252F1B5000A3AEEC /* AppDelegate.swift */; };
 		CEDD8759252F1B5200A3AEEC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEDD8758252F1B5200A3AEEC /* Assets.xcassets */; };
 		CEDD875C252F1B5200A3AEEC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEDD875A252F1B5200A3AEEC /* LaunchScreen.storyboard */; };
@@ -82,6 +84,8 @@
 		CED408AD2B42724B00954292 /* ImageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageInfo.swift; sourceTree = "<group>"; };
 		CED408B02B4272ED00954292 /* FavoriteImageCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteImageCoordinator.swift; sourceTree = "<group>"; };
 		CED408B32B483F3E00954292 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
+		CED408B82B491CD500954292 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BaseNavigationController.swift; path = ImageSearcher/Extentions/BaseNavigationController.swift; sourceTree = SOURCE_ROOT; };
+		CED408BA2B491F6C00954292 /* NavigationBarCustomizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarCustomizable.swift; sourceTree = "<group>"; };
 		CEDD874C252F1B5000A3AEEC /* ImageSearcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageSearcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEDD874F252F1B5000A3AEEC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEDD8758252F1B5200A3AEEC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -154,6 +158,7 @@
 		CED408652B3FD83D00954292 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				CED408B72B491CBF00954292 /* NavigationController */,
 				CED4088C2B401AC500954292 /* UICollectionView */,
 				CED408712B3FDE2300954292 /* View */,
 				CED408672B3FD84B00954292 /* ViewController */,
@@ -344,6 +349,15 @@
 				CED408882B3FEDEA00954292 /* ImageSearchViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		CED408B72B491CBF00954292 /* NavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				CED408B82B491CD500954292 /* BaseNavigationController.swift */,
+				CED408BA2B491F6C00954292 /* NavigationBarCustomizable.swift */,
+			);
+			path = NavigationController;
 			sourceTree = "<group>";
 		};
 		CEDD8743252F1B5000A3AEEC = {
@@ -557,6 +571,7 @@
 				CED408942B401C2200954292 /* SectionModeling.swift in Sources */,
 				CEDD87C5252F624700A3AEEC /* UIViewController+Ext.swift in Sources */,
 				CED408B42B483F3E00954292 /* UIImage+Ext.swift in Sources */,
+				CED408B92B491CD500954292 /* BaseNavigationController.swift in Sources */,
 				CED408892B3FEDEA00954292 /* ImageSearchViewController.swift in Sources */,
 				CEDD8787252F2CF400A3AEEC /* Constants.swift in Sources */,
 				CEDD87CD252F828900A3AEEC /* Reactive+Ext.swift in Sources */,
@@ -568,6 +583,7 @@
 				CED4086C2B3FDAAF00954292 /* ViewType.swift in Sources */,
 				CED408972B40245B00954292 /* ImageSearchCollectionViewLayoutProvider.swift in Sources */,
 				CED4089C2B41181E00954292 /* ImageSearchCoordinator.swift in Sources */,
+				CED408BB2B491F6C00954292 /* NavigationBarCustomizable.swift in Sources */,
 				CEDD8784252F2CB800A3AEEC /* APIManager.swift in Sources */,
 				CED408A62B42712900954292 /* FavoriteImageViewController.swift in Sources */,
 				CED408A42B4270F700954292 /* FavoriteImageViewModel.swift in Sources */,

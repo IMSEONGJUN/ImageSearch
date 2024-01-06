@@ -31,8 +31,8 @@ final class ImageSearchViewController: BaseViewController<ImageSearchViewModel> 
         coordinator as? ImageSearchCoordinator
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override var navigationBarStyle: BaseNavigationController.NavigationBarStyle? {
+        BaseNavigationController.NavigationBarStyle.none
     }
     
     override func bind() {

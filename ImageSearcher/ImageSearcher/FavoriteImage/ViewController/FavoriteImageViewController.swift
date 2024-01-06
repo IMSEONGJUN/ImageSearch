@@ -19,11 +19,15 @@ final class FavoriteImageViewController: BaseViewController<FavoriteImageViewMod
         coordinator as? FavoriteImageCoordinator
     }
     
+    override var navigationBarStyle: BaseNavigationController.NavigationBarStyle? {
+        BaseNavigationController.NavigationBarStyle.none
+    }
+    
     override func bind() {
         let output = viewModel.transform(ViewModel.Input(unmarkFavorite: unmarkFavoriteSubject.asObservable()))
         
         let dataLoaded = output.dataSource
-            .compactMap { result -> [ImageInfo]? in
+            .compactMap { result -> Set<ImageInfo>? in
                 if case let .success(imageInfos) = result {
                     return imageInfos
                 }

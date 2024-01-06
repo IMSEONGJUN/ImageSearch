@@ -24,6 +24,6 @@ final class ImageSearchUseCase: ImageSearchUseCasable {
     }
     
     func updateFavorite(imageInfo: ImageInfo, actionType: PersistenceUpdateType) -> Single<FavoriteError?> {
-        PersistenceManager.updateWith(favorite: imageInfo, actionType: actionType)
+        PersistenceManager.updateWith(favorite: imageInfo, updateType: actionType)
     }
 }

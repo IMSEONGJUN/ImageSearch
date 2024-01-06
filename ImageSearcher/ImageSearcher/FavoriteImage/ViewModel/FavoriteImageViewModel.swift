@@ -15,22 +15,30 @@ final class FavoriteImageViewModel: ViewModelType {
     }
     
     struct Output {
-        let dataSource: Driver<Result<[ImageInfo], FavoriteError>>
+        let dataSource: Driver<Result<Set<ImageInfo>, FavoriteError>>
         let unmarkDone: Driver<FavoriteError?>
     }
     
+    private let useCase: any FavoriteImageUseCasable
+    
+    init(useCase: some FavoriteImageUseCasable) {
+        self.useCase = useCase
+    }
+    
     func transform(_ input: Input) -> Output {
+        let useCase = self.useCase
+        
         let dataSource = PersistenceManager.dataUpdated
             .startWith(())
             .flatMapLatest {
-                PersistenceManager.retrieveFavoritesArray()
+                useCase.retrieveFavorites()
                     .asObservable()
             }
             .asDriver(onErrorJustReturn: .failure(.failedToLoadFavorite))
         
         let unmarkDone = input.unmarkFavorite
             .flatMapLatest { imageInfo in
-                PersistenceManager.updateWith(favorite: imageInfo, actionType: .remove)
+                useCase.updateWith(favorite: imageInfo, updateType: .remove)
             }
             .asDriver(onErrorJustReturn: .failedToRemoveFavorite)
         

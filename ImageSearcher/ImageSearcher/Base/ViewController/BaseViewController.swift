@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class BaseViewController<ViewModel: ViewModelType>: UIViewController, ViewType {
+class BaseViewController<ViewModel: ViewModelType>: BaseNavigableViewController, ViewType {
     let viewModel: ViewModel
     let coordinator: any Coordinator
     var disposeBag = DisposeBag()
@@ -31,6 +31,7 @@ class BaseViewController<ViewModel: ViewModelType>: UIViewController, ViewType {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
         bind()
     }
     
