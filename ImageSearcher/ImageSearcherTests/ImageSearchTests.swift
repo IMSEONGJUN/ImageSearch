@@ -15,7 +15,7 @@ final class ImageSearchTests: XCTestCase {
     private let searchKeywordSubject = BehaviorSubject<String>(value: "")
     private let favoriteButtonTapSubject = PublishSubject<(ImageSearchResultItem, PersistenceUpdateType)>()
     private let didScrollToBottomSubject = PublishSubject<Void>()
-    private let searchButton = UIButton()
+    private let searchButtonTappedSubject = PublishSubject<Void>()
     
     private var disposeBag = DisposeBag()
     
@@ -33,7 +33,7 @@ final class ImageSearchTests: XCTestCase {
         let input = ImageSearchViewModel.Input(searchKeyword: searchKeywordSubject.asObservable(),
                                                favoriteButtonSelected: favoriteButtonTapSubject.asObservable(),
                                                didScrollToBottom: didScrollToBottomSubject.asObservable(),
-                                               searchButtonTapped: searchButton.rx.tap.asObservable())
+                                               searchButtonTapped: searchButtonTappedSubject.asObservable())
         
         let output = viewModel.transform(input)
         
@@ -43,7 +43,7 @@ final class ImageSearchTests: XCTestCase {
         output.dataLoaded
             .drive(onNext:{ sectionModels, presentType in
                 /// Then
-                guard var item = sectionModels.first?.items.first, case .image(let imageInfo) = item else {
+                guard let item = sectionModels.first?.items.first, case .image(let imageInfo) = item else {
                     return
                 }
                 let isItemImageInfoType = type(of: imageInfo) == ImageInfo.self
@@ -55,7 +55,7 @@ final class ImageSearchTests: XCTestCase {
         output.updateFavorite.drive().disposed(by: disposeBag)
         
         searchKeywordSubject.onNext("bmw")
-        searchButton.sendActions(for: .touchUpInside)
+        searchButtonTappedSubject.onNext(())
         
         wait(for: [expectation], timeout: 5)
     }

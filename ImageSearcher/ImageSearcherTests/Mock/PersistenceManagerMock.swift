@@ -29,11 +29,10 @@ enum PersistenceManagerMock {
                         guard !favorites.contains(favorite) else {
                             return .alreadyInFavorites
                         }
-                        mutableFavorites.insert(favorite)
-                        
+                        mutableFavorites.append(favorite)
                         
                     case .remove:
-                        mutableFavorites.remove(favorite)
+                        mutableFavorites.removeAll(where: { $0 == favorite })
                     }
                     
                     defaults[Keys.favorites] = mutableFavorites
@@ -61,8 +60,8 @@ enum PersistenceManagerMock {
             }
     }
     
-    static func retrieveFavorites() -> Single<Result<Set<ImageInfo>, FavoriteError>> {
-        guard let favorites = defaults[Keys.favorites] as? Set<ImageInfo> else {
+    static func retrieveFavorites() -> Single<Result<[ImageInfo], FavoriteError>> {
+        guard let favorites = defaults[Keys.favorites] as? [ImageInfo] else {
             return .just(.failure(.failedToLoadFavorite))
         }
         return .just(.success(favorites))

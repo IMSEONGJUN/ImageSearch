@@ -41,6 +41,7 @@
 		CED408D32B49A2FA00954292 /* TargetType+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408D22B49A2FA00954292 /* TargetType+Ext.swift */; };
 		CED408D52B49A46400954292 /* FavoriteImageUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408D42B49A46400954292 /* FavoriteImageUseCaseMock.swift */; };
 		CED408D62B4A51D700954292 /* imageSearchResultStub.json in Resources */ = {isa = PBXBuildFile; fileRef = CED408CD2B492C1300954292 /* imageSearchResultStub.json */; };
+		CED408D82B4A8CB400954292 /* FavoriteImageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408D72B4A8CB400954292 /* FavoriteImageTest.swift */; };
 		CEDD8750252F1B5000A3AEEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDD874F252F1B5000A3AEEC /* AppDelegate.swift */; };
 		CEDD8759252F1B5200A3AEEC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEDD8758252F1B5200A3AEEC /* Assets.xcassets */; };
 		CEDD875C252F1B5200A3AEEC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEDD875A252F1B5200A3AEEC /* LaunchScreen.storyboard */; };
@@ -106,6 +107,7 @@
 		CED408CF2B499C1600954292 /* PersistenceManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManagerMock.swift; sourceTree = "<group>"; };
 		CED408D22B49A2FA00954292 /* TargetType+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TargetType+Ext.swift"; sourceTree = "<group>"; };
 		CED408D42B49A46400954292 /* FavoriteImageUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteImageUseCaseMock.swift; sourceTree = "<group>"; };
+		CED408D72B4A8CB400954292 /* FavoriteImageTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteImageTest.swift; sourceTree = "<group>"; };
 		CEDD874C252F1B5000A3AEEC /* ImageSearcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageSearcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEDD874F252F1B5000A3AEEC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEDD8758252F1B5200A3AEEC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -381,6 +383,7 @@
 				CED408CC2B4929EC00954292 /* Mock */,
 				CED408CB2B4929E300954292 /* Stub */,
 				CED408C22B49243700954292 /* ImageSearchTests.swift */,
+				CED408D72B4A8CB400954292 /* FavoriteImageTest.swift */,
 			);
 			path = ImageSearcherTests;
 			sourceTree = "<group>";
@@ -660,6 +663,7 @@
 				CED408D02B499C1600954292 /* PersistenceManagerMock.swift in Sources */,
 				CED408C32B49243700954292 /* ImageSearchTests.swift in Sources */,
 				CED408D12B499FD900954292 /* ImageSearchUseCaseMock.swift in Sources */,
+				CED408D82B4A8CB400954292 /* FavoriteImageTest.swift in Sources */,
 				CED408D52B49A46400954292 /* FavoriteImageUseCaseMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

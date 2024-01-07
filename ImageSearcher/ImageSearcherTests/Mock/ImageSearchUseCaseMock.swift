@@ -14,7 +14,6 @@ final class ImageSearchUseCaseMock: ImageSearchUseCasable {
     func search(keyword: String, page: Int?) -> Single<ImageSearchResponse> {
         moyaProvider.rx.request(ImageSearchAPI.search(keyword: keyword, page: page))
             .map(ImageSearchResponse.self)
-            .debug("@@@api call")
     }
     
     func updateFavorite(imageInfo: ImageSearcher.ImageInfo, actionType: ImageSearcher.PersistenceUpdateType) -> RxSwift.Single<ImageSearcher.FavoriteError?> {

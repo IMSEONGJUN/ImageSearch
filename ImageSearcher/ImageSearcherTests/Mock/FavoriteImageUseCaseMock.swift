@@ -14,7 +14,7 @@ class FavoriteImageUseCaseMock: FavoriteImageUseCasable {
         PersistenceManagerMock.dataUpdated
     }
     
-    func retrieveFavorites() -> Single<Result<Set<ImageInfo>, FavoriteError>> {
+    func retrieveFavorites() -> Single<Result<[ImageSearcher.ImageInfo], ImageSearcher.FavoriteError>> {
         PersistenceManagerMock.retrieveFavorites()
     }
     
