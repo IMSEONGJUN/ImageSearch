@@ -59,6 +59,37 @@ final class ImageSearchTests: XCTestCase {
         
         wait(for: [expectation], timeout: 5)
     }
+    
+    func testImageResultCleanUp() throws {
+        /// Given
+        disposeBag = DisposeBag()
+        let input = ImageSearchViewModel.Input(searchKeyword: searchKeywordSubject.asObservable(),
+                                               favoriteButtonSelected: favoriteButtonTapSubject.asObservable(),
+                                               didScrollToBottom: didScrollToBottomSubject.asObservable(),
+                                               searchButtonTapped: searchButtonTappedSubject.asObservable())
+        
+        let output = viewModel.transform(input)
+        
+        /// When
+        output.dataLoaded
+            .asObservable()
+            .enumerated()
+            .subscribe(onNext:{ index, value in
+                /// Then
+                if index == 1 {
+                    let (sectionModels, _) = value
+                    XCTAssertTrue(sectionModels.isEmpty)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        output.updateFavorite.drive().disposed(by: disposeBag)
+        
+        searchKeywordSubject.onNext("bmw")
+        searchButtonTappedSubject.onNext(())
+        
+        searchKeywordSubject.onNext("")
+    }
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
