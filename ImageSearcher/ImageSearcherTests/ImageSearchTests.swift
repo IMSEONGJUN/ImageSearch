@@ -25,11 +25,11 @@ final class ImageSearchTests: XCTestCase {
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
+        disposeBag = DisposeBag()
     }
     
     func testImageSearchResponseIsValid() throws {
         /// Given
-        disposeBag = DisposeBag()
         let input = ImageSearchViewModel.Input(searchKeyword: searchKeywordSubject.asObservable(),
                                                favoriteButtonSelected: favoriteButtonTapSubject.asObservable(),
                                                didScrollToBottom: didScrollToBottomSubject.asObservable(),
@@ -62,7 +62,6 @@ final class ImageSearchTests: XCTestCase {
     
     func testImageResultCleanUp() throws {
         /// Given
-        disposeBag = DisposeBag()
         let input = ImageSearchViewModel.Input(searchKeyword: searchKeywordSubject.asObservable(),
                                                favoriteButtonSelected: favoriteButtonTapSubject.asObservable(),
                                                didScrollToBottom: didScrollToBottomSubject.asObservable(),
