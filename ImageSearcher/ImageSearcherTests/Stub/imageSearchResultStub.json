@@ -1,209 +1,41 @@
 {
     "documents": [
         {
-            collection = etc;
-            datetime = "2020-03-19T13:23:33.000+09:00";
-            "display_sitename" = "";
-            "doc_url" = "https://www.esquirekorea.co.kr/article/45267";
-            height = 493;
-            "image_url" = "https://image.jtbcplus.kr/data/contents/jam_photo/202003/10/0ef855be-7bf6-4e6b-ae1d-353304d4791f.jpg";
-            "thumbnail_url" = "https://search4.kakaocdn.net/argon/130x130_85_c/HS2pBG6eUC2";
-            width = 740;
+            "display_sitename" : "Kakao",
+            "image_url" : "https://image.jtbcplus.kr/data/contents/jam_photo/202003/10/0ef855be-7bf6-4e6b-ae1d-353304d4791f.jpg",
         },
         {
-            collection = blog;
-            datetime = "2023-01-30T22:00:11.000+09:00";
-            "display_sitename" = "\Ud2f0\Uc2a4\Ud1a0\Ub9ac";
-            "doc_url" = "https://secretshop.tistory.com/211";
-            height = 720;
-            "image_url" = "https://blog.kakaocdn.net/dn/bWrgL7/btrXBMYaaML/kUgy90Eyl3kfVFUF8WEow0/img.jpg";
-            "thumbnail_url" = "https://search2.kakaocdn.net/argon/130x130_85_c/5NHYhtlB4eC";
-            width = 960;
+            "display_sitename" : "Naver",
+            "image_url" : "https://blog.kakaocdn.net/dn/bWrgL7/btrXBMYaaML/kUgy90Eyl3kfVFUF8WEow0/img.jpg",
         },
         {
-            collection = news;
-            datetime = "2021-08-17T14:01:38.000+09:00";
-            "display_sitename" = "\Uc11c\Uc6b8\Uacbd\Uc81c";
-            "doc_url" = "http://v.media.daum.net/v/20210817140138671";
-            height = 426;
-            "image_url" = "https://t1.daumcdn.net/news/202108/17/seouleconomy/20210817140146203gqgz.jpg";
-            "thumbnail_url" = "https://search4.kakaocdn.net/argon/130x130_85_c/7L4uFrWkh3p";
-            width = 640;
+            "display_sitename" : "Daum",
+            "image_url" : "https://image.jtbcplus.kr/data/contents/jam_photo/202003/10/0ef855be-7bf6-4e6b-ae1d-353304d4791f.jpg",
         },
         {
-            collection = news;
-            datetime = "2019-04-11T11:07:39.000+09:00";
-            "display_sitename" = "\Ucf54\Ub9ac\Uc544\Ud5e4\Ub7f4\Ub4dc";
-            "doc_url" = "http://v.media.daum.net/v/20190411110739421";
-            height = 432;
-            "image_url" = "https://t1.daumcdn.net/news/201904/11/koreaherald/20190411110739994qsjn.jpg";
-            "thumbnail_url" = "https://search1.kakaocdn.net/argon/130x130_85_c/CAXVCCzw38g";
-            width = 650;
+            "display_sitename" : "Nate",
+            "image_url" : "https://blog.kakaocdn.net/dn/bWrgL7/btrXBMYaaML/kUgy90Eyl3kfVFUF8WEow0/img.jpg",
         },
         {
-            collection = etc;
-            datetime = "2023-04-21T22:42:38.000+09:00";
-            "display_sitename" = "";
-            "doc_url" = "https://www.motorgraph.com/news/articleView.html?idxno=32044";
-            height = 700;
-            "image_url" = "https://www.motorgraph.com/news/photo/202304/32044_100427_4230.jpg";
-            "thumbnail_url" = "https://search1.kakaocdn.net/argon/130x130_85_c/1DrTMsYCsoI";
-            width = 960;
+            "display_sitename" : "Kakao",
+            "image_url" : "https://image.jtbcplus.kr/data/contents/jam_photo/202003/10/0ef855be-7bf6-4e6b-ae1d-353304d4791f.jpg",
         },
         {
-            collection = news;
-            datetime = "2017-12-13T09:28:07.000+09:00";
-            "display_sitename" = "\Uc11c\Uc6b8\Uacbd\Uc81c";
-            "doc_url" = "http://v.media.daum.net/v/20171213092807343";
-            height = 359;
-            "image_url" = "https://t1.daumcdn.net/news/201712/13/seouleconomy/20171213174415001gged.jpg";
-            "thumbnail_url" = "https://search1.kakaocdn.net/argon/130x130_85_c/DG2hwmSNqNR";
-            width = 540;
+            "display_sitename" : "Naver",
+            "image_url" : "https://blog.kakaocdn.net/dn/bWrgL7/btrXBMYaaML/kUgy90Eyl3kfVFUF8WEow0/img.jpg",
         },
         {
-            collection = news;
-            datetime = "2016-10-25T12:01:05.000+09:00";
-            "display_sitename" = "\Uc804\Uc790\Uc2e0\Ubb38";
-            "doc_url" = "http://v.media.daum.net/v/20161025120106916";
-            height = 285;
-            "image_url" = "http://t1.daumcdn.net/news/201610/25/etimesi/20161025164303485dpzk.jpg";
-            "thumbnail_url" = "https://search3.kakaocdn.net/argon/130x130_85_c/9pK0u2TlUsg";
-            width = 700;
+            "display_sitename" : "Daum",
+            "image_url" : "https://image.jtbcplus.kr/data/contents/jam_photo/202003/10/0ef855be-7bf6-4e6b-ae1d-353304d4791f.jpg",
         },
         {
-            collection = news;
-            datetime = "2016-01-15T08:33:02.000+09:00";
-            "display_sitename" = "\Ud5e4\Ub7f4\Ub4dc\Uacbd\Uc81c";
-            "doc_url" = "http://v.media.daum.net/v/20160115083302597";
-            height = 364;
-            "image_url" = "http://t1.daumcdn.net/news/201601/15/ned/20160115083302425ehye.jpg";
-            "thumbnail_url" = "https://search4.kakaocdn.net/argon/130x130_85_c/5IX7vQaf2WY";
-            width = 650;
-        },
-        {
-            collection = blog;
-            datetime = "2023-05-17T23:34:34.000+09:00";
-            "display_sitename" = "\Ud2f0\Uc2a4\Ud1a0\Ub9ac";
-            "doc_url" = "https://supelta.tistory.com/2456";
-            height = 683;
-            "image_url" = "https://blog.kakaocdn.net/dn/s9yvQ/btsglwQoDjQ/84S8f8i1DkSNDTp9fgHn4k/img.jpg";
-            "thumbnail_url" = "https://search2.kakaocdn.net/argon/130x130_85_c/4fRTZzVve1p";
-            width = 1024;
-        },
-        {
-            collection = blog;
-            datetime = "2022-09-21T19:58:09.000+09:00";
-            "display_sitename" = "\Ud2f0\Uc2a4\Ud1a0\Ub9ac";
-            "doc_url" = "https://ainloa12097.tistory.com/301";
-            height = 301;
-            "image_url" = "https://blog.kakaocdn.net/dn/pdHFS/btrMDaJi73S/cLoV3VYAk3Sm0Kj9yn8ml0/img.webp";
-            "thumbnail_url" = "https://search1.kakaocdn.net/argon/130x130_85_c/6g7JDcnGn8d";
-            width = 330;
-        },
-        {
-            collection = blog;
-            datetime = "2022-12-22T22:53:50.000+09:00";
-            "display_sitename" = "\Ud2f0\Uc2a4\Ud1a0\Ub9ac";
-            "doc_url" = "https://ainloa12097.tistory.com/442";
-            height = 264;
-            "image_url" = "https://blog.kakaocdn.net/dn/mfe96/btrT0RuiIoQ/GiCIfjngvVDiU3gFvDOnlk/img.webp";
-            "thumbnail_url" = "https://search3.kakaocdn.net/argon/130x130_85_c/B00koavHCja";
-            width = 318;
-        },
-        {
-            collection = blog;
-            datetime = "2017-02-08T22:48:00.000+09:00";
-            "display_sitename" = "\Ub124\Uc774\Ubc84\Ube14\Ub85c\Uadf8";
-            "doc_url" = "http://blog.naver.com/cho04099/220930651336";
-            height = 853;
-            "image_url" = "http://www.motorian.kr/wp-content/uploads/2013/10/09-BMW-3%EC%8B%9C%EB%A6%AC%EC%A6%88-6%EC%84%B8%EB%8C%80-1.jpg";
-            "thumbnail_url" = "https://search2.kakaocdn.net/argon/130x130_85_c/1NJQoRGZtP4";
-            width = 1280;
-        },
-        {
-            collection = news;
-            datetime = "2015-06-04T10:55:50.000+09:00";
-            "display_sitename" = "\Ud5e4\Ub7f4\Ub4dc\Uacbd\Uc81c";
-            "doc_url" = "http://v.media.daum.net/v/20150604105611908";
-            height = 439;
-            "image_url" = "http://i2.media.daumcdn.net/svc/image/U03/news/201506/04/ned/20150604105602624wclb.jpg";
-            "thumbnail_url" = "https://search4.kakaocdn.net/argon/130x130_85_c/44suVUmDX2f";
-            width = 650;
-        },
-        {
-            collection = etc;
-            datetime = "2017-08-29T09:40:35.000+09:00";
-            "display_sitename" = "";
-            "doc_url" = "http://www.businessinsider.com/bmw-i3s-electric-car-sporty-edition-2017-8";
-            height = 1136;
-            "image_url" = "http://static1.businessinsider.com/image/59a48cd06eac400d4a8b4730-1514/p90273553highres.jpg";
-            "thumbnail_url" = "https://search3.kakaocdn.net/argon/130x130_85_c/GDYh7lxeWnu";
-            width = 1514;
-        },
-        {
-            collection = news;
-            datetime = "2019-01-27T16:00:05.000+09:00";
-            "display_sitename" = "\Uc804\Uc790\Uc2e0\Ubb38";
-            "doc_url" = "http://v.media.daum.net/v/20190127160005501";
-            height = 465;
-            "image_url" = "https://t1.daumcdn.net/news/201901/27/etimesi/20190127160005938slxl.jpg";
-            "thumbnail_url" = "https://search1.kakaocdn.net/argon/130x130_85_c/5z5ZgtnBV3j";
-            width = 700;
-        },
-        {
-            collection = blog;
-            datetime = "2023-01-24T22:44:54.000+09:00";
-            "display_sitename" = "\Ud2f0\Uc2a4\Ud1a0\Ub9ac";
-            "doc_url" = "https://lt66239ay7.tistory.com/557";
-            height = 287;
-            "image_url" = "https://blog.kakaocdn.net/dn/7e028/btrWR8tVpO8/NtJqsJ0W5npXrG6PsBWUY1/img.webp";
-            "thumbnail_url" = "https://search1.kakaocdn.net/argon/130x130_85_c/CkhDliKpNku";
-            width = 355;
-        },
-        {
-            collection = blog;
-            datetime = "2021-07-23T16:27:51.000+09:00";
-            "display_sitename" = "\Ud2f0\Uc2a4\Ud1a0\Ub9ac";
-            "doc_url" = "https://the-finest-skin-with-chael.tistory.com/192";
-            height = 607;
-            "image_url" = "https://blog.kakaocdn.net/dn/1egbr/btrajoYO3D5/7wu7IOEkNKHx2cPZ4vxKoK/img.jpg";
-            "thumbnail_url" = "https://search3.kakaocdn.net/argon/130x130_85_c/6voGhPTVf4E";
-            width = 1080;
-        },
-        {
-            collection = news;
-            datetime = "2021-02-01T16:50:43.000+09:00";
-            "display_sitename" = "\Ub274\Uc2a41";
-            "doc_url" = "http://v.media.daum.net/v/20210201165043835";
-            height = 933;
-            "image_url" = "https://t1.daumcdn.net/news/202102/01/NEWS1/20210201165044538xaft.jpg";
-            "thumbnail_url" = "https://search3.kakaocdn.net/argon/130x130_85_c/232WqLGTyZC";
-            width = 1400;
-        },
-        {
-            collection = etc;
-            datetime = "1970-01-01T09:00:00.000+09:00";
-            "display_sitename" = "";
-            "doc_url" = "http://www.dailycar.co.kr/content/news.html?type=view&autoId=30134&from=%2Fcontent%2Fnews.html%3Fgu%3D12%26offset%3D270%26screen%3Dpc";
-            height = 464;
-            "image_url" = "http://www.dailycar.co.kr/data/news_xml_img/Id0000000159/ns79178.jpg";
-            "thumbnail_url" = "https://search2.kakaocdn.net/argon/130x130_85_c/C38HmTJBAM1";
-            width = 700;
-        },
-        {
-            collection = blog;
-            datetime = "2023-01-11T19:05:26.000+09:00";
-            "display_sitename" = "\Ud2f0\Uc2a4\Ud1a0\Ub9ac";
-            "doc_url" = "https://reminisce.tistory.com/181";
-            height = 565;
-            "image_url" = "https://blog.kakaocdn.net/dn/bEQelB/btrV0Gq29Ke/UwiaEFkJyXd5gO9k4RiNaK/img.webp";
-            "thumbnail_url" = "https://search4.kakaocdn.net/argon/130x130_85_c/EdNimEqcRg8";
-            width = 1185;
+            "display_sitename" : "Nate",
+            "image_url" : "https://blog.kakaocdn.net/dn/bWrgL7/btrXBMYaaML/kUgy90Eyl3kfVFUF8WEow0/img.jpg",
         }
     ],
     "meta": {
-        "is_end" = 0;
-        "pageable_count" = 3948;
-        "total_count" = 15807689;
+        "is_end" : false,
+        "pageable_count" : 3948,
+        "total_count" : 15807689,
     }
 }

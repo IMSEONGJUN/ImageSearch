@@ -8,16 +8,16 @@
 import RxSwift
 import Moya
 
-final class ImageSearchUseCaseMock {
+final class ImageSearchUseCaseMock: ImageSearchUseCasable {
     let moyaProvider = MoyaProvider<ImageSearchAPI>(stubClosure: MoyaProvider.immediatelyStub)
     
     func search(keyword: String, page: Int?) -> Single<ImageSearchResponse> {
         moyaProvider.rx.request(ImageSearchAPI.search(keyword: keyword, page: page))
-            .filterSuccessfulStatusCodes()
             .map(ImageSearchResponse.self)
+            .debug("@@@api call")
     }
     
-    func markFavorite(imageInfo: ImageInfo) -> Single<FavoriteError?> {
+    func updateFavorite(imageInfo: ImageSearcher.ImageInfo, actionType: ImageSearcher.PersistenceUpdateType) -> RxSwift.Single<ImageSearcher.FavoriteError?> {
         PersistenceManagerMock.updateWith(favorite: imageInfo, updateType: .add)
     }
 }

@@ -36,11 +36,11 @@
 		CED408B92B491CD500954292 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408B82B491CD500954292 /* BaseNavigationController.swift */; };
 		CED408BB2B491F6C00954292 /* NavigationBarCustomizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408BA2B491F6C00954292 /* NavigationBarCustomizable.swift */; };
 		CED408C32B49243700954292 /* ImageSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408C22B49243700954292 /* ImageSearchTests.swift */; };
-		CED408CE2B492C1300954292 /* imageSearchResultStub.json in Resources */ = {isa = PBXBuildFile; fileRef = CED408CD2B492C1300954292 /* imageSearchResultStub.json */; };
 		CED408D02B499C1600954292 /* PersistenceManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408CF2B499C1600954292 /* PersistenceManagerMock.swift */; };
 		CED408D12B499FD900954292 /* ImageSearchUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4089F2B4145DA00954292 /* ImageSearchUseCaseMock.swift */; };
 		CED408D32B49A2FA00954292 /* TargetType+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408D22B49A2FA00954292 /* TargetType+Ext.swift */; };
 		CED408D52B49A46400954292 /* FavoriteImageUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED408D42B49A46400954292 /* FavoriteImageUseCaseMock.swift */; };
+		CED408D62B4A51D700954292 /* imageSearchResultStub.json in Resources */ = {isa = PBXBuildFile; fileRef = CED408CD2B492C1300954292 /* imageSearchResultStub.json */; };
 		CEDD8750252F1B5000A3AEEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDD874F252F1B5000A3AEEC /* AppDelegate.swift */; };
 		CEDD8759252F1B5200A3AEEC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEDD8758252F1B5200A3AEEC /* Assets.xcassets */; };
 		CEDD875C252F1B5200A3AEEC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEDD875A252F1B5200A3AEEC /* LaunchScreen.storyboard */; };
@@ -595,7 +595,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CED408CE2B492C1300954292 /* imageSearchResultStub.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -604,6 +603,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEDD875C252F1B5200A3AEEC /* LaunchScreen.storyboard in Resources */,
+				CED408D62B4A51D700954292 /* imageSearchResultStub.json in Resources */,
 				CEDD8759252F1B5200A3AEEC /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
