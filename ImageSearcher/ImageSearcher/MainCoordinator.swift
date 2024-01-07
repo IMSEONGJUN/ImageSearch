@@ -14,7 +14,14 @@ final class MainCoordinator: BaseCoordinator {
         let imageSearchViewController = imageSearchCoordinator.start()
         imageSearchViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
         
-        tabBarController.viewControllers = [imageSearchViewController]
+        let favoriteImageCoordinator = FavoriteImageCoordinator()
+        let favoriteImageViewController = favoriteImageCoordinator.start()
+        favoriteImageViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
+        
+        UITabBar.appearance().tintColor = .systemGreen
+        UITabBar.appearance().backgroundColor = .systemBackground
+        
+        tabBarController.viewControllers = [imageSearchViewController, favoriteImageViewController]
         
         registerBaseViewController(tabBarController)
         
