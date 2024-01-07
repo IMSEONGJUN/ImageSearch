@@ -10,7 +10,7 @@ import RxSwift
 
 protocol FavoriteImageUseCasable {
     func favoriteUpdated() -> Observable<Void>
-    func retrieveFavorites() -> Single<Result<Set<ImageInfo>, FavoriteError>>
+    func retrieveFavorites() -> Single<Result<[ImageInfo], FavoriteError>>
     func updateWith(favorite: ImageInfo, updateType: PersistenceUpdateType) -> Single<FavoriteError?>
 }
 
@@ -19,7 +19,7 @@ class FavoriteImageUseCase: FavoriteImageUseCasable {
         PersistenceManager.dataUpdated
     }
     
-    func retrieveFavorites() -> Single<Result<Set<ImageInfo>, FavoriteError>> {
+    func retrieveFavorites() -> Single<Result<[ImageInfo], FavoriteError>> {
         PersistenceManager.retrieveFavorites()
     }
     

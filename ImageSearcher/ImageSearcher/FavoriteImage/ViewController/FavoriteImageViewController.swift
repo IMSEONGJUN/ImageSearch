@@ -27,7 +27,7 @@ final class FavoriteImageViewController: BaseViewController<FavoriteImageViewMod
         let output = viewModel.transform(ViewModel.Input(unmarkFavorite: unmarkFavoriteSubject.asObservable()))
         
         let dataLoaded = output.dataSource
-            .compactMap { result -> Set<ImageInfo>? in
+            .compactMap { result -> [ImageInfo]? in
                 if case let .success(imageInfos) = result {
                     return imageInfos
                 }

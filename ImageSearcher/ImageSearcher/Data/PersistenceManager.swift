@@ -16,7 +16,7 @@ enum PersistenceManager {
     
     static private let defaults = UserDefaults.standard
     
-    static private var cache = Set<ImageInfo>()
+    static private var cache = [ImageInfo]()
     
     static let dataUpdated = PublishSubject<Void>()
     
@@ -34,10 +34,10 @@ enum PersistenceManager {
                         guard !favorites.contains(favorite) else {
                             return .alreadyInFavorites
                         }
-                        cache.insert(favorite)
+                        cache.append(favorite)
                         
                     case .remove:
-                        cache.remove(favorite)
+                        cache.removeAll(where: { $0 == favorite })
                     }
                     
                     do {
@@ -69,7 +69,7 @@ enum PersistenceManager {
             }
     }
     
-    static func retrieveFavorites() -> Single<Result<Set<ImageInfo>, FavoriteError>> {
+    static func retrieveFavorites() -> Single<Result<[ImageInfo], FavoriteError>> {
         guard cache.isEmpty else {
             return .just(.success(cache))
         }
@@ -80,8 +80,8 @@ enum PersistenceManager {
         
         do {
             let decoder = JSONDecoder()
-            let favorites = try decoder.decode(Set<ImageInfo>.self, from: favoriteData)
-            cache = cache.union(favorites)
+            let favorites = try decoder.decode([ImageInfo].self, from: favoriteData)
+            cache = favorites
             return .just(.success(favorites))
         } catch {
             return .just(.failure(.failedToLoadFavorite))

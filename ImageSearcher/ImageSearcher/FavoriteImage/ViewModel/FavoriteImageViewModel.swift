@@ -15,7 +15,7 @@ final class FavoriteImageViewModel: ViewModelType {
     }
     
     struct Output {
-        let dataSource: Driver<Result<Set<ImageInfo>, FavoriteError>>
+        let dataSource: Driver<Result<[ImageInfo], FavoriteError>>
         let unmarkDone: Driver<FavoriteError?>
     }
     
